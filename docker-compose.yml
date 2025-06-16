@@ -1,0 +1,28 @@
+---
+services:
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_HOST:?database host not specified} 
+      POSTGRES_USER: ${DB_USER:?database username not specified}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?database password not specified}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  challenge:
+    build:
+      dockerfile: challenge.Dockerfile
+    depends_on:
+      - database
+    environment:
+      DB_HOST: ${DB_HOST:?database host not specified}
+      DB_PORT: ${DB_PORT:?database port not specified}
+      DB_USER: ${DB_USER:?database username not specified}
+      DB_PASSWORD: ${DB_PASSWORD:?database password not specified}
+      DB_NAME: ${DB_NAME:?database name not specified}
+    ports:
+      - ${PORT:-8081}:${PORT:-8081}
+volumes:
+  postgres-data:
+...

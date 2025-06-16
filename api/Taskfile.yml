@@ -1,0 +1,8 @@
+---
+version: "3"
+
+tasks:
+  generate:
+    summary: Generates the OpenAPI Specification.
+    cmds:
+      - bun run index.ts

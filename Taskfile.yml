@@ -1,0 +1,19 @@
+# https://taskfile.dev
+---
+version: "3"
+
+dotenv: ["./.env.test"]
+
+includes:
+  challenge:
+    taskfile: ./challenge/Taskfile.yml
+    dir: ./challenge
+  api:
+    taskfile: ./api/Taskfile.yml
+    dir: ./api
+
+tasks:
+  docker-develop-run:
+    summary: Run development db and server in docker.
+    cmds:
+      - docker compose up

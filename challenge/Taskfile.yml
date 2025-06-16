@@ -1,0 +1,43 @@
+---
+version: "3"
+
+tasks:
+  run:
+    deps:
+      - build
+    summary: Runs the backend server
+    cmds:
+      - ./main_server
+  generate:
+    summary: generate server code from openapi spec
+    sources:
+      - ../openapi.json
+    generates:
+      - ./internal/api/
+    cmds:
+      - go generate ./...
+  build:
+    deps:
+      - generate
+    summary: Build backend executables
+    sources:
+      - ./**/*.go
+    generates:
+      - server
+    cmds:
+      - go mod download
+      - go build -o main_server ./cmd/main/main.go
+  test:
+    summary: Run all tests
+    deps:
+      - build
+    cmds:
+      - go test -v ./...
+  reset:
+    summary: Delete build files
+    cmds:
+      - go clean --modcache
+      - go mod download
+      - go mod tidy
+      - go install
+      - rm -f main_server
