@@ -66,7 +66,7 @@ func (t TestClient) GET(endpoint string) TestVerify {
 }
 
 func (v TestVerify) AssertStatusCode(statusCode int, t *testing.T) TestVerify {
-	assert.Equal(t, 200, statusCode)
+	assert.Equal(t, statusCode, v.res.StatusCode)
 	return v
 }
 

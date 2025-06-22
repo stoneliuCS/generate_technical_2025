@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	challenge "generate_technical_challenge_2025"
 	api "generate_technical_challenge_2025/internal/api"
 	"generate_technical_challenge_2025/internal/services"
 	"log/slog"
@@ -10,17 +11,10 @@ import (
 	scalar "github.com/MarceloPetrucio/go-scalar-api-reference"
 )
 
-var openapiSpec string = "../openapi.json"
-
 // Handles incoming API requests
 type Handler struct {
 	services *services.Services
 	logger   *slog.Logger // event logger
-}
-
-// APIV1RegisterGet implements api.Handler.
-func (h Handler) APIV1RegisterGet(ctx context.Context, req api.OptAPIV1RegisterGetReq) (*api.APIV1RegisterGetCreated, error) {
-	panic("unimplemented")
 }
 
 // HealtcheckGet implements api.Handler.
@@ -38,7 +32,7 @@ func CreateHandler(logger *slog.Logger, services *services.Services) api.Handler
 
 func (h Handler) Get(ctx context.Context) (api.GetOK, error) {
 	html, err := scalar.ApiReferenceHTML(&scalar.Options{
-		SpecURL: openapiSpec,
+		SpecURL: challenge.GetSpecPath(),
 	})
 	if err != nil {
 		return api.GetOK{}, err
