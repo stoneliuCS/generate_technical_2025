@@ -2,6 +2,8 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
+	"log/slog"
 	"net/http"
 	"testing"
 	"time"
@@ -13,16 +15,19 @@ import (
 type TestClient struct {
 	client  http.Client
 	baseurl string
+	logger  *slog.Logger
 }
 
 type TestVerify struct {
 	res *http.Response
 }
 
-func CreateTestClient(port string) TestClient {
+func CreateTestClient(port int, logger *slog.Logger) TestClient {
+	portString := fmt.Sprintf("%d", port)
 	return TestClient{
 		client:  http.Client{Timeout: 30 * time.Second},
-		baseurl: "http://localhost:" + port,
+		baseurl: "http://localhost:" + portString,
+		logger:  logger,
 	}
 }
 
@@ -30,31 +35,28 @@ func CreateTestClient(port string) TestClient {
 func (t TestClient) CheckServer(timeout time.Duration) bool {
 	start := time.Now()
 	for {
+		t.logger.Info("Attempting to connect to test backend server...")
 		res, err := t.client.Get(t.baseurl + "/healthcheck")
-		// Handle error case
 		if err != nil {
-			// Check timeout before sleeping
 			if time.Since(start) > timeout {
+				t.logger.Info("Attempting to connect and ran out of timeout.")
 				return false
 			}
 			time.Sleep(100 * time.Millisecond)
+			t.logger.Info("Retrying to connect...")
 			continue // Skip to next iteration
 		}
 
-		// Always close response body to prevent resource leaks
 		defer res.Body.Close()
 
-		// Check if successful
 		if res.StatusCode == 200 {
 			return true
 		}
 
-		// Check timeout
 		if time.Since(start) > timeout {
 			return false
 		}
 
-		// Sleep before next attempt
 		time.Sleep(100 * time.Millisecond)
 	}
 }

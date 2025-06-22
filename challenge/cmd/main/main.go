@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"generate_technical_challenge_2025/internal/database"
 	"generate_technical_challenge_2025/internal/handler"
 	"generate_technical_challenge_2025/internal/server"
@@ -9,8 +8,6 @@ import (
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
-
-	"github.com/sethvargo/go-envconfig"
 )
 
 func main() {
@@ -18,7 +15,7 @@ func main() {
 	logger := slog.New(slog.Default().Handler())
 
 	logger.Info("Loading environment variables...")
-	env := loadEnv()
+	env := utils.LoadEnv()
 
 	logger.Info("Creating database from environment variables...")
 	db := database.CreateDatabase(env, logger)
@@ -35,16 +32,5 @@ func main() {
 	logger.Info("Intializing handler layer...")
 	h := handler.CreateHandler(logger, services)
 
-	port := "8081"
-
-	logger.Info("Attaching handler and running server on http://localhost:" + port + "...")
-	server.RunServer(h, ":"+port)
-}
-
-// Loads the environment variables as an EnvConfig
-func loadEnv() utils.EnvConfig {
-	var config utils.EnvConfig
-	envFun := func() error { return envconfig.Process(context.Background(), &config) }
-	utils.SafeCallErrorSupplier(envFun)
-	return config
+	server.RunServer(h, env, logger)
 }
