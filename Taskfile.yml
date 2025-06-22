@@ -16,4 +16,4 @@ tasks:
   docker-develop-run:
     summary: Run development db and server in docker.
     cmds:
-      - docker compose up
+      - docker compose up --watch
