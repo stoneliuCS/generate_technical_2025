@@ -10,6 +10,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "fluid-oas": "^0.4.3"
+    "fluid-oas": "^0.4.4"
   }
 }

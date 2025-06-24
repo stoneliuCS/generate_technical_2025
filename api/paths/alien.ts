@@ -19,7 +19,7 @@ export const ALIEN_ENDPOINT = PathItem.addMethod({
       ).addContents({
         "application/json": MediaType.addSchema(
           Object.addProperties({
-            waves: Array.addItems(COMPONENT_MAPPINGS.get(ALIEN!)),
+            waves: Array.addItems(COMPONENT_MAPPINGS.get(ALIEN)!),
             budget: Integer,
             health: Integer,
           }).addRequired(["waves", "budget", "health"]),
