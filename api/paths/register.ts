@@ -1,5 +1,4 @@
 import {
-  Example,
   MediaType,
   Object,
   Operation,
@@ -9,6 +8,7 @@ import {
   Responses,
   String,
 } from "fluid-oas";
+import { ERROR } from "../schema";
 
 export const REGISTER_ENDPOINT = PathItem.addSummary(
   "Register your Northeastern email address and grab your token",
@@ -29,21 +29,23 @@ export const REGISTER_ENDPOINT = PathItem.addSummary(
       "201": Response.addDescription(
         "Successfully registered your Northeastern email",
       ).addContents({
-        "application/json": MediaType.addExamples({
-          "Example-One": Example.addDescription(
-            "Response with token.",
-          ).addValue(
-            JSON.stringify({
-              message: "Successfully registered user!",
-              token: "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
-            }),
-          ),
-        }).addSchema(
+        "application/json": MediaType.addSchema(
           Object.addProperties({
-            message: String,
-            token: String.addFormat("uuid"),
-          }).addDescription("Successfully returned response."),
+            id: String.addFormat("uuid"),
+          })
+            .addDescription(
+              "Unique identifier associated with the registered northeastern email.",
+            )
+            .addRequired(["id"]),
         ),
+      }),
+      "400": Response.addDescription(
+        "Invalid northeastern email address or nuid provided.",
+      ).addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
+      "500": Response.addDescription("Internal server error.").addContents({
+        "application/json": MediaType.addSchema(ERROR),
       }),
     }),
   ),

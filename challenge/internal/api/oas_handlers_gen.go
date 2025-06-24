@@ -251,7 +251,7 @@ func (s *Server) handleAPIV1RegisterPostRequest(args [0]string, argsEscaped bool
 		}
 	}()
 
-	var response *APIV1RegisterPostCreated
+	var response APIV1RegisterPostRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
@@ -266,7 +266,7 @@ func (s *Server) handleAPIV1RegisterPostRequest(args [0]string, argsEscaped bool
 		type (
 			Request  = OptAPIV1RegisterPostReq
 			Params   = struct{}
-			Response = *APIV1RegisterPostCreated
+			Response = APIV1RegisterPostRes
 		)
 		response, err = middleware.HookMiddleware[
 			Request,

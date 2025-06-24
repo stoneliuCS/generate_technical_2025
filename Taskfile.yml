@@ -18,3 +18,8 @@ tasks:
     cmds:
       - docker rmi -f generate_technical_2025-challenge:latest
       - docker compose up --watch
+  sync:
+    summary: Syncs up both generate api schema and server code.
+    cmds:
+      - task api:generate
+      - task challenge:generate

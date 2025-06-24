@@ -24,13 +24,13 @@ func main() {
 	database.AutoMigrate(db)
 
 	logger.Info("Initializing transaction layer...")
-	transactions := transactions.CreateTransactions(logger, db)
+	userTransactions := transactions.CreateUserTransactions(logger, db)
 
 	logger.Info("Intializing service layer...")
-	services := services.CreateServices(logger, transactions)
+	userServices := services.CreateUserService(logger, userTransactions)
 
 	logger.Info("Intializing handler layer...")
-	h := handler.CreateHandler(logger, services)
+	h := handler.CreateHandler(logger, userServices)
 
 	server.RunServer(h, env, logger)
 }

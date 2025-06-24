@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
 
@@ -28,4 +29,5 @@ func CreateDatabase(cfg utils.EnvConfig, logger *slog.Logger) *gorm.DB {
 
 func AutoMigrate(db *gorm.DB) {
 	// Add migrations here.
+	db.AutoMigrate(&models.User{})
 }

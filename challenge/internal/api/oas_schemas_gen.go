@@ -430,31 +430,54 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) UnmarshalText(data 
 	}
 }
 
-// Successfully returned response.
-type APIV1RegisterPostCreated struct {
-	Message OptString `json:"message"`
-	Token   OptUUID   `json:"token"`
+type APIV1RegisterPostBadRequest struct {
+	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1RegisterPostCreated) GetMessage() OptString {
+func (s *APIV1RegisterPostBadRequest) GetMessage() string {
 	return s.Message
 }
 
-// GetToken returns the value of Token.
-func (s *APIV1RegisterPostCreated) GetToken() OptUUID {
-	return s.Token
-}
-
 // SetMessage sets the value of Message.
-func (s *APIV1RegisterPostCreated) SetMessage(val OptString) {
+func (s *APIV1RegisterPostBadRequest) SetMessage(val string) {
 	s.Message = val
 }
 
-// SetToken sets the value of Token.
-func (s *APIV1RegisterPostCreated) SetToken(val OptUUID) {
-	s.Token = val
+func (*APIV1RegisterPostBadRequest) aPIV1RegisterPostRes() {}
+
+// Unique identifier associated with the registered northeastern email.
+type APIV1RegisterPostCreated struct {
+	ID uuid.UUID `json:"id"`
 }
+
+// GetID returns the value of ID.
+func (s *APIV1RegisterPostCreated) GetID() uuid.UUID {
+	return s.ID
+}
+
+// SetID sets the value of ID.
+func (s *APIV1RegisterPostCreated) SetID(val uuid.UUID) {
+	s.ID = val
+}
+
+func (*APIV1RegisterPostCreated) aPIV1RegisterPostRes() {}
+
+type APIV1RegisterPostInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1RegisterPostInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1RegisterPostInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1RegisterPostInternalServerError) aPIV1RegisterPostRes() {}
 
 type APIV1RegisterPostReq struct {
 	// Must be a valid Northeastern email address.
@@ -1321,98 +1344,6 @@ func (o OptHealthcheckGetOKMessage) Get() (v HealthcheckGetOKMessage, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptHealthcheckGetOKMessage) Or(d HealthcheckGetOKMessage) HealthcheckGetOKMessage {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptString returns new OptString with value set to v.
-func NewOptString(v string) OptString {
-	return OptString{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptString is optional string.
-type OptString struct {
-	Value string
-	Set   bool
-}
-
-// IsSet returns true if OptString was set.
-func (o OptString) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptString) Reset() {
-	var v string
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptString) SetTo(v string) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptString) Get() (v string, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptString) Or(d string) string {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptUUID returns new OptUUID with value set to v.
-func NewOptUUID(v uuid.UUID) OptUUID {
-	return OptUUID{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptUUID is optional uuid.UUID.
-type OptUUID struct {
-	Value uuid.UUID
-	Set   bool
-}
-
-// IsSet returns true if OptUUID was set.
-func (o OptUUID) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptUUID) Reset() {
-	var v uuid.UUID
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptUUID) SetTo(v uuid.UUID) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptUUID) Get() (v uuid.UUID, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptUUID) Or(d uuid.UUID) uuid.UUID {
 	if v, ok := o.Get(); ok {
 		return v
 	}

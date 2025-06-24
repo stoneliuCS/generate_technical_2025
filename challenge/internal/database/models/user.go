@@ -13,8 +13,18 @@ type User struct {
 	// Northeastern email.
 	Email string
 	// NUID of the user.
-	NUID      string
+	NUID string
 	// Metadata
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func CreateUser(email string, nuid string) *User {
+	user := &User{}
+	user.ID = uuid.New()
+	user.Email = email
+	user.NUID = nuid
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Now()
+	return user
 }

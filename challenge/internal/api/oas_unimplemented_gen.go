@@ -23,7 +23,7 @@ func (UnimplementedHandler) APIV1ChallengeIDAliensGet(ctx context.Context, param
 // APIV1RegisterPost implements POST /api/v1/register operation.
 //
 // POST /api/v1/register
-func (UnimplementedHandler) APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (r *APIV1RegisterPostCreated, _ error) {
+func (UnimplementedHandler) APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (r APIV1RegisterPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

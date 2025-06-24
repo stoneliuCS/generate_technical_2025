@@ -34,7 +34,7 @@ type Invoker interface {
 	// APIV1RegisterPost invokes POST /api/v1/register operation.
 	//
 	// POST /api/v1/register
-	APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error)
+	APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error)
 	// Get invokes GET / operation.
 	//
 	// API documentation.
@@ -181,12 +181,12 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 // APIV1RegisterPost invokes POST /api/v1/register operation.
 //
 // POST /api/v1/register
-func (c *Client) APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error) {
+func (c *Client) APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error) {
 	res, err := c.sendAPIV1RegisterPost(ctx, request)
 	return res, err
 }
 
-func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (res *APIV1RegisterPostCreated, err error) {
+func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (res APIV1RegisterPostRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/v1/register"),

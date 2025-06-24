@@ -15,7 +15,7 @@ type Handler interface {
 	// APIV1RegisterPost implements POST /api/v1/register operation.
 	//
 	// POST /api/v1/register
-	APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error)
+	APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error)
 	// Get implements GET / operation.
 	//
 	// API documentation.

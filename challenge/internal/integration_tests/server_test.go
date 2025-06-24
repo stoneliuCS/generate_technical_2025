@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/docker/go-connections/nat"
+	"github.com/google/uuid"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 )
@@ -23,7 +24,7 @@ import (
 var (
 	PORT   = 8008
 	LOGGER = slog.New(slog.Default().Handler())
-	CLIENT = utils.CreateTestClient(PORT, LOGGER)
+	CLIENT = func() *utils.TestClient { return utils.CreateTestClient(PORT, LOGGER) }
 )
 
 func runServer() {
@@ -68,18 +69,18 @@ func runServer() {
 
 	database.AutoMigrate(db)
 
-	transactions := transactions.CreateTransactions(LOGGER, db)
+	userTransactions := transactions.CreateUserTransactions(LOGGER, db)
 
-	services := services.CreateServices(LOGGER, transactions)
+	userServices := services.CreateUserService(LOGGER, userTransactions)
 
-	h := handler.CreateHandler(LOGGER, services)
+	h := handler.CreateHandler(LOGGER, userServices)
 	server.RunServer(h, *envConfig, LOGGER)
 }
 
 func TestMain(m *testing.M) {
 	LOGGER.Info("Starting test server in a seperate go routine..")
 	go runServer()
-	if !CLIENT.CheckServer(time.Second * 30) {
+	if !CLIENT().CheckServer(time.Second * 30) {
 		os.Exit(1)
 	}
 	LOGGER.Info("Finished setting up mock postgres container and server...")
@@ -93,6 +94,58 @@ func TestHealthCheck(t *testing.T) {
 		"message": "OK",
 	}
 
-	testVerify := CLIENT.GET("/healthcheck")
+	testVerify := CLIENT().GET("/healthcheck")
 	testVerify.AssertStatusCode(200, t).AssertBody(expectedBody, t)
+}
+
+func TestUserWithNonValidNUIDReceives400(t *testing.T) {
+	client := CLIENT()
+	client.AddBody(map[string]any{
+		"email": "notavalidemail@gmail.com",
+		"nuid":  "1231",
+	})
+	client.AddHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
+	testVerify := client.POST("/api/v1/register")
+	testVerify.AssertStatusCode(400, t).AssertBody(map[string]any{
+		"message": "Not a valid northeastern email address.",
+	}, t)
+}
+
+func TestUserWithBadNUIDReceives400(t *testing.T) {
+	client := CLIENT()
+	client.AddBody(map[string]any{
+		"email": "somebody@northeastern.edu",
+		"nuid":  "1231",
+	})
+	client.AddHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
+	testVerify := client.POST("/api/v1/register")
+	testVerify.AssertStatusCode(400, t).AssertBody(map[string]any{
+		"message": "Not a valid NUID.",
+	}, t)
+}
+
+func TestUserReceives201OnGoodRequest(t *testing.T) {
+	client := CLIENT()
+	client.AddBody(map[string]any{
+		"email": "somebody@northeastern.edu",
+		"nuid":  "123456789", // NUID is 9 characters long
+	})
+	client.AddHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
+
+	testVerify := client.POST("/api/v1/register")
+	pred := func(prop any) bool {
+		s, ok := prop.(string)
+		if !ok {
+			return ok
+		}
+		_, err := uuid.Parse(s)
+		return err == nil
+	}
+	testVerify.AssertStatusCode(201, t).AssertProperty("id", pred, t)
 }
