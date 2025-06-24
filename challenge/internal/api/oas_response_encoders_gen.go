@@ -26,7 +26,7 @@ func encodeAPIV1AliensGetResponse(response *APIV1AliensGetOK, w http.ResponseWri
 	return nil
 }
 
-func encodeAPIV1RegisterGetResponse(response *APIV1RegisterGetCreated, w http.ResponseWriter, span trace.Span) error {
+func encodeAPIV1RegisterPostResponse(response *APIV1RegisterPostCreated, w http.ResponseWriter, span trace.Span) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(201)
 	span.SetStatus(codes.Ok, http.StatusText(201))

@@ -50,7 +50,7 @@ func (s *APIV1AliensGetOK) Validate() error {
 	return nil
 }
 
-func (s *APIV1RegisterGetReq) Validate() error {
+func (s *APIV1RegisterPostReq) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}

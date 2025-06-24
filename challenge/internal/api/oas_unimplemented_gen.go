@@ -20,10 +20,10 @@ func (UnimplementedHandler) APIV1AliensGet(ctx context.Context) (r *APIV1AliensG
 	return r, ht.ErrNotImplemented
 }
 
-// APIV1RegisterGet implements GET /api/v1/register operation.
+// APIV1RegisterPost implements POST /api/v1/register operation.
 //
-// GET /api/v1/register
-func (UnimplementedHandler) APIV1RegisterGet(ctx context.Context, req OptAPIV1RegisterGetReq) (r *APIV1RegisterGetCreated, _ error) {
+// POST /api/v1/register
+func (UnimplementedHandler) APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (r *APIV1RegisterPostCreated, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

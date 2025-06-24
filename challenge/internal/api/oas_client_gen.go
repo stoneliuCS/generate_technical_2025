@@ -30,10 +30,10 @@ type Invoker interface {
 	//
 	// GET /api/v1/aliens
 	APIV1AliensGet(ctx context.Context) (*APIV1AliensGetOK, error)
-	// APIV1RegisterGet invokes GET /api/v1/register operation.
+	// APIV1RegisterPost invokes POST /api/v1/register operation.
 	//
-	// GET /api/v1/register
-	APIV1RegisterGet(ctx context.Context, request OptAPIV1RegisterGetReq) (*APIV1RegisterGetCreated, error)
+	// POST /api/v1/register
+	APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error)
 	// Get invokes GET / operation.
 	//
 	// API documentation.
@@ -158,17 +158,17 @@ func (c *Client) sendAPIV1AliensGet(ctx context.Context) (res *APIV1AliensGetOK,
 	return result, nil
 }
 
-// APIV1RegisterGet invokes GET /api/v1/register operation.
+// APIV1RegisterPost invokes POST /api/v1/register operation.
 //
-// GET /api/v1/register
-func (c *Client) APIV1RegisterGet(ctx context.Context, request OptAPIV1RegisterGetReq) (*APIV1RegisterGetCreated, error) {
-	res, err := c.sendAPIV1RegisterGet(ctx, request)
+// POST /api/v1/register
+func (c *Client) APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error) {
+	res, err := c.sendAPIV1RegisterPost(ctx, request)
 	return res, err
 }
 
-func (c *Client) sendAPIV1RegisterGet(ctx context.Context, request OptAPIV1RegisterGetReq) (res *APIV1RegisterGetCreated, err error) {
+func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (res *APIV1RegisterPostCreated, err error) {
 	otelAttrs := []attribute.KeyValue{
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/v1/register"),
 	}
 
@@ -184,7 +184,7 @@ func (c *Client) sendAPIV1RegisterGet(ctx context.Context, request OptAPIV1Regis
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, APIV1RegisterGetOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1RegisterPostOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -206,11 +206,11 @@ func (c *Client) sendAPIV1RegisterGet(ctx context.Context, request OptAPIV1Regis
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
-	r, err := ht.NewRequest(ctx, "GET", u)
+	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
-	if err := encodeAPIV1RegisterGetRequest(request, r); err != nil {
+	if err := encodeAPIV1RegisterPostRequest(request, r); err != nil {
 		return res, errors.Wrap(err, "encode request")
 	}
 
@@ -222,7 +222,7 @@ func (c *Client) sendAPIV1RegisterGet(ctx context.Context, request OptAPIV1Regis
 	defer resp.Body.Close()
 
 	stage = "DecodeResponse"
-	result, err := decodeAPIV1RegisterGetResponse(resp)
+	result, err := decodeAPIV1RegisterPostResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

@@ -13,7 +13,7 @@ import {
 export const REGISTER_ENDPOINT = PathItem.addSummary(
   "Register your Northeastern email address and grab your token",
 ).addMethod({
-  get: Operation.addRequestBody(
+  post: Operation.addRequestBody(
     RequestBody.addContents({
       "application/json": MediaType.addSchema(
         Object.addProperties({

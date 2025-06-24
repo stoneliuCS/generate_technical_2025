@@ -145,19 +145,19 @@ func (s *Server) handleAPIV1AliensGetRequest(args [0]string, argsEscaped bool, w
 	}
 }
 
-// handleAPIV1RegisterGetRequest handles GET /api/v1/register operation.
+// handleAPIV1RegisterPostRequest handles POST /api/v1/register operation.
 //
-// GET /api/v1/register
-func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// POST /api/v1/register
+func (s *Server) handleAPIV1RegisterPostRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
-		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/v1/register"),
 	}
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1RegisterGetOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1RegisterPostOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -212,11 +212,11 @@ func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool,
 		}
 		err          error
 		opErrContext = ogenerrors.OperationContext{
-			Name: APIV1RegisterGetOperation,
+			Name: APIV1RegisterPostOperation,
 			ID:   "",
 		}
 	)
-	request, close, err := s.decodeAPIV1RegisterGetRequest(r)
+	request, close, err := s.decodeAPIV1RegisterPostRequest(r)
 	if err != nil {
 		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
@@ -232,11 +232,11 @@ func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool,
 		}
 	}()
 
-	var response *APIV1RegisterGetCreated
+	var response *APIV1RegisterPostCreated
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    APIV1RegisterGetOperation,
+			OperationName:    APIV1RegisterPostOperation,
 			OperationSummary: "",
 			OperationID:      "",
 			Body:             request,
@@ -245,9 +245,9 @@ func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool,
 		}
 
 		type (
-			Request  = OptAPIV1RegisterGetReq
+			Request  = OptAPIV1RegisterPostReq
 			Params   = struct{}
-			Response = *APIV1RegisterGetCreated
+			Response = *APIV1RegisterPostCreated
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -258,12 +258,12 @@ func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool,
 			mreq,
 			nil,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.APIV1RegisterGet(ctx, request)
+				response, err = s.h.APIV1RegisterPost(ctx, request)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.APIV1RegisterGet(ctx, request)
+		response, err = s.h.APIV1RegisterPost(ctx, request)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -271,7 +271,7 @@ func (s *Server) handleAPIV1RegisterGetRequest(args [0]string, argsEscaped bool,
 		return
 	}
 
-	if err := encodeAPIV1RegisterGetResponse(response, w, span); err != nil {
+	if err := encodeAPIV1RegisterPostResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)

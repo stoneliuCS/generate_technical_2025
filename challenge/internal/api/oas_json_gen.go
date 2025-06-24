@@ -154,14 +154,14 @@ func (s *APIV1AliensGetOK) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterGetCreated) Encode(e *jx.Encoder) {
+func (s *APIV1RegisterPostCreated) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterGetCreated) encodeFields(e *jx.Encoder) {
+func (s *APIV1RegisterPostCreated) encodeFields(e *jx.Encoder) {
 	{
 		if s.Message.Set {
 			e.FieldStart("message")
@@ -176,15 +176,15 @@ func (s *APIV1RegisterGetCreated) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterGetCreated = [2]string{
+var jsonFieldsNameOfAPIV1RegisterPostCreated = [2]string{
 	0: "message",
 	1: "token",
 }
 
-// Decode decodes APIV1RegisterGetCreated from json.
-func (s *APIV1RegisterGetCreated) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1RegisterPostCreated from json.
+func (s *APIV1RegisterPostCreated) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterGetCreated to nil")
+		return errors.New("invalid: unable to decode APIV1RegisterPostCreated to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -214,34 +214,34 @@ func (s *APIV1RegisterGetCreated) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterGetCreated")
+		return errors.Wrap(err, "decode APIV1RegisterPostCreated")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterGetCreated) MarshalJSON() ([]byte, error) {
+func (s *APIV1RegisterPostCreated) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterGetCreated) UnmarshalJSON(data []byte) error {
+func (s *APIV1RegisterPostCreated) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterGetReq) Encode(e *jx.Encoder) {
+func (s *APIV1RegisterPostReq) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterGetReq) encodeFields(e *jx.Encoder) {
+func (s *APIV1RegisterPostReq) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("email")
 		e.Str(s.Email)
@@ -252,15 +252,15 @@ func (s *APIV1RegisterGetReq) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterGetReq = [2]string{
+var jsonFieldsNameOfAPIV1RegisterPostReq = [2]string{
 	0: "email",
 	1: "nuid",
 }
 
-// Decode decodes APIV1RegisterGetReq from json.
-func (s *APIV1RegisterGetReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1RegisterPostReq from json.
+func (s *APIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterGetReq to nil")
+		return errors.New("invalid: unable to decode APIV1RegisterPostReq to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -295,7 +295,7 @@ func (s *APIV1RegisterGetReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterGetReq")
+		return errors.Wrap(err, "decode APIV1RegisterPostReq")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -312,8 +312,8 @@ func (s *APIV1RegisterGetReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterGetReq) {
-					name = jsonFieldsNameOfAPIV1RegisterGetReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterPostReq) {
+					name = jsonFieldsNameOfAPIV1RegisterPostReq[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -334,14 +334,14 @@ func (s *APIV1RegisterGetReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterGetReq) MarshalJSON() ([]byte, error) {
+func (s *APIV1RegisterPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterGetReq) UnmarshalJSON(data []byte) error {
+func (s *APIV1RegisterPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -577,18 +577,18 @@ func (s *HealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1RegisterGetReq as json.
-func (o OptAPIV1RegisterGetReq) Encode(e *jx.Encoder) {
+// Encode encodes APIV1RegisterPostReq as json.
+func (o OptAPIV1RegisterPostReq) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1RegisterGetReq from json.
-func (o *OptAPIV1RegisterGetReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1RegisterPostReq from json.
+func (o *OptAPIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1RegisterGetReq to nil")
+		return errors.New("invalid: unable to decode OptAPIV1RegisterPostReq to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -598,14 +598,14 @@ func (o *OptAPIV1RegisterGetReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1RegisterGetReq) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1RegisterPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1RegisterGetReq) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1RegisterPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

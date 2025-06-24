@@ -65,7 +65,7 @@ func decodeAPIV1AliensGetResponse(resp *http.Response) (res *APIV1AliensGetOK, _
 	return res, validate.UnexpectedStatusCode(resp.StatusCode)
 }
 
-func decodeAPIV1RegisterGetResponse(resp *http.Response) (res *APIV1RegisterGetCreated, _ error) {
+func decodeAPIV1RegisterPostResponse(resp *http.Response) (res *APIV1RegisterPostCreated, _ error) {
 	switch resp.StatusCode {
 	case 201:
 		// Code 201.
@@ -81,7 +81,7 @@ func decodeAPIV1RegisterGetResponse(resp *http.Response) (res *APIV1RegisterGetC
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1RegisterGetCreated
+			var response APIV1RegisterPostCreated
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

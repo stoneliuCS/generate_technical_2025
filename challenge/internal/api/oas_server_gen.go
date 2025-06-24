@@ -12,10 +12,10 @@ type Handler interface {
 	//
 	// GET /api/v1/aliens
 	APIV1AliensGet(ctx context.Context) (*APIV1AliensGetOK, error)
-	// APIV1RegisterGet implements GET /api/v1/register operation.
+	// APIV1RegisterPost implements POST /api/v1/register operation.
 	//
-	// GET /api/v1/register
-	APIV1RegisterGet(ctx context.Context, req OptAPIV1RegisterGetReq) (*APIV1RegisterGetCreated, error)
+	// POST /api/v1/register
+	APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (*APIV1RegisterPostCreated, error)
 	// Get implements GET / operation.
 	//
 	// API documentation.

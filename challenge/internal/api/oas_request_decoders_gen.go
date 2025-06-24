@@ -14,8 +14,8 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func (s *Server) decodeAPIV1RegisterGetRequest(r *http.Request) (
-	req OptAPIV1RegisterGetReq,
+func (s *Server) decodeAPIV1RegisterPostRequest(r *http.Request) (
+	req OptAPIV1RegisterPostReq,
 	close func() error,
 	rerr error,
 ) {
@@ -57,7 +57,7 @@ func (s *Server) decodeAPIV1RegisterGetRequest(r *http.Request) (
 
 		d := jx.DecodeBytes(buf)
 
-		var request OptAPIV1RegisterGetReq
+		var request OptAPIV1RegisterPostReq
 		if err := func() error {
 			request.Reset()
 			if err := request.Decode(d); err != nil {

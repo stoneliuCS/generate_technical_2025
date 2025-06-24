@@ -6,9 +6,7 @@ import (
 	api "generate_technical_challenge_2025/internal/api"
 )
 
-// Handles user registration via their northeastern email.
-func (h Handler) APIV1RegisterGet(ctx context.Context, req api.OptAPIV1RegisterGetReq) (*api.APIV1RegisterGetCreated, error) {
-	// email := req.Value.GetEmail()
-	// nuid := req.Value.GetNuid()
-	panic("")
+// APIV1RegisterPost implements api.Handler.
+func (h Handler) APIV1RegisterPost(ctx context.Context, req api.OptAPIV1RegisterPostReq) (*api.APIV1RegisterPostCreated, error) {
+	panic("unimplemented")
 }

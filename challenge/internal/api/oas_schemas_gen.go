@@ -46,32 +46,32 @@ func (s *APIV1AliensGetOK) SetHealth(val int) {
 }
 
 // Successfully returned response.
-type APIV1RegisterGetCreated struct {
+type APIV1RegisterPostCreated struct {
 	Message OptString `json:"message"`
 	Token   OptUUID   `json:"token"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1RegisterGetCreated) GetMessage() OptString {
+func (s *APIV1RegisterPostCreated) GetMessage() OptString {
 	return s.Message
 }
 
 // GetToken returns the value of Token.
-func (s *APIV1RegisterGetCreated) GetToken() OptUUID {
+func (s *APIV1RegisterPostCreated) GetToken() OptUUID {
 	return s.Token
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1RegisterGetCreated) SetMessage(val OptString) {
+func (s *APIV1RegisterPostCreated) SetMessage(val OptString) {
 	s.Message = val
 }
 
 // SetToken sets the value of Token.
-func (s *APIV1RegisterGetCreated) SetToken(val OptUUID) {
+func (s *APIV1RegisterPostCreated) SetToken(val OptUUID) {
 	s.Token = val
 }
 
-type APIV1RegisterGetReq struct {
+type APIV1RegisterPostReq struct {
 	// Must be a valid Northeastern email address.
 	Email string `json:"email"`
 	// Valid nuid.
@@ -79,22 +79,22 @@ type APIV1RegisterGetReq struct {
 }
 
 // GetEmail returns the value of Email.
-func (s *APIV1RegisterGetReq) GetEmail() string {
+func (s *APIV1RegisterPostReq) GetEmail() string {
 	return s.Email
 }
 
 // GetNuid returns the value of Nuid.
-func (s *APIV1RegisterGetReq) GetNuid() string {
+func (s *APIV1RegisterPostReq) GetNuid() string {
 	return s.Nuid
 }
 
 // SetEmail sets the value of Email.
-func (s *APIV1RegisterGetReq) SetEmail(val string) {
+func (s *APIV1RegisterPostReq) SetEmail(val string) {
 	s.Email = val
 }
 
 // SetNuid sets the value of Nuid.
-func (s *APIV1RegisterGetReq) SetNuid(val string) {
+func (s *APIV1RegisterPostReq) SetNuid(val string) {
 	s.Nuid = val
 }
 
@@ -197,38 +197,38 @@ func (s *HealthcheckGetOKMessage) UnmarshalText(data []byte) error {
 	}
 }
 
-// NewOptAPIV1RegisterGetReq returns new OptAPIV1RegisterGetReq with value set to v.
-func NewOptAPIV1RegisterGetReq(v APIV1RegisterGetReq) OptAPIV1RegisterGetReq {
-	return OptAPIV1RegisterGetReq{
+// NewOptAPIV1RegisterPostReq returns new OptAPIV1RegisterPostReq with value set to v.
+func NewOptAPIV1RegisterPostReq(v APIV1RegisterPostReq) OptAPIV1RegisterPostReq {
+	return OptAPIV1RegisterPostReq{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1RegisterGetReq is optional APIV1RegisterGetReq.
-type OptAPIV1RegisterGetReq struct {
-	Value APIV1RegisterGetReq
+// OptAPIV1RegisterPostReq is optional APIV1RegisterPostReq.
+type OptAPIV1RegisterPostReq struct {
+	Value APIV1RegisterPostReq
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1RegisterGetReq was set.
-func (o OptAPIV1RegisterGetReq) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1RegisterPostReq was set.
+func (o OptAPIV1RegisterPostReq) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1RegisterGetReq) Reset() {
-	var v APIV1RegisterGetReq
+func (o *OptAPIV1RegisterPostReq) Reset() {
+	var v APIV1RegisterPostReq
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1RegisterGetReq) SetTo(v APIV1RegisterGetReq) {
+func (o *OptAPIV1RegisterPostReq) SetTo(v APIV1RegisterPostReq) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1RegisterGetReq) Get() (v APIV1RegisterGetReq, ok bool) {
+func (o OptAPIV1RegisterPostReq) Get() (v APIV1RegisterPostReq, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -236,7 +236,7 @@ func (o OptAPIV1RegisterGetReq) Get() (v APIV1RegisterGetReq, ok bool) {
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1RegisterGetReq) Or(d APIV1RegisterGetReq) APIV1RegisterGetReq {
+func (o OptAPIV1RegisterPostReq) Or(d APIV1RegisterPostReq) APIV1RegisterPostReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}

@@ -110,10 +110,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					if len(elem) == 0 {
 						// Leaf node.
 						switch r.Method {
-						case "GET":
-							s.handleAPIV1RegisterGetRequest([0]string{}, elemIsEscaped, w, r)
+						case "POST":
+							s.handleAPIV1RegisterPostRequest([0]string{}, elemIsEscaped, w, r)
 						default:
-							s.notAllowed(w, r, "GET")
+							s.notAllowed(w, r, "POST")
 						}
 
 						return
@@ -293,8 +293,8 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					if len(elem) == 0 {
 						// Leaf node.
 						switch method {
-						case "GET":
-							r.name = APIV1RegisterGetOperation
+						case "POST":
+							r.name = APIV1RegisterPostOperation
 							r.summary = ""
 							r.operationID = ""
 							r.pathPattern = "/api/v1/register"

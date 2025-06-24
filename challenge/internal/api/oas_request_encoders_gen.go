@@ -11,8 +11,8 @@ import (
 	ht "github.com/ogen-go/ogen/http"
 )
 
-func encodeAPIV1RegisterGetRequest(
-	req OptAPIV1RegisterGetReq,
+func encodeAPIV1RegisterPostRequest(
+	req OptAPIV1RegisterPostReq,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
