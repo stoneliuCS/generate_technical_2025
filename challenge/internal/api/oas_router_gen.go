@@ -40,6 +40,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.notFound(w, r)
 		return
 	}
+	args := [1]string{}
 
 	// Static code generated router with unwrapped path search.
 	switch {
@@ -79,24 +80,49 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					break
 				}
 				switch elem[0] {
-				case 'a': // Prefix: "aliens"
+				case 'c': // Prefix: "challenge/"
 
-					if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+					if l := len("challenge/"); len(elem) >= l && elem[0:l] == "challenge/" {
 						elem = elem[l:]
 					} else {
 						break
 					}
 
+					// Param: "id"
+					// Match until "/"
+					idx := strings.IndexByte(elem, '/')
+					if idx < 0 {
+						idx = len(elem)
+					}
+					args[0] = elem[:idx]
+					elem = elem[idx:]
+
 					if len(elem) == 0 {
-						// Leaf node.
-						switch r.Method {
-						case "GET":
-							s.handleAPIV1AliensGetRequest([0]string{}, elemIsEscaped, w, r)
-						default:
-							s.notAllowed(w, r, "GET")
+						break
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/aliens"
+
+						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+							elem = elem[l:]
+						} else {
+							break
 						}
 
-						return
+						if len(elem) == 0 {
+							// Leaf node.
+							switch r.Method {
+							case "GET":
+								s.handleAPIV1ChallengeIDAliensGetRequest([1]string{
+									args[0],
+								}, elemIsEscaped, w, r)
+							default:
+								s.notAllowed(w, r, "GET")
+							}
+
+							return
+						}
+
 					}
 
 				case 'r': // Prefix: "register"
@@ -155,7 +181,7 @@ type Route struct {
 	operationID string
 	pathPattern string
 	count       int
-	args        [0]string
+	args        [1]string
 }
 
 // Name returns ogen operation name.
@@ -258,28 +284,51 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					break
 				}
 				switch elem[0] {
-				case 'a': // Prefix: "aliens"
+				case 'c': // Prefix: "challenge/"
 
-					if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+					if l := len("challenge/"); len(elem) >= l && elem[0:l] == "challenge/" {
 						elem = elem[l:]
 					} else {
 						break
 					}
 
+					// Param: "id"
+					// Match until "/"
+					idx := strings.IndexByte(elem, '/')
+					if idx < 0 {
+						idx = len(elem)
+					}
+					args[0] = elem[:idx]
+					elem = elem[idx:]
+
 					if len(elem) == 0 {
-						// Leaf node.
-						switch method {
-						case "GET":
-							r.name = APIV1AliensGetOperation
-							r.summary = ""
-							r.operationID = ""
-							r.pathPattern = "/api/v1/aliens"
-							r.args = args
-							r.count = 0
-							return r, true
-						default:
-							return
+						break
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/aliens"
+
+						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+							elem = elem[l:]
+						} else {
+							break
 						}
+
+						if len(elem) == 0 {
+							// Leaf node.
+							switch method {
+							case "GET":
+								r.name = APIV1ChallengeIDAliensGetOperation
+								r.summary = ""
+								r.operationID = ""
+								r.pathPattern = "/api/v1/challenge/{id}/aliens"
+								r.args = args
+								r.count = 1
+								return r, true
+							default:
+								return
+							}
+						}
+
 					}
 
 				case 'r': // Prefix: "register"

@@ -1,5 +1,8 @@
-import { Component } from "fluid-oas";
-import { ALIEN } from "./alien";
+import { Component, String } from "fluid-oas";
 
-export const COMPONENT = Component.addSchemas({ alien: ALIEN })
-export const COMPONENT_MAPPINGS = COMPONENT.createMappings()
+// Reusable models used throughout the api specification
+export const COMPONENT = Component.addSchemas({});
+export const COMPONENT_MAPPINGS = COMPONENT.createMappings();
+export const UUID = String.addFormat("uuid")
+  .addDescription("Unique identifer for the registered participant.")
+  .addExample("17aa5a93-73fc-4f8c-9977-2994481213be");

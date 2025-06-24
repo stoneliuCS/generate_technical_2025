@@ -12,7 +12,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func encodeAPIV1AliensGetResponse(response *APIV1AliensGetOK, w http.ResponseWriter, span trace.Span) error {
+func encodeAPIV1ChallengeIDAliensGetResponse(response *APIV1ChallengeIDAliensGetOK, w http.ResponseWriter, span trace.Span) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(200)
 	span.SetStatus(codes.Ok, http.StatusText(200))

@@ -29,19 +29,19 @@ func (c *codeRecorder) WriteHeader(status int) {
 	c.ResponseWriter.WriteHeader(status)
 }
 
-// handleAPIV1AliensGetRequest handles GET /api/v1/aliens operation.
+// handleAPIV1ChallengeIDAliensGetRequest handles GET /api/v1/challenge/{id}/aliens operation.
 //
-// GET /api/v1/aliens
-func (s *Server) handleAPIV1AliensGetRequest(args [0]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// GET /api/v1/challenge/{id}/aliens
+func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/v1/aliens"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/aliens"),
 	}
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1AliensGetOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1ChallengeIDAliensGetOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -94,25 +94,44 @@ func (s *Server) handleAPIV1AliensGetRequest(args [0]string, argsEscaped bool, w
 
 			s.errors.Add(ctx, 1, metric.WithAttributes(attrs...))
 		}
-		err error
+		err          error
+		opErrContext = ogenerrors.OperationContext{
+			Name: APIV1ChallengeIDAliensGetOperation,
+			ID:   "",
+		}
 	)
+	params, err := decodeAPIV1ChallengeIDAliensGetParams(args, argsEscaped, r)
+	if err != nil {
+		err = &ogenerrors.DecodeParamsError{
+			OperationContext: opErrContext,
+			Err:              err,
+		}
+		defer recordError("DecodeParams", err)
+		s.cfg.ErrorHandler(ctx, w, r, err)
+		return
+	}
 
-	var response *APIV1AliensGetOK
+	var response *APIV1ChallengeIDAliensGetOK
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    APIV1AliensGetOperation,
+			OperationName:    APIV1ChallengeIDAliensGetOperation,
 			OperationSummary: "",
 			OperationID:      "",
 			Body:             nil,
-			Params:           middleware.Parameters{},
-			Raw:              r,
+			Params: middleware.Parameters{
+				{
+					Name: "id",
+					In:   "path",
+				}: params.ID,
+			},
+			Raw: r,
 		}
 
 		type (
 			Request  = struct{}
-			Params   = struct{}
-			Response = *APIV1AliensGetOK
+			Params   = APIV1ChallengeIDAliensGetParams
+			Response = *APIV1ChallengeIDAliensGetOK
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -121,14 +140,14 @@ func (s *Server) handleAPIV1AliensGetRequest(args [0]string, argsEscaped bool, w
 		](
 			m,
 			mreq,
-			nil,
+			unpackAPIV1ChallengeIDAliensGetParams,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.APIV1AliensGet(ctx)
+				response, err = s.h.APIV1ChallengeIDAliensGet(ctx, params)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.APIV1AliensGet(ctx)
+		response, err = s.h.APIV1ChallengeIDAliensGet(ctx, params)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -136,7 +155,7 @@ func (s *Server) handleAPIV1AliensGetRequest(args [0]string, argsEscaped bool, w
 		return
 	}
 
-	if err := encodeAPIV1AliensGetResponse(response, w, span); err != nil {
+	if err := encodeAPIV1ChallengeIDAliensGetResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)

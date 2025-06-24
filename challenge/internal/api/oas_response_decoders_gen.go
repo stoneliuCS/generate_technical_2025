@@ -15,7 +15,7 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func decodeAPIV1AliensGetResponse(resp *http.Response) (res *APIV1AliensGetOK, _ error) {
+func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res *APIV1ChallengeIDAliensGetOK, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
@@ -31,7 +31,7 @@ func decodeAPIV1AliensGetResponse(resp *http.Response) (res *APIV1AliensGetOK, _
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1AliensGetOK
+			var response APIV1ChallengeIDAliensGetOK
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

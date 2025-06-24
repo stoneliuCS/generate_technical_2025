@@ -15,7 +15,7 @@ let oas = OpenApiV3.addOpenApiVersion("3.1.0")
     Path.addEndpoints({
       "/api/v1/register": REGISTER_ENDPOINT,
       "/healthcheck": HEALTHCHECK_ENDPOINT,
-      "/api/v1/aliens": ALIEN_ENDPOINT,
+      "/api/v1/challenge/{id}/aliens": ALIEN_ENDPOINT,
       "/": API_DOCS_ENDPOINT,
     }),
   );

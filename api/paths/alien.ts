@@ -1,29 +1,27 @@
 import {
-  Array,
-  Integer,
   MediaType,
-  Object,
   Operation,
+  Parameter,
   PathItem,
   Response,
   Responses,
 } from "fluid-oas";
-import { ALIEN } from "../schema/alien";
-import { COMPONENT_MAPPINGS } from "../schema";
+import { ALIEN_INVASION } from "../schema/alien";
+import { UUID } from "../schema";
 
 export const ALIEN_ENDPOINT = PathItem.addMethod({
-  get: Operation.addResponses(
+  get: Operation.addParameters([
+    Parameter.schema
+      .addIn("path")
+      .addRequired(true)
+      .addName("id")
+      .addSchema(UUID),
+  ]).addResponses(
     Responses({
       "200": Response.addDescription(
         "Successfully gotten alien invasion data",
       ).addContents({
-        "application/json": MediaType.addSchema(
-          Object.addProperties({
-            waves: Array.addItems(COMPONENT_MAPPINGS.get(ALIEN)!),
-            budget: Integer,
-            health: Integer,
-          }).addRequired(["waves", "budget", "health"]),
-        ),
+        "application/json": MediaType.addSchema(ALIEN_INVASION),
       }),
     }),
   ),

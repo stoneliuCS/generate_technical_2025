@@ -8,10 +8,10 @@ import (
 
 // Handler handles operations described by OpenAPI v3 specification.
 type Handler interface {
-	// APIV1AliensGet implements GET /api/v1/aliens operation.
+	// APIV1ChallengeIDAliensGet implements GET /api/v1/challenge/{id}/aliens operation.
 	//
-	// GET /api/v1/aliens
-	APIV1AliensGet(ctx context.Context) (*APIV1AliensGetOK, error)
+	// GET /api/v1/challenge/{id}/aliens
+	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error)
 	// APIV1RegisterPost implements POST /api/v1/register operation.
 	//
 	// POST /api/v1/register

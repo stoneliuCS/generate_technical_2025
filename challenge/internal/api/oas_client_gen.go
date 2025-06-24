@@ -15,6 +15,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.26.0"
 	"go.opentelemetry.io/otel/trace"
 
+	"github.com/ogen-go/ogen/conv"
 	ht "github.com/ogen-go/ogen/http"
 	"github.com/ogen-go/ogen/uri"
 )
@@ -26,10 +27,10 @@ func trimTrailingSlashes(u *url.URL) {
 
 // Invoker invokes operations described by OpenAPI v3 specification.
 type Invoker interface {
-	// APIV1AliensGet invokes GET /api/v1/aliens operation.
+	// APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
 	//
-	// GET /api/v1/aliens
-	APIV1AliensGet(ctx context.Context) (*APIV1AliensGetOK, error)
+	// GET /api/v1/challenge/{id}/aliens
+	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error)
 	// APIV1RegisterPost invokes POST /api/v1/register operation.
 	//
 	// POST /api/v1/register
@@ -89,18 +90,18 @@ func (c *Client) requestURL(ctx context.Context) *url.URL {
 	return u
 }
 
-// APIV1AliensGet invokes GET /api/v1/aliens operation.
+// APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
 //
-// GET /api/v1/aliens
-func (c *Client) APIV1AliensGet(ctx context.Context) (*APIV1AliensGetOK, error) {
-	res, err := c.sendAPIV1AliensGet(ctx)
+// GET /api/v1/challenge/{id}/aliens
+func (c *Client) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error) {
+	res, err := c.sendAPIV1ChallengeIDAliensGet(ctx, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1AliensGet(ctx context.Context) (res *APIV1AliensGetOK, err error) {
+func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (res *APIV1ChallengeIDAliensGetOK, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/v1/aliens"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/aliens"),
 	}
 
 	// Run stopwatch.
@@ -115,7 +116,7 @@ func (c *Client) sendAPIV1AliensGet(ctx context.Context) (res *APIV1AliensGetOK,
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, APIV1AliensGetOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeIDAliensGetOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -132,8 +133,27 @@ func (c *Client) sendAPIV1AliensGet(ctx context.Context) (res *APIV1AliensGetOK,
 
 	stage = "BuildURL"
 	u := uri.Clone(c.requestURL(ctx))
-	var pathParts [1]string
-	pathParts[0] = "/api/v1/aliens"
+	var pathParts [3]string
+	pathParts[0] = "/api/v1/challenge/"
+	{
+		// Encode "id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/aliens"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
@@ -150,7 +170,7 @@ func (c *Client) sendAPIV1AliensGet(ctx context.Context) (res *APIV1AliensGetOK,
 	defer resp.Body.Close()
 
 	stage = "DecodeResponse"
-	result, err := decodeAPIV1AliensGetResponse(resp)
+	result, err := decodeAPIV1ChallengeIDAliensGetResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

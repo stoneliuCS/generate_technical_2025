@@ -6,8 +6,8 @@ package api
 type OperationName = string
 
 const (
-	APIV1AliensGetOperation    OperationName = "APIV1AliensGet"
-	APIV1RegisterPostOperation OperationName = "APIV1RegisterPost"
-	GetOperation               OperationName = "Get"
-	HealthcheckGetOperation    OperationName = "HealthcheckGet"
+	APIV1ChallengeIDAliensGetOperation OperationName = "APIV1ChallengeIDAliensGet"
+	APIV1RegisterPostOperation         OperationName = "APIV1RegisterPost"
+	GetOperation                       OperationName = "Get"
+	HealthcheckGetOperation            OperationName = "HealthcheckGet"
 )
