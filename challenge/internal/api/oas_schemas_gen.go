@@ -9,6 +9,42 @@ import (
 	"github.com/google/uuid"
 )
 
+type APIV1AliensGetOK struct {
+	Waves  []Alien `json:"waves"`
+	Budget int     `json:"budget"`
+	Health int     `json:"health"`
+}
+
+// GetWaves returns the value of Waves.
+func (s *APIV1AliensGetOK) GetWaves() []Alien {
+	return s.Waves
+}
+
+// GetBudget returns the value of Budget.
+func (s *APIV1AliensGetOK) GetBudget() int {
+	return s.Budget
+}
+
+// GetHealth returns the value of Health.
+func (s *APIV1AliensGetOK) GetHealth() int {
+	return s.Health
+}
+
+// SetWaves sets the value of Waves.
+func (s *APIV1AliensGetOK) SetWaves(val []Alien) {
+	s.Waves = val
+}
+
+// SetBudget sets the value of Budget.
+func (s *APIV1AliensGetOK) SetBudget(val int) {
+	s.Budget = val
+}
+
+// SetHealth sets the value of Health.
+func (s *APIV1AliensGetOK) SetHealth(val int) {
+	s.Health = val
+}
+
 // Successfully returned response.
 type APIV1RegisterGetCreated struct {
 	Message OptString `json:"message"`
@@ -60,6 +96,43 @@ func (s *APIV1RegisterGetReq) SetEmail(val string) {
 // SetNuid sets the value of Nuid.
 func (s *APIV1RegisterGetReq) SetNuid(val string) {
 	s.Nuid = val
+}
+
+// Ref: #/components/schemas/alien
+type Alien struct {
+	HP  int `json:"HP"`
+	ATK int `json:"ATK"`
+	SPD int `json:"SPD"`
+}
+
+// GetHP returns the value of HP.
+func (s *Alien) GetHP() int {
+	return s.HP
+}
+
+// GetATK returns the value of ATK.
+func (s *Alien) GetATK() int {
+	return s.ATK
+}
+
+// GetSPD returns the value of SPD.
+func (s *Alien) GetSPD() int {
+	return s.SPD
+}
+
+// SetHP sets the value of HP.
+func (s *Alien) SetHP(val int) {
+	s.HP = val
+}
+
+// SetATK sets the value of ATK.
+func (s *Alien) SetATK(val int) {
+	s.ATK = val
+}
+
+// SetSPD sets the value of SPD.
+func (s *Alien) SetSPD(val int) {
+	s.SPD = val
 }
 
 type GetOK struct {

@@ -67,24 +67,58 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			switch elem[0] {
-			case 'a': // Prefix: "api/v1/register"
+			case 'a': // Prefix: "api/v1/"
 
-				if l := len("api/v1/register"); len(elem) >= l && elem[0:l] == "api/v1/register" {
+				if l := len("api/v1/"); len(elem) >= l && elem[0:l] == "api/v1/" {
 					elem = elem[l:]
 				} else {
 					break
 				}
 
 				if len(elem) == 0 {
-					// Leaf node.
-					switch r.Method {
-					case "GET":
-						s.handleAPIV1RegisterGetRequest([0]string{}, elemIsEscaped, w, r)
-					default:
-						s.notAllowed(w, r, "GET")
+					break
+				}
+				switch elem[0] {
+				case 'a': // Prefix: "aliens"
+
+					if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+						elem = elem[l:]
+					} else {
+						break
 					}
 
-					return
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "GET":
+							s.handleAPIV1AliensGetRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET")
+						}
+
+						return
+					}
+
+				case 'r': // Prefix: "register"
+
+					if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "GET":
+							s.handleAPIV1RegisterGetRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET")
+						}
+
+						return
+					}
+
 				}
 
 			case 'h': // Prefix: "healthcheck"
@@ -212,28 +246,66 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 				}
 			}
 			switch elem[0] {
-			case 'a': // Prefix: "api/v1/register"
+			case 'a': // Prefix: "api/v1/"
 
-				if l := len("api/v1/register"); len(elem) >= l && elem[0:l] == "api/v1/register" {
+				if l := len("api/v1/"); len(elem) >= l && elem[0:l] == "api/v1/" {
 					elem = elem[l:]
 				} else {
 					break
 				}
 
 				if len(elem) == 0 {
-					// Leaf node.
-					switch method {
-					case "GET":
-						r.name = APIV1RegisterGetOperation
-						r.summary = ""
-						r.operationID = ""
-						r.pathPattern = "/api/v1/register"
-						r.args = args
-						r.count = 0
-						return r, true
-					default:
-						return
+					break
+				}
+				switch elem[0] {
+				case 'a': // Prefix: "aliens"
+
+					if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+						elem = elem[l:]
+					} else {
+						break
 					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "GET":
+							r.name = APIV1AliensGetOperation
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/api/v1/aliens"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
+				case 'r': // Prefix: "register"
+
+					if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "GET":
+							r.name = APIV1RegisterGetOperation
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/api/v1/register"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
 				}
 
 			case 'h': // Prefix: "healthcheck"

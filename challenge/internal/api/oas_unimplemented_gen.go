@@ -13,6 +13,13 @@ type UnimplementedHandler struct{}
 
 var _ Handler = UnimplementedHandler{}
 
+// APIV1AliensGet implements GET /api/v1/aliens operation.
+//
+// GET /api/v1/aliens
+func (UnimplementedHandler) APIV1AliensGet(ctx context.Context) (r *APIV1AliensGetOK, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // APIV1RegisterGet implements GET /api/v1/register operation.
 //
 // GET /api/v1/register
