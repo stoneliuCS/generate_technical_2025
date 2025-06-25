@@ -13,29 +13,30 @@ import (
 
 // Handles incoming API requests
 type Handler struct {
-	userService services.UserService
-	logger      *slog.Logger // event logger
+	memberService services.MemberService
+	logger        *slog.Logger // event logger
 }
 
-// HealtcheckGet implements api.Handler.
-func (h Handler) HealthcheckGet(ctx context.Context) (*api.HealthcheckGetOK, error) {
-	return &api.HealthcheckGetOK{Message: api.OptHealthcheckGetOKMessage{Value: "OK", Set: true}}, nil
-}
-
-// Creates a new handler for all defined API endpoints
-func CreateHandler(logger *slog.Logger, userService services.UserService) api.Handler {
-	return Handler{
-		userService,
-		logger,
-	}
-}
-
-func (h Handler) Get(ctx context.Context) (api.GetOK, error) {
+// Get implements api.Handler.
+func (h Handler) Get(ctx context.Context) (api.GetRes, error) {
 	html, err := scalar.ApiReferenceHTML(&scalar.Options{
 		SpecURL: challenge.GetSpecPath(),
 	})
 	if err != nil {
-		return api.GetOK{}, err
+		return &api.GetOK{}, err
 	}
-	return api.GetOK{Data: strings.NewReader(html)}, nil
+	return &api.GetOK{Data: strings.NewReader(html)}, nil
+}
+
+// HealthcheckGet implements api.Handler.
+func (h Handler) HealthcheckGet(ctx context.Context) (api.HealthcheckGetRes, error) {
+	return &api.HealthcheckGetOK{Message: api.OptHealthcheckGetOKMessage{Value: "OK", Set: true}}, nil
+}
+
+// Creates a new handler for all defined API endpoints
+func CreateHandler(logger *slog.Logger, memberService services.MemberService) api.Handler {
+	return Handler{
+		memberService,
+		logger,
+	}
 }

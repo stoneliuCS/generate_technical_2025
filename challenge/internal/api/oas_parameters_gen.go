@@ -80,3 +80,187 @@ func decodeAPIV1ChallengeIDAliensGetParams(args [1]string, argsEscaped bool, r *
 	}
 	return params, nil
 }
+
+// APIV1ChallengeIDSubmitPostParams is parameters of POST /api/v1/challenge/{id}/submit operation.
+type APIV1ChallengeIDSubmitPostParams struct {
+	ID uuid.UUID
+}
+
+func unpackAPIV1ChallengeIDSubmitPostParams(packed middleware.Parameters) (params APIV1ChallengeIDSubmitPostParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "id",
+			In:   "path",
+		}
+		params.ID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeAPIV1ChallengeIDSubmitPostParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeIDSubmitPostParams, _ error) {
+	// Decode path: id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.ID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// APIV1MemberGetParams is parameters of GET /api/v1/member operation.
+type APIV1MemberGetParams struct {
+	// Northeastern email address.
+	Email string
+	// Northeastern NUID.
+	Nuid int
+}
+
+func unpackAPIV1MemberGetParams(packed middleware.Parameters) (params APIV1MemberGetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "email",
+			In:   "query",
+		}
+		params.Email = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "nuid",
+			In:   "query",
+		}
+		params.Nuid = packed[key].(int)
+	}
+	return params
+}
+
+func decodeAPIV1MemberGetParams(args [0]string, argsEscaped bool, r *http.Request) (params APIV1MemberGetParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: email.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "email",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.Email = c
+				return nil
+			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if err := (validate.String{
+					MinLength:    0,
+					MinLengthSet: false,
+					MaxLength:    0,
+					MaxLengthSet: false,
+					Email:        true,
+					Hostname:     false,
+					Regex:        nil,
+				}).Validate(string(params.Email)); err != nil {
+					return errors.Wrap(err, "string")
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "email",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: nuid.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "nuid",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToInt(val)
+				if err != nil {
+					return err
+				}
+
+				params.Nuid = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "nuid",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}

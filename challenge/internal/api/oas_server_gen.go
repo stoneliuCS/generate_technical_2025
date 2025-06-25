@@ -11,21 +11,29 @@ type Handler interface {
 	// APIV1ChallengeIDAliensGet implements GET /api/v1/challenge/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/{id}/aliens
-	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error)
-	// APIV1RegisterPost implements POST /api/v1/register operation.
+	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error)
+	// APIV1ChallengeIDSubmitPost implements POST /api/v1/challenge/{id}/submit operation.
 	//
-	// POST /api/v1/register
-	APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error)
+	// POST /api/v1/challenge/{id}/submit
+	APIV1ChallengeIDSubmitPost(ctx context.Context, req OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error)
+	// APIV1MemberGet implements GET /api/v1/member operation.
+	//
+	// GET /api/v1/member
+	APIV1MemberGet(ctx context.Context, params APIV1MemberGetParams) (APIV1MemberGetRes, error)
+	// APIV1MemberRegisterPost implements POST /api/v1/member/register operation.
+	//
+	// POST /api/v1/member/register
+	APIV1MemberRegisterPost(ctx context.Context, req OptAPIV1MemberRegisterPostReq) (APIV1MemberRegisterPostRes, error)
 	// Get implements GET / operation.
 	//
 	// API documentation.
 	//
 	// GET /
-	Get(ctx context.Context) (GetOK, error)
+	Get(ctx context.Context) (GetRes, error)
 	// HealthcheckGet implements GET /healthcheck operation.
 	//
 	// GET /healthcheck
-	HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error)
+	HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

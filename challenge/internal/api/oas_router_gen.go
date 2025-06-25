@@ -101,9 +101,88 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						break
 					}
 					switch elem[0] {
-					case '/': // Prefix: "/aliens"
+					case '/': // Prefix: "/"
 
-						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+						if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case 'a': // Prefix: "aliens"
+
+							if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch r.Method {
+								case "GET":
+									s.handleAPIV1ChallengeIDAliensGetRequest([1]string{
+										args[0],
+									}, elemIsEscaped, w, r)
+								default:
+									s.notAllowed(w, r, "GET")
+								}
+
+								return
+							}
+
+						case 's': // Prefix: "submit"
+
+							if l := len("submit"); len(elem) >= l && elem[0:l] == "submit" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch r.Method {
+								case "POST":
+									s.handleAPIV1ChallengeIDSubmitPostRequest([1]string{
+										args[0],
+									}, elemIsEscaped, w, r)
+								default:
+									s.notAllowed(w, r, "POST")
+								}
+
+								return
+							}
+
+						}
+
+					}
+
+				case 'm': // Prefix: "member"
+
+					if l := len("member"); len(elem) >= l && elem[0:l] == "member" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch r.Method {
+						case "GET":
+							s.handleAPIV1MemberGetRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET")
+						}
+
+						return
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/register"
+
+						if l := len("/register"); len(elem) >= l && elem[0:l] == "/register" {
 							elem = elem[l:]
 						} else {
 							break
@@ -112,37 +191,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						if len(elem) == 0 {
 							// Leaf node.
 							switch r.Method {
-							case "GET":
-								s.handleAPIV1ChallengeIDAliensGetRequest([1]string{
-									args[0],
-								}, elemIsEscaped, w, r)
+							case "POST":
+								s.handleAPIV1MemberRegisterPostRequest([0]string{}, elemIsEscaped, w, r)
 							default:
-								s.notAllowed(w, r, "GET")
+								s.notAllowed(w, r, "POST")
 							}
 
 							return
 						}
 
-					}
-
-				case 'r': // Prefix: "register"
-
-					if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
-						elem = elem[l:]
-					} else {
-						break
-					}
-
-					if len(elem) == 0 {
-						// Leaf node.
-						switch r.Method {
-						case "POST":
-							s.handleAPIV1RegisterPostRequest([0]string{}, elemIsEscaped, w, r)
-						default:
-							s.notAllowed(w, r, "POST")
-						}
-
-						return
 					}
 
 				}
@@ -305,9 +362,96 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						break
 					}
 					switch elem[0] {
-					case '/': // Prefix: "/aliens"
+					case '/': // Prefix: "/"
 
-						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+						if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case 'a': // Prefix: "aliens"
+
+							if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch method {
+								case "GET":
+									r.name = APIV1ChallengeIDAliensGetOperation
+									r.summary = ""
+									r.operationID = ""
+									r.pathPattern = "/api/v1/challenge/{id}/aliens"
+									r.args = args
+									r.count = 1
+									return r, true
+								default:
+									return
+								}
+							}
+
+						case 's': // Prefix: "submit"
+
+							if l := len("submit"); len(elem) >= l && elem[0:l] == "submit" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								// Leaf node.
+								switch method {
+								case "POST":
+									r.name = APIV1ChallengeIDSubmitPostOperation
+									r.summary = ""
+									r.operationID = ""
+									r.pathPattern = "/api/v1/challenge/{id}/submit"
+									r.args = args
+									r.count = 1
+									return r, true
+								default:
+									return
+								}
+							}
+
+						}
+
+					}
+
+				case 'm': // Prefix: "member"
+
+					if l := len("member"); len(elem) >= l && elem[0:l] == "member" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch method {
+						case "GET":
+							r.name = APIV1MemberGetOperation
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/api/v1/member"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/register"
+
+						if l := len("/register"); len(elem) >= l && elem[0:l] == "/register" {
 							elem = elem[l:]
 						} else {
 							break
@@ -316,43 +460,19 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						if len(elem) == 0 {
 							// Leaf node.
 							switch method {
-							case "GET":
-								r.name = APIV1ChallengeIDAliensGetOperation
+							case "POST":
+								r.name = APIV1MemberRegisterPostOperation
 								r.summary = ""
 								r.operationID = ""
-								r.pathPattern = "/api/v1/challenge/{id}/aliens"
+								r.pathPattern = "/api/v1/member/register"
 								r.args = args
-								r.count = 1
+								r.count = 0
 								return r, true
 							default:
 								return
 							}
 						}
 
-					}
-
-				case 'r': // Prefix: "register"
-
-					if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
-						elem = elem[l:]
-					} else {
-						break
-					}
-
-					if len(elem) == 0 {
-						// Leaf node.
-						switch method {
-						case "POST":
-							r.name = APIV1RegisterPostOperation
-							r.summary = ""
-							r.operationID = ""
-							r.pathPattern = "/api/v1/register"
-							r.args = args
-							r.count = 0
-							return r, true
-						default:
-							return
-						}
 					}
 
 				}

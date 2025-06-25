@@ -16,14 +16,28 @@ var _ Handler = UnimplementedHandler{}
 // APIV1ChallengeIDAliensGet implements GET /api/v1/challenge/{id}/aliens operation.
 //
 // GET /api/v1/challenge/{id}/aliens
-func (UnimplementedHandler) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (r *APIV1ChallengeIDAliensGetOK, _ error) {
+func (UnimplementedHandler) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (r APIV1ChallengeIDAliensGetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
-// APIV1RegisterPost implements POST /api/v1/register operation.
+// APIV1ChallengeIDSubmitPost implements POST /api/v1/challenge/{id}/submit operation.
 //
-// POST /api/v1/register
-func (UnimplementedHandler) APIV1RegisterPost(ctx context.Context, req OptAPIV1RegisterPostReq) (r APIV1RegisterPostRes, _ error) {
+// POST /api/v1/challenge/{id}/submit
+func (UnimplementedHandler) APIV1ChallengeIDSubmitPost(ctx context.Context, req OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (r APIV1ChallengeIDSubmitPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// APIV1MemberGet implements GET /api/v1/member operation.
+//
+// GET /api/v1/member
+func (UnimplementedHandler) APIV1MemberGet(ctx context.Context, params APIV1MemberGetParams) (r APIV1MemberGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// APIV1MemberRegisterPost implements POST /api/v1/member/register operation.
+//
+// POST /api/v1/member/register
+func (UnimplementedHandler) APIV1MemberRegisterPost(ctx context.Context, req OptAPIV1MemberRegisterPostReq) (r APIV1MemberRegisterPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -32,13 +46,13 @@ func (UnimplementedHandler) APIV1RegisterPost(ctx context.Context, req OptAPIV1R
 // API documentation.
 //
 // GET /
-func (UnimplementedHandler) Get(ctx context.Context) (r GetOK, _ error) {
+func (UnimplementedHandler) Get(ctx context.Context) (r GetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
 // HealthcheckGet implements GET /healthcheck operation.
 //
 // GET /healthcheck
-func (UnimplementedHandler) HealthcheckGet(ctx context.Context) (r *HealthcheckGetOK, _ error) {
+func (UnimplementedHandler) HealthcheckGet(ctx context.Context) (r HealthcheckGetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

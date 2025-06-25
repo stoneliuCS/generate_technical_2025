@@ -2,8 +2,9 @@ import { Info, OpenApiV3, Path } from "fluid-oas";
 import { REGISTER_ENDPOINT } from "./paths/register";
 import { API_DOCS_ENDPOINT } from "./paths/docs";
 import { HEALTHCHECK_ENDPOINT } from "./paths/healthcheck";
-import { ALIEN_ENDPOINT } from "./paths/alien";
 import { COMPONENT } from "./schema";
+import { MEMBER_ENDPOINT } from "./paths/member";
+import { ALIEN_CHALLENGE_ENDPOINT, SUBMIT_ENDPOINT } from "./paths/challenge";
 
 let oas = OpenApiV3.addOpenApiVersion("3.1.0")
   .addInfo(
@@ -13,10 +14,12 @@ let oas = OpenApiV3.addOpenApiVersion("3.1.0")
   )
   .addPaths(
     Path.addEndpoints({
-      "/api/v1/register": REGISTER_ENDPOINT,
-      "/healthcheck": HEALTHCHECK_ENDPOINT,
-      "/api/v1/challenge/{id}/aliens": ALIEN_ENDPOINT,
       "/": API_DOCS_ENDPOINT,
+      "/healthcheck": HEALTHCHECK_ENDPOINT,
+      "/api/v1/member/register": REGISTER_ENDPOINT,
+      "/api/v1/member": MEMBER_ENDPOINT,
+      "/api/v1/challenge/{id}/aliens": ALIEN_CHALLENGE_ENDPOINT,
+      "/api/v1/challenge/{id}/submit": SUBMIT_ENDPOINT,
     }),
   );
 

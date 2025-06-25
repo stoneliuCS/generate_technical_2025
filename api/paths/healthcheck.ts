@@ -7,6 +7,7 @@ import {
   MediaType,
   Object,
 } from "fluid-oas";
+import { ERROR } from "../schema";
 
 export const HEALTHCHECK_ENDPOINT = PathItem.addMethod({
   get: Operation.addResponses(
@@ -17,6 +18,9 @@ export const HEALTHCHECK_ENDPOINT = PathItem.addMethod({
             message: String.addEnums(["OK"]),
           }),
         ),
+      }),
+      "500": Response.addDescription("Server is not Healthy!").addContents({
+        "application/json": MediaType.addSchema(ERROR),
       }),
     }),
   ),

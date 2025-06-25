@@ -10,9 +10,9 @@ export const WAVE = Array.addItems(
     ),
   }),
 ).addExample([
-  { type: "regular", count: 1 },
-  { type: "swift", count: 1 },
-  { type: "boss", count: 1 },
+  { type: "regular", count: 50 },
+  { type: "swift", count: 10 },
+  { type: "boss", count: 2 },
 ]);
 
 export const ALIEN_TYPES = Object.addProperties({
@@ -54,4 +54,20 @@ export const ALIEN_INVASION = Object.addProperties({
   alienTypes: ALIEN_TYPES,
   budget: Integer.addEnums([100]),
   wallDurability: Integer.addEnums([100]),
+});
+
+export const ALIEN_INVASION_ANSWER = Object.addProperties({
+  gunsPurchased: Array.addItems(
+    Object.addProperties({
+      type: String.addEnums(["turret", "machineGun", "rayGun"]),
+    }),
+  ),
+  totalCost: Integer,
+  assignments: Array.addItems(
+    Object.addProperties({
+      wave: Integer.addMinimum(1),
+      gunQueues: Array.addItems(Array.addItems(Integer)),
+      wallDurabilityRemaining: Integer,
+    }),
+  ),
 });

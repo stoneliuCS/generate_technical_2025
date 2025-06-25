@@ -14,6 +14,102 @@ import (
 )
 
 // Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1ChallengeIDAliensGetInternalServerError from json.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError) {
+					name = jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
 func (s *APIV1ChallengeIDAliensGetOK) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
@@ -1106,28 +1202,28 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) UnmarshalJSON(data 
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterPostBadRequest) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterPostBadRequest) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterPostBadRequest = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1RegisterPostBadRequest from json.
-func (s *APIV1RegisterPostBadRequest) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeIDAliensGetUnauthorized from json.
+func (s *APIV1ChallengeIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterPostBadRequest to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetUnauthorized to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1150,7 +1246,7 @@ func (s *APIV1RegisterPostBadRequest) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterPostBadRequest")
+		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetUnauthorized")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1167,8 +1263,8 @@ func (s *APIV1RegisterPostBadRequest) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterPostBadRequest) {
-					name = jsonFieldsNameOfAPIV1RegisterPostBadRequest[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized) {
+					name = jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1189,41 +1285,1017 @@ func (s *APIV1RegisterPostBadRequest) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterPostBadRequest) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterPostBadRequest) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterPostCreated) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeIDSubmitPostBadRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterPostCreated) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeIDSubmitPostBadRequest) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostBadRequest from json.
+func (s *APIV1ChallengeIDSubmitPostBadRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostBadRequest to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostBadRequest")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest) {
+					name = jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostBadRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostBadRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostInternalServerError from json.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError) {
+					name = jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIV1ChallengeIDSubmitPostOK as json.
+func (s APIV1ChallengeIDSubmitPostOK) Encode(e *jx.Encoder) {
+	switch s.Type {
+	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
+		s.APIV1ChallengeIDSubmitPostOK0.Encode(e)
+	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
+		s.APIV1ChallengeIDSubmitPostOK1.Encode(e)
+	}
+}
+
+func (s APIV1ChallengeIDSubmitPostOK) encodeFields(e *jx.Encoder) {
+	switch s.Type {
+	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
+		s.APIV1ChallengeIDSubmitPostOK0.encodeFields(e)
+	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
+		s.APIV1ChallengeIDSubmitPostOK1.encodeFields(e)
+	}
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostOK from json.
+func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK to nil")
+	}
+	// Sum type fields.
+	if typ := d.Next(); typ != jx.Object {
+		return errors.Errorf("unexpected json type %q", typ)
+	}
+
+	var found bool
+	if err := d.Capture(func(d *jx.Decoder) error {
+		return d.ObjBytes(func(d *jx.Decoder, key []byte) error {
+			switch string(key) {
+			case "score":
+				match := APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
+				if found && s.Type != match {
+					s.Type = ""
+					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
+				}
+				found = true
+				s.Type = match
+			case "reason":
+				match := APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
+				if found && s.Type != match {
+					s.Type = ""
+					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
+				}
+				found = true
+				s.Type = match
+			}
+			return d.Skip()
+		})
+	}); err != nil {
+		return errors.Wrap(err, "capture")
+	}
+	if !found {
+		return errors.New("unable to detect sum type variant")
+	}
+	switch s.Type {
+	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
+		if err := s.APIV1ChallengeIDSubmitPostOK0.Decode(d); err != nil {
+			return err
+		}
+	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
+		if err := s.APIV1ChallengeIDSubmitPostOK1.Decode(d); err != nil {
+			return err
+		}
+	default:
+		return errors.Errorf("inferred invalid type: %s", s.Type)
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIV1ChallengeIDSubmitPostOK) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostOK) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostOK0) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostOK0) encodeFields(e *jx.Encoder) {
+	{
+		if s.Valid.Set {
+			e.FieldStart("valid")
+			s.Valid.Encode(e)
+		}
+	}
+	{
+		if s.Score.Set {
+			e.FieldStart("score")
+			s.Score.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostOK0 = [2]string{
+	0: "valid",
+	1: "score",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostOK0 from json.
+func (s *APIV1ChallengeIDSubmitPostOK0) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK0 to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "valid":
+			if err := func() error {
+				s.Valid.Reset()
+				if err := s.Valid.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"valid\"")
+			}
+		case "score":
+			if err := func() error {
+				s.Score.Reset()
+				if err := s.Score.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"score\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostOK0")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostOK0) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostOK0) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostOK1) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostOK1) encodeFields(e *jx.Encoder) {
+	{
+		if s.Valid.Set {
+			e.FieldStart("valid")
+			s.Valid.Encode(e)
+		}
+	}
+	{
+		if s.Reason.Set {
+			e.FieldStart("reason")
+			s.Reason.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostOK1 = [2]string{
+	0: "valid",
+	1: "reason",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostOK1 from json.
+func (s *APIV1ChallengeIDSubmitPostOK1) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK1 to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "valid":
+			if err := func() error {
+				s.Valid.Reset()
+				if err := s.Valid.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"valid\"")
+			}
+		case "reason":
+			if err := func() error {
+				s.Reason.Reset()
+				if err := s.Reason.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"reason\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostOK1")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostOK1) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostOK1) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReq) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostReq) encodeFields(e *jx.Encoder) {
+	{
+		if s.GunsPurchased != nil {
+			e.FieldStart("gunsPurchased")
+			e.ArrStart()
+			for _, elem := range s.GunsPurchased {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.TotalCost.Set {
+			e.FieldStart("totalCost")
+			s.TotalCost.Encode(e)
+		}
+	}
+	{
+		if s.Assignments != nil {
+			e.FieldStart("assignments")
+			e.ArrStart()
+			for _, elem := range s.Assignments {
+				elem.Encode(e)
+			}
+			e.ArrEnd()
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReq = [3]string{
+	0: "gunsPurchased",
+	1: "totalCost",
+	2: "assignments",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostReq from json.
+func (s *APIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReq to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "gunsPurchased":
+			if err := func() error {
+				s.GunsPurchased = make([]APIV1ChallengeIDSubmitPostReqGunsPurchasedItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIV1ChallengeIDSubmitPostReqGunsPurchasedItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.GunsPurchased = append(s.GunsPurchased, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"gunsPurchased\"")
+			}
+		case "totalCost":
+			if err := func() error {
+				s.TotalCost.Reset()
+				if err := s.TotalCost.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"totalCost\"")
+			}
+		case "assignments":
+			if err := func() error {
+				s.Assignments = make([]APIV1ChallengeIDSubmitPostReqAssignmentsItem, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem APIV1ChallengeIDSubmitPostReqAssignmentsItem
+					if err := elem.Decode(d); err != nil {
+						return err
+					}
+					s.Assignments = append(s.Assignments, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"assignments\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReq")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) encodeFields(e *jx.Encoder) {
+	{
+		if s.Wave.Set {
+			e.FieldStart("wave")
+			s.Wave.Encode(e)
+		}
+	}
+	{
+		if s.GunQueues != nil {
+			e.FieldStart("gunQueues")
+			e.ArrStart()
+			for _, elem := range s.GunQueues {
+				e.ArrStart()
+				for _, elem := range elem {
+					e.Int(elem)
+				}
+				e.ArrEnd()
+			}
+			e.ArrEnd()
+		}
+	}
+	{
+		if s.WallDurabilityRemaining.Set {
+			e.FieldStart("wallDurabilityRemaining")
+			s.WallDurabilityRemaining.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReqAssignmentsItem = [3]string{
+	0: "wave",
+	1: "gunQueues",
+	2: "wallDurabilityRemaining",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostReqAssignmentsItem from json.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqAssignmentsItem to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "wave":
+			if err := func() error {
+				s.Wave.Reset()
+				if err := s.Wave.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"wave\"")
+			}
+		case "gunQueues":
+			if err := func() error {
+				s.GunQueues = make([][]int, 0)
+				if err := d.Arr(func(d *jx.Decoder) error {
+					var elem []int
+					elem = make([]int, 0)
+					if err := d.Arr(func(d *jx.Decoder) error {
+						var elemElem int
+						v, err := d.Int()
+						elemElem = int(v)
+						if err != nil {
+							return err
+						}
+						elem = append(elem, elemElem)
+						return nil
+					}); err != nil {
+						return err
+					}
+					s.GunQueues = append(s.GunQueues, elem)
+					return nil
+				}); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"gunQueues\"")
+			}
+		case "wallDurabilityRemaining":
+			if err := func() error {
+				s.WallDurabilityRemaining.Reset()
+				if err := s.WallDurabilityRemaining.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"wallDurabilityRemaining\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReqAssignmentsItem")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) encodeFields(e *jx.Encoder) {
+	{
+		if s.Type.Set {
+			e.FieldStart("type")
+			s.Type.Encode(e)
+		}
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReqGunsPurchasedItem = [1]string{
+	0: "type",
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItem from json.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItem to nil")
+	}
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "type":
+			if err := func() error {
+				s.Type.Reset()
+				if err := s.Type.Decode(d); err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"type\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItem")
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType as json.
+func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
+	e.Str(string(s))
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType from json.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType to nil")
+	}
+	v, err := d.StrBytes()
+	if err != nil {
+		return err
+	}
+	// Try to use constant string.
+	switch APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v) {
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun
+	default:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v)
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberGetBadRequest) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberGetBadRequest) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1MemberGetBadRequest = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1MemberGetBadRequest from json.
+func (s *APIV1MemberGetBadRequest) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1MemberGetBadRequest to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1MemberGetBadRequest")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberGetBadRequest) {
+					name = jsonFieldsNameOfAPIV1MemberGetBadRequest[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1MemberGetBadRequest) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1MemberGetBadRequest) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberGetInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberGetInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1MemberGetInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1MemberGetInternalServerError from json.
+func (s *APIV1MemberGetInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1MemberGetInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1MemberGetInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberGetInternalServerError) {
+					name = jsonFieldsNameOfAPIV1MemberGetInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1MemberGetInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1MemberGetInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberGetOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberGetOK) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("id")
 		json.EncodeUUID(e, s.ID)
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterPostCreated = [1]string{
+var jsonFieldsNameOfAPIV1MemberGetOK = [1]string{
 	0: "id",
 }
 
-// Decode decodes APIV1RegisterPostCreated from json.
-func (s *APIV1RegisterPostCreated) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1MemberGetOK from json.
+func (s *APIV1MemberGetOK) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterPostCreated to nil")
+		return errors.New("invalid: unable to decode APIV1MemberGetOK to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1246,7 +2318,7 @@ func (s *APIV1RegisterPostCreated) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterPostCreated")
+		return errors.Wrap(err, "decode APIV1MemberGetOK")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1263,8 +2335,8 @@ func (s *APIV1RegisterPostCreated) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterPostCreated) {
-					name = jsonFieldsNameOfAPIV1RegisterPostCreated[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberGetOK) {
+					name = jsonFieldsNameOfAPIV1MemberGetOK[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1285,41 +2357,41 @@ func (s *APIV1RegisterPostCreated) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterPostCreated) MarshalJSON() ([]byte, error) {
+func (s *APIV1MemberGetOK) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterPostCreated) UnmarshalJSON(data []byte) error {
+func (s *APIV1MemberGetOK) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterPostInternalServerError) Encode(e *jx.Encoder) {
+func (s *APIV1MemberRegisterPostBadRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterPostInternalServerError) encodeFields(e *jx.Encoder) {
+func (s *APIV1MemberRegisterPostBadRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterPostInternalServerError = [1]string{
+var jsonFieldsNameOfAPIV1MemberRegisterPostBadRequest = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1RegisterPostInternalServerError from json.
-func (s *APIV1RegisterPostInternalServerError) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1MemberRegisterPostBadRequest from json.
+func (s *APIV1MemberRegisterPostBadRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterPostInternalServerError to nil")
+		return errors.New("invalid: unable to decode APIV1MemberRegisterPostBadRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1342,7 +2414,7 @@ func (s *APIV1RegisterPostInternalServerError) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterPostInternalServerError")
+		return errors.Wrap(err, "decode APIV1MemberRegisterPostBadRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1359,8 +2431,8 @@ func (s *APIV1RegisterPostInternalServerError) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterPostInternalServerError) {
-					name = jsonFieldsNameOfAPIV1RegisterPostInternalServerError[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberRegisterPostBadRequest) {
+					name = jsonFieldsNameOfAPIV1MemberRegisterPostBadRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1381,27 +2453,315 @@ func (s *APIV1RegisterPostInternalServerError) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterPostInternalServerError) MarshalJSON() ([]byte, error) {
+func (s *APIV1MemberRegisterPostBadRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterPostInternalServerError) UnmarshalJSON(data []byte) error {
+func (s *APIV1MemberRegisterPostBadRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1RegisterPostReq) Encode(e *jx.Encoder) {
+func (s *APIV1MemberRegisterPostConflict) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1RegisterPostReq) encodeFields(e *jx.Encoder) {
+func (s *APIV1MemberRegisterPostConflict) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1MemberRegisterPostConflict = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1MemberRegisterPostConflict from json.
+func (s *APIV1MemberRegisterPostConflict) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1MemberRegisterPostConflict to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1MemberRegisterPostConflict")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberRegisterPostConflict) {
+					name = jsonFieldsNameOfAPIV1MemberRegisterPostConflict[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1MemberRegisterPostConflict) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1MemberRegisterPostConflict) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberRegisterPostCreated) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberRegisterPostCreated) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("id")
+		json.EncodeUUID(e, s.ID)
+	}
+}
+
+var jsonFieldsNameOfAPIV1MemberRegisterPostCreated = [1]string{
+	0: "id",
+}
+
+// Decode decodes APIV1MemberRegisterPostCreated from json.
+func (s *APIV1MemberRegisterPostCreated) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1MemberRegisterPostCreated to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "id":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := json.DecodeUUID(d)
+				s.ID = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"id\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1MemberRegisterPostCreated")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberRegisterPostCreated) {
+					name = jsonFieldsNameOfAPIV1MemberRegisterPostCreated[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1MemberRegisterPostCreated) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1MemberRegisterPostCreated) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberRegisterPostInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberRegisterPostInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1MemberRegisterPostInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1MemberRegisterPostInternalServerError from json.
+func (s *APIV1MemberRegisterPostInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1MemberRegisterPostInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1MemberRegisterPostInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberRegisterPostInternalServerError) {
+					name = jsonFieldsNameOfAPIV1MemberRegisterPostInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1MemberRegisterPostInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1MemberRegisterPostInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1MemberRegisterPostReq) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1MemberRegisterPostReq) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("email")
 		e.Str(s.Email)
@@ -1412,15 +2772,15 @@ func (s *APIV1RegisterPostReq) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1RegisterPostReq = [2]string{
+var jsonFieldsNameOfAPIV1MemberRegisterPostReq = [2]string{
 	0: "email",
 	1: "nuid",
 }
 
-// Decode decodes APIV1RegisterPostReq from json.
-func (s *APIV1RegisterPostReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1MemberRegisterPostReq from json.
+func (s *APIV1MemberRegisterPostReq) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1RegisterPostReq to nil")
+		return errors.New("invalid: unable to decode APIV1MemberRegisterPostReq to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1455,7 +2815,7 @@ func (s *APIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1RegisterPostReq")
+		return errors.Wrap(err, "decode APIV1MemberRegisterPostReq")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1472,8 +2832,8 @@ func (s *APIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1RegisterPostReq) {
-					name = jsonFieldsNameOfAPIV1RegisterPostReq[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1MemberRegisterPostReq) {
+					name = jsonFieldsNameOfAPIV1MemberRegisterPostReq[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1494,14 +2854,206 @@ func (s *APIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1RegisterPostReq) MarshalJSON() ([]byte, error) {
+func (s *APIV1MemberRegisterPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1RegisterPostReq) UnmarshalJSON(data []byte) error {
+func (s *APIV1MemberRegisterPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *GetInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *GetInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfGetInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes GetInternalServerError from json.
+func (s *GetInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode GetInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode GetInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfGetInternalServerError) {
+					name = jsonFieldsNameOfGetInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *GetInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *GetInternalServerError) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *HealthcheckGetInternalServerError) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *HealthcheckGetInternalServerError) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfHealthcheckGetInternalServerError = [1]string{
+	0: "message",
+}
+
+// Decode decodes HealthcheckGetInternalServerError from json.
+func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode HealthcheckGetInternalServerError to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode HealthcheckGetInternalServerError")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfHealthcheckGetInternalServerError) {
+					name = jsonFieldsNameOfHealthcheckGetInternalServerError[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *HealthcheckGetInternalServerError) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *HealthcheckGetInternalServerError) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -2102,18 +3654,18 @@ func (s *OptAPIV1ChallengeIDAliensGetOKWallDurability) UnmarshalJSON(data []byte
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1RegisterPostReq as json.
-func (o OptAPIV1RegisterPostReq) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeIDSubmitPostReq as json.
+func (o OptAPIV1ChallengeIDSubmitPostReq) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1RegisterPostReq from json.
-func (o *OptAPIV1RegisterPostReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeIDSubmitPostReq from json.
+func (o *OptAPIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1RegisterPostReq to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDSubmitPostReq to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -2123,14 +3675,115 @@ func (o *OptAPIV1RegisterPostReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1RegisterPostReq) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeIDSubmitPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1RegisterPostReq) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeIDSubmitPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType as json.
+func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.Str(string(o.Value))
+}
+
+// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType from json.
+func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes APIV1MemberRegisterPostReq as json.
+func (o OptAPIV1MemberRegisterPostReq) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	o.Value.Encode(e)
+}
+
+// Decode decodes APIV1MemberRegisterPostReq from json.
+func (o *OptAPIV1MemberRegisterPostReq) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptAPIV1MemberRegisterPostReq to nil")
+	}
+	o.Set = true
+	if err := o.Value.Decode(d); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptAPIV1MemberRegisterPostReq) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptAPIV1MemberRegisterPostReq) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes bool as json.
+func (o OptBool) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.Bool(bool(o.Value))
+}
+
+// Decode decodes bool from json.
+func (o *OptBool) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptBool to nil")
+	}
+	o.Set = true
+	v, err := d.Bool()
+	if err != nil {
+		return err
+	}
+	o.Value = bool(v)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptBool) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptBool) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -2164,6 +3817,76 @@ func (s OptHealthcheckGetOKMessage) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptHealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes int as json.
+func (o OptInt) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.Int(int(o.Value))
+}
+
+// Decode decodes int from json.
+func (o *OptInt) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptInt to nil")
+	}
+	o.Set = true
+	v, err := d.Int()
+	if err != nil {
+		return err
+	}
+	o.Value = int(v)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptInt) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptInt) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode encodes string as json.
+func (o OptString) Encode(e *jx.Encoder) {
+	if !o.Set {
+		return
+	}
+	e.Str(string(o.Value))
+}
+
+// Decode decodes string from json.
+func (o *OptString) Decode(d *jx.Decoder) error {
+	if o == nil {
+		return errors.New("invalid: unable to decode OptString to nil")
+	}
+	o.Set = true
+	v, err := d.Str()
+	if err != nil {
+		return err
+	}
+	o.Value = string(v)
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s OptString) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *OptString) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

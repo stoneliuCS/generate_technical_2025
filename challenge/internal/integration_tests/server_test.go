@@ -69,11 +69,11 @@ func runServer() {
 
 	database.AutoMigrate(db)
 
-	userTransactions := transactions.CreateUserTransactions(LOGGER, db)
+	memberTransactions := transactions.CreateMemberTransactions(LOGGER, db)
 
-	userServices := services.CreateUserService(LOGGER, userTransactions)
+	memberServices := services.CreateMemberService(LOGGER, memberTransactions)
 
-	h := handler.CreateHandler(LOGGER, userServices)
+	h := handler.CreateHandler(LOGGER, memberServices)
 	server.RunServer(h, *envConfig, LOGGER)
 }
 
@@ -107,7 +107,7 @@ func TestUserWithNonValidNUIDReceives400(t *testing.T) {
 	client.AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
-	testVerify := client.POST("/api/v1/register")
+	testVerify := client.POST("/api/v1/member/register")
 	testVerify.AssertStatusCode(400, t).AssertBody(map[string]any{
 		"message": "Not a valid northeastern email address.",
 	}, t)
@@ -122,7 +122,7 @@ func TestUserWithBadNUIDReceives400(t *testing.T) {
 	client.AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
-	testVerify := client.POST("/api/v1/register")
+	testVerify := client.POST("/api/v1/member/register")
 	testVerify.AssertStatusCode(400, t).AssertBody(map[string]any{
 		"message": "Not a valid NUID.",
 	}, t)
@@ -138,7 +138,7 @@ func TestUserReceives201OnGoodRequest(t *testing.T) {
 		"Content-Type": "application/json",
 	})
 
-	testVerify := client.POST("/api/v1/register")
+	testVerify := client.POST("/api/v1/member/register")
 	pred := func(prop any) bool {
 		s, ok := prop.(string)
 		if !ok {

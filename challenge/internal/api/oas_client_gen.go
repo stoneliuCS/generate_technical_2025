@@ -30,21 +30,29 @@ type Invoker interface {
 	// APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/{id}/aliens
-	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error)
-	// APIV1RegisterPost invokes POST /api/v1/register operation.
+	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error)
+	// APIV1ChallengeIDSubmitPost invokes POST /api/v1/challenge/{id}/submit operation.
 	//
-	// POST /api/v1/register
-	APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error)
+	// POST /api/v1/challenge/{id}/submit
+	APIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error)
+	// APIV1MemberGet invokes GET /api/v1/member operation.
+	//
+	// GET /api/v1/member
+	APIV1MemberGet(ctx context.Context, params APIV1MemberGetParams) (APIV1MemberGetRes, error)
+	// APIV1MemberRegisterPost invokes POST /api/v1/member/register operation.
+	//
+	// POST /api/v1/member/register
+	APIV1MemberRegisterPost(ctx context.Context, request OptAPIV1MemberRegisterPostReq) (APIV1MemberRegisterPostRes, error)
 	// Get invokes GET / operation.
 	//
 	// API documentation.
 	//
 	// GET /
-	Get(ctx context.Context) (GetOK, error)
+	Get(ctx context.Context) (GetRes, error)
 	// HealthcheckGet invokes GET /healthcheck operation.
 	//
 	// GET /healthcheck
-	HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error)
+	HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error)
 }
 
 // Client implements OAS client.
@@ -93,12 +101,12 @@ func (c *Client) requestURL(ctx context.Context) *url.URL {
 // APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
 //
 // GET /api/v1/challenge/{id}/aliens
-func (c *Client) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (*APIV1ChallengeIDAliensGetOK, error) {
+func (c *Client) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error) {
 	res, err := c.sendAPIV1ChallengeIDAliensGet(ctx, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (res *APIV1ChallengeIDAliensGetOK, err error) {
+func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (res APIV1ChallengeIDAliensGetRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
 		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/aliens"),
@@ -178,18 +186,18 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 	return result, nil
 }
 
-// APIV1RegisterPost invokes POST /api/v1/register operation.
+// APIV1ChallengeIDSubmitPost invokes POST /api/v1/challenge/{id}/submit operation.
 //
-// POST /api/v1/register
-func (c *Client) APIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (APIV1RegisterPostRes, error) {
-	res, err := c.sendAPIV1RegisterPost(ctx, request)
+// POST /api/v1/challenge/{id}/submit
+func (c *Client) APIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error) {
+	res, err := c.sendAPIV1ChallengeIDSubmitPost(ctx, request, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1RegisterPostReq) (res APIV1RegisterPostRes, err error) {
+func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (res APIV1ChallengeIDSubmitPostRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/v1/register"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/submit"),
 	}
 
 	// Run stopwatch.
@@ -204,7 +212,98 @@ func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1Regi
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, APIV1RegisterPostOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeIDSubmitPostOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	stage = "BuildURL"
+	u := uri.Clone(c.requestURL(ctx))
+	var pathParts [3]string
+	pathParts[0] = "/api/v1/challenge/"
+	{
+		// Encode "id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/submit"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAPIV1ChallengeIDSubmitPostRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	stage = "SendRequest"
+	resp, err := c.cfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	defer resp.Body.Close()
+
+	stage = "DecodeResponse"
+	result, err := decodeAPIV1ChallengeIDSubmitPostResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APIV1MemberGet invokes GET /api/v1/member operation.
+//
+// GET /api/v1/member
+func (c *Client) APIV1MemberGet(ctx context.Context, params APIV1MemberGetParams) (APIV1MemberGetRes, error) {
+	res, err := c.sendAPIV1MemberGet(ctx, params)
+	return res, err
+}
+
+func (c *Client) sendAPIV1MemberGet(ctx context.Context, params APIV1MemberGetParams) (res APIV1MemberGetRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		semconv.HTTPRequestMethodKey.String("GET"),
+		semconv.HTTPRouteKey.String("/api/v1/member"),
+	}
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1MemberGetOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -222,7 +321,108 @@ func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1Regi
 	stage = "BuildURL"
 	u := uri.Clone(c.requestURL(ctx))
 	var pathParts [1]string
-	pathParts[0] = "/api/v1/register"
+	pathParts[0] = "/api/v1/member"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeQueryParams"
+	q := uri.NewQueryEncoder()
+	{
+		// Encode "email" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "email",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			return e.EncodeValue(conv.StringToString(params.Email))
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	{
+		// Encode "nuid" parameter.
+		cfg := uri.QueryParameterEncodingConfig{
+			Name:    "nuid",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
+			return e.EncodeValue(conv.IntToString(params.Nuid))
+		}); err != nil {
+			return res, errors.Wrap(err, "encode query")
+		}
+	}
+	u.RawQuery = q.Values().Encode()
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "GET", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+
+	stage = "SendRequest"
+	resp, err := c.cfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	defer resp.Body.Close()
+
+	stage = "DecodeResponse"
+	result, err := decodeAPIV1MemberGetResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APIV1MemberRegisterPost invokes POST /api/v1/member/register operation.
+//
+// POST /api/v1/member/register
+func (c *Client) APIV1MemberRegisterPost(ctx context.Context, request OptAPIV1MemberRegisterPostReq) (APIV1MemberRegisterPostRes, error) {
+	res, err := c.sendAPIV1MemberRegisterPost(ctx, request)
+	return res, err
+}
+
+func (c *Client) sendAPIV1MemberRegisterPost(ctx context.Context, request OptAPIV1MemberRegisterPostReq) (res APIV1MemberRegisterPostRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.HTTPRouteKey.String("/api/v1/member/register"),
+	}
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1MemberRegisterPostOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	stage = "BuildURL"
+	u := uri.Clone(c.requestURL(ctx))
+	var pathParts [1]string
+	pathParts[0] = "/api/v1/member/register"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
@@ -230,7 +430,7 @@ func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1Regi
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
-	if err := encodeAPIV1RegisterPostRequest(request, r); err != nil {
+	if err := encodeAPIV1MemberRegisterPostRequest(request, r); err != nil {
 		return res, errors.Wrap(err, "encode request")
 	}
 
@@ -242,7 +442,7 @@ func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1Regi
 	defer resp.Body.Close()
 
 	stage = "DecodeResponse"
-	result, err := decodeAPIV1RegisterPostResponse(resp)
+	result, err := decodeAPIV1MemberRegisterPostResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -255,12 +455,12 @@ func (c *Client) sendAPIV1RegisterPost(ctx context.Context, request OptAPIV1Regi
 // API documentation.
 //
 // GET /
-func (c *Client) Get(ctx context.Context) (GetOK, error) {
+func (c *Client) Get(ctx context.Context) (GetRes, error) {
 	res, err := c.sendGet(ctx)
 	return res, err
 }
 
-func (c *Client) sendGet(ctx context.Context) (res GetOK, err error) {
+func (c *Client) sendGet(ctx context.Context) (res GetRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
 		semconv.HTTPRouteKey.String("/"),
@@ -324,12 +524,12 @@ func (c *Client) sendGet(ctx context.Context) (res GetOK, err error) {
 // HealthcheckGet invokes GET /healthcheck operation.
 //
 // GET /healthcheck
-func (c *Client) HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error) {
+func (c *Client) HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error) {
 	res, err := c.sendHealthcheckGet(ctx)
 	return res, err
 }
 
-func (c *Client) sendHealthcheckGet(ctx context.Context) (res *HealthcheckGetOK, err error) {
+func (c *Client) sendHealthcheckGet(ctx context.Context) (res HealthcheckGetRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
 		semconv.HTTPRouteKey.String("/healthcheck"),

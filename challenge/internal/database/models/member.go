@@ -7,7 +7,7 @@ import (
 )
 
 // Represents a user registering for the technical challenge.
-type User struct {
+type Member struct {
 	// Primary key, users must save it if they wish to get their status
 	ID uuid.UUID `gorm:"primaryKey"`
 	// Northeastern email.
@@ -19,8 +19,8 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-func CreateUser(email string, nuid string) *User {
-	user := &User{}
+func CreateMember(email string, nuid string) *Member {
+	user := &Member{}
 	user.ID = uuid.New()
 	user.Email = email
 	user.NUID = nuid

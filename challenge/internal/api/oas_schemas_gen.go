@@ -9,6 +9,22 @@ import (
 	"github.com/google/uuid"
 )
 
+type APIV1ChallengeIDAliensGetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeIDAliensGetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeIDAliensGetInternalServerError) aPIV1ChallengeIDAliensGetRes() {}
+
 type APIV1ChallengeIDAliensGetOK struct {
 	Waves          []APIV1ChallengeIDAliensGetOKWavesItem       `json:"waves"`
 	AlienTypes     OptAPIV1ChallengeIDAliensGetOKAlienTypes     `json:"alienTypes"`
@@ -55,6 +71,8 @@ func (s *APIV1ChallengeIDAliensGetOK) SetBudget(val OptAPIV1ChallengeIDAliensGet
 func (s *APIV1ChallengeIDAliensGetOK) SetWallDurability(val OptAPIV1ChallengeIDAliensGetOKWallDurability) {
 	s.WallDurability = val
 }
+
+func (*APIV1ChallengeIDAliensGetOK) aPIV1ChallengeIDAliensGetRes() {}
 
 type APIV1ChallengeIDAliensGetOKAlienTypes struct {
 	Regular OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular `json:"regular"`
@@ -430,56 +448,423 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) UnmarshalText(data 
 	}
 }
 
-type APIV1RegisterPostBadRequest struct {
+type APIV1ChallengeIDAliensGetUnauthorized struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1RegisterPostBadRequest) GetMessage() string {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1RegisterPostBadRequest) SetMessage(val string) {
+func (s *APIV1ChallengeIDAliensGetUnauthorized) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1RegisterPostBadRequest) aPIV1RegisterPostRes() {}
+func (*APIV1ChallengeIDAliensGetUnauthorized) aPIV1ChallengeIDAliensGetRes() {}
+
+type APIV1ChallengeIDSubmitPostBadRequest struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeIDSubmitPostBadRequest) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeIDSubmitPostBadRequest) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeIDSubmitPostBadRequest) aPIV1ChallengeIDSubmitPostRes() {}
+
+type APIV1ChallengeIDSubmitPostInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeIDSubmitPostInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeIDSubmitPostInternalServerError) aPIV1ChallengeIDSubmitPostRes() {}
+
+// APIV1ChallengeIDSubmitPostOK represents sum type.
+type APIV1ChallengeIDSubmitPostOK struct {
+	Type                          APIV1ChallengeIDSubmitPostOKType // switch on this field
+	APIV1ChallengeIDSubmitPostOK0 APIV1ChallengeIDSubmitPostOK0
+	APIV1ChallengeIDSubmitPostOK1 APIV1ChallengeIDSubmitPostOK1
+}
+
+// APIV1ChallengeIDSubmitPostOKType is oneOf type of APIV1ChallengeIDSubmitPostOK.
+type APIV1ChallengeIDSubmitPostOKType string
+
+// Possible values for APIV1ChallengeIDSubmitPostOKType.
+const (
+	APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK APIV1ChallengeIDSubmitPostOKType = "APIV1ChallengeIDSubmitPostOK0"
+	APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK APIV1ChallengeIDSubmitPostOKType = "APIV1ChallengeIDSubmitPostOK1"
+)
+
+// IsAPIV1ChallengeIDSubmitPostOK0 reports whether APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK0.
+func (s APIV1ChallengeIDSubmitPostOK) IsAPIV1ChallengeIDSubmitPostOK0() bool {
+	return s.Type == APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
+}
+
+// IsAPIV1ChallengeIDSubmitPostOK1 reports whether APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK1.
+func (s APIV1ChallengeIDSubmitPostOK) IsAPIV1ChallengeIDSubmitPostOK1() bool {
+	return s.Type == APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
+}
+
+// SetAPIV1ChallengeIDSubmitPostOK0 sets APIV1ChallengeIDSubmitPostOK to APIV1ChallengeIDSubmitPostOK0.
+func (s *APIV1ChallengeIDSubmitPostOK) SetAPIV1ChallengeIDSubmitPostOK0(v APIV1ChallengeIDSubmitPostOK0) {
+	s.Type = APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
+	s.APIV1ChallengeIDSubmitPostOK0 = v
+}
+
+// GetAPIV1ChallengeIDSubmitPostOK0 returns APIV1ChallengeIDSubmitPostOK0 and true boolean if APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK0.
+func (s APIV1ChallengeIDSubmitPostOK) GetAPIV1ChallengeIDSubmitPostOK0() (v APIV1ChallengeIDSubmitPostOK0, ok bool) {
+	if !s.IsAPIV1ChallengeIDSubmitPostOK0() {
+		return v, false
+	}
+	return s.APIV1ChallengeIDSubmitPostOK0, true
+}
+
+// NewAPIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK returns new APIV1ChallengeIDSubmitPostOK from APIV1ChallengeIDSubmitPostOK0.
+func NewAPIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK(v APIV1ChallengeIDSubmitPostOK0) APIV1ChallengeIDSubmitPostOK {
+	var s APIV1ChallengeIDSubmitPostOK
+	s.SetAPIV1ChallengeIDSubmitPostOK0(v)
+	return s
+}
+
+// SetAPIV1ChallengeIDSubmitPostOK1 sets APIV1ChallengeIDSubmitPostOK to APIV1ChallengeIDSubmitPostOK1.
+func (s *APIV1ChallengeIDSubmitPostOK) SetAPIV1ChallengeIDSubmitPostOK1(v APIV1ChallengeIDSubmitPostOK1) {
+	s.Type = APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
+	s.APIV1ChallengeIDSubmitPostOK1 = v
+}
+
+// GetAPIV1ChallengeIDSubmitPostOK1 returns APIV1ChallengeIDSubmitPostOK1 and true boolean if APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK1.
+func (s APIV1ChallengeIDSubmitPostOK) GetAPIV1ChallengeIDSubmitPostOK1() (v APIV1ChallengeIDSubmitPostOK1, ok bool) {
+	if !s.IsAPIV1ChallengeIDSubmitPostOK1() {
+		return v, false
+	}
+	return s.APIV1ChallengeIDSubmitPostOK1, true
+}
+
+// NewAPIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK returns new APIV1ChallengeIDSubmitPostOK from APIV1ChallengeIDSubmitPostOK1.
+func NewAPIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK(v APIV1ChallengeIDSubmitPostOK1) APIV1ChallengeIDSubmitPostOK {
+	var s APIV1ChallengeIDSubmitPostOK
+	s.SetAPIV1ChallengeIDSubmitPostOK1(v)
+	return s
+}
+
+func (*APIV1ChallengeIDSubmitPostOK) aPIV1ChallengeIDSubmitPostRes() {}
+
+type APIV1ChallengeIDSubmitPostOK0 struct {
+	Valid OptBool `json:"valid"`
+	Score OptInt  `json:"score"`
+}
+
+// GetValid returns the value of Valid.
+func (s *APIV1ChallengeIDSubmitPostOK0) GetValid() OptBool {
+	return s.Valid
+}
+
+// GetScore returns the value of Score.
+func (s *APIV1ChallengeIDSubmitPostOK0) GetScore() OptInt {
+	return s.Score
+}
+
+// SetValid sets the value of Valid.
+func (s *APIV1ChallengeIDSubmitPostOK0) SetValid(val OptBool) {
+	s.Valid = val
+}
+
+// SetScore sets the value of Score.
+func (s *APIV1ChallengeIDSubmitPostOK0) SetScore(val OptInt) {
+	s.Score = val
+}
+
+type APIV1ChallengeIDSubmitPostOK1 struct {
+	Valid  OptBool   `json:"valid"`
+	Reason OptString `json:"reason"`
+}
+
+// GetValid returns the value of Valid.
+func (s *APIV1ChallengeIDSubmitPostOK1) GetValid() OptBool {
+	return s.Valid
+}
+
+// GetReason returns the value of Reason.
+func (s *APIV1ChallengeIDSubmitPostOK1) GetReason() OptString {
+	return s.Reason
+}
+
+// SetValid sets the value of Valid.
+func (s *APIV1ChallengeIDSubmitPostOK1) SetValid(val OptBool) {
+	s.Valid = val
+}
+
+// SetReason sets the value of Reason.
+func (s *APIV1ChallengeIDSubmitPostOK1) SetReason(val OptString) {
+	s.Reason = val
+}
+
+type APIV1ChallengeIDSubmitPostReq struct {
+	GunsPurchased []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem `json:"gunsPurchased"`
+	TotalCost     OptInt                                           `json:"totalCost"`
+	Assignments   []APIV1ChallengeIDSubmitPostReqAssignmentsItem   `json:"assignments"`
+}
+
+// GetGunsPurchased returns the value of GunsPurchased.
+func (s *APIV1ChallengeIDSubmitPostReq) GetGunsPurchased() []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem {
+	return s.GunsPurchased
+}
+
+// GetTotalCost returns the value of TotalCost.
+func (s *APIV1ChallengeIDSubmitPostReq) GetTotalCost() OptInt {
+	return s.TotalCost
+}
+
+// GetAssignments returns the value of Assignments.
+func (s *APIV1ChallengeIDSubmitPostReq) GetAssignments() []APIV1ChallengeIDSubmitPostReqAssignmentsItem {
+	return s.Assignments
+}
+
+// SetGunsPurchased sets the value of GunsPurchased.
+func (s *APIV1ChallengeIDSubmitPostReq) SetGunsPurchased(val []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) {
+	s.GunsPurchased = val
+}
+
+// SetTotalCost sets the value of TotalCost.
+func (s *APIV1ChallengeIDSubmitPostReq) SetTotalCost(val OptInt) {
+	s.TotalCost = val
+}
+
+// SetAssignments sets the value of Assignments.
+func (s *APIV1ChallengeIDSubmitPostReq) SetAssignments(val []APIV1ChallengeIDSubmitPostReqAssignmentsItem) {
+	s.Assignments = val
+}
+
+type APIV1ChallengeIDSubmitPostReqAssignmentsItem struct {
+	Wave                    OptInt  `json:"wave"`
+	GunQueues               [][]int `json:"gunQueues"`
+	WallDurabilityRemaining OptInt  `json:"wallDurabilityRemaining"`
+}
+
+// GetWave returns the value of Wave.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetWave() OptInt {
+	return s.Wave
+}
+
+// GetGunQueues returns the value of GunQueues.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetGunQueues() [][]int {
+	return s.GunQueues
+}
+
+// GetWallDurabilityRemaining returns the value of WallDurabilityRemaining.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetWallDurabilityRemaining() OptInt {
+	return s.WallDurabilityRemaining
+}
+
+// SetWave sets the value of Wave.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetWave(val OptInt) {
+	s.Wave = val
+}
+
+// SetGunQueues sets the value of GunQueues.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetGunQueues(val [][]int) {
+	s.GunQueues = val
+}
+
+// SetWallDurabilityRemaining sets the value of WallDurabilityRemaining.
+func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetWallDurabilityRemaining(val OptInt) {
+	s.WallDurabilityRemaining = val
+}
+
+type APIV1ChallengeIDSubmitPostReqGunsPurchasedItem struct {
+	Type OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType `json:"type"`
+}
+
+// GetType returns the value of Type.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) GetType() OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+	return s.Type
+}
+
+// SetType sets the value of Type.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) SetType(val OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) {
+	s.Type = val
+}
+
+type APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType string
+
+const (
+	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret     APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "turret"
+	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "machineGun"
+	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun     APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "rayGun"
+)
+
+// AllValues returns all APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType values.
+func (APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) AllValues() []APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+	return []APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType{
+		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret,
+		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun,
+		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun,
+	}
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalText() ([]byte, error) {
+	switch s {
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
+		return []byte(s), nil
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
+		return []byte(s), nil
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
+		return []byte(s), nil
+	default:
+		return nil, errors.Errorf("invalid value: %q", s)
+	}
+}
+
+// UnmarshalText implements encoding.TextUnmarshaler.
+func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalText(data []byte) error {
+	switch APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(data) {
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret
+		return nil
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun
+		return nil
+	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
+		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun
+		return nil
+	default:
+		return errors.Errorf("invalid value: %q", data)
+	}
+}
+
+type APIV1MemberGetBadRequest struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1MemberGetBadRequest) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1MemberGetBadRequest) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1MemberGetBadRequest) aPIV1MemberGetRes() {}
+
+type APIV1MemberGetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1MemberGetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1MemberGetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1MemberGetInternalServerError) aPIV1MemberGetRes() {}
 
 // Unique identifier associated with the registered northeastern email.
-type APIV1RegisterPostCreated struct {
+type APIV1MemberGetOK struct {
 	ID uuid.UUID `json:"id"`
 }
 
 // GetID returns the value of ID.
-func (s *APIV1RegisterPostCreated) GetID() uuid.UUID {
+func (s *APIV1MemberGetOK) GetID() uuid.UUID {
 	return s.ID
 }
 
 // SetID sets the value of ID.
-func (s *APIV1RegisterPostCreated) SetID(val uuid.UUID) {
+func (s *APIV1MemberGetOK) SetID(val uuid.UUID) {
 	s.ID = val
 }
 
-func (*APIV1RegisterPostCreated) aPIV1RegisterPostRes() {}
+func (*APIV1MemberGetOK) aPIV1MemberGetRes() {}
 
-type APIV1RegisterPostInternalServerError struct {
+type APIV1MemberRegisterPostBadRequest struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1RegisterPostInternalServerError) GetMessage() string {
+func (s *APIV1MemberRegisterPostBadRequest) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1RegisterPostInternalServerError) SetMessage(val string) {
+func (s *APIV1MemberRegisterPostBadRequest) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1RegisterPostInternalServerError) aPIV1RegisterPostRes() {}
+func (*APIV1MemberRegisterPostBadRequest) aPIV1MemberRegisterPostRes() {}
 
-type APIV1RegisterPostReq struct {
+type APIV1MemberRegisterPostConflict struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1MemberRegisterPostConflict) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1MemberRegisterPostConflict) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1MemberRegisterPostConflict) aPIV1MemberRegisterPostRes() {}
+
+// Unique identifier associated with the registered northeastern email.
+type APIV1MemberRegisterPostCreated struct {
+	ID uuid.UUID `json:"id"`
+}
+
+// GetID returns the value of ID.
+func (s *APIV1MemberRegisterPostCreated) GetID() uuid.UUID {
+	return s.ID
+}
+
+// SetID sets the value of ID.
+func (s *APIV1MemberRegisterPostCreated) SetID(val uuid.UUID) {
+	s.ID = val
+}
+
+func (*APIV1MemberRegisterPostCreated) aPIV1MemberRegisterPostRes() {}
+
+type APIV1MemberRegisterPostInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1MemberRegisterPostInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1MemberRegisterPostInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1MemberRegisterPostInternalServerError) aPIV1MemberRegisterPostRes() {}
+
+type APIV1MemberRegisterPostReq struct {
 	// Must be a valid Northeastern email address.
 	Email string `json:"email"`
 	// Valid nuid.
@@ -487,24 +872,40 @@ type APIV1RegisterPostReq struct {
 }
 
 // GetEmail returns the value of Email.
-func (s *APIV1RegisterPostReq) GetEmail() string {
+func (s *APIV1MemberRegisterPostReq) GetEmail() string {
 	return s.Email
 }
 
 // GetNuid returns the value of Nuid.
-func (s *APIV1RegisterPostReq) GetNuid() string {
+func (s *APIV1MemberRegisterPostReq) GetNuid() string {
 	return s.Nuid
 }
 
 // SetEmail sets the value of Email.
-func (s *APIV1RegisterPostReq) SetEmail(val string) {
+func (s *APIV1MemberRegisterPostReq) SetEmail(val string) {
 	s.Email = val
 }
 
 // SetNuid sets the value of Nuid.
-func (s *APIV1RegisterPostReq) SetNuid(val string) {
+func (s *APIV1MemberRegisterPostReq) SetNuid(val string) {
 	s.Nuid = val
 }
+
+type GetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *GetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *GetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*GetInternalServerError) getRes() {}
 
 type GetOK struct {
 	Data io.Reader
@@ -520,6 +921,24 @@ func (s GetOK) Read(p []byte) (n int, err error) {
 	return s.Data.Read(p)
 }
 
+func (*GetOK) getRes() {}
+
+type HealthcheckGetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *HealthcheckGetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *HealthcheckGetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*HealthcheckGetInternalServerError) healthcheckGetRes() {}
+
 type HealthcheckGetOK struct {
 	Message OptHealthcheckGetOKMessage `json:"message"`
 }
@@ -533,6 +952,8 @@ func (s *HealthcheckGetOK) GetMessage() OptHealthcheckGetOKMessage {
 func (s *HealthcheckGetOK) SetMessage(val OptHealthcheckGetOKMessage) {
 	s.Message = val
 }
+
+func (*HealthcheckGetOK) healthcheckGetRes() {}
 
 type HealthcheckGetOKMessage string
 
@@ -1258,38 +1679,38 @@ func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) Or(d APIV1ChallengeIDAlien
 	return d
 }
 
-// NewOptAPIV1RegisterPostReq returns new OptAPIV1RegisterPostReq with value set to v.
-func NewOptAPIV1RegisterPostReq(v APIV1RegisterPostReq) OptAPIV1RegisterPostReq {
-	return OptAPIV1RegisterPostReq{
+// NewOptAPIV1ChallengeIDSubmitPostReq returns new OptAPIV1ChallengeIDSubmitPostReq with value set to v.
+func NewOptAPIV1ChallengeIDSubmitPostReq(v APIV1ChallengeIDSubmitPostReq) OptAPIV1ChallengeIDSubmitPostReq {
+	return OptAPIV1ChallengeIDSubmitPostReq{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1RegisterPostReq is optional APIV1RegisterPostReq.
-type OptAPIV1RegisterPostReq struct {
-	Value APIV1RegisterPostReq
+// OptAPIV1ChallengeIDSubmitPostReq is optional APIV1ChallengeIDSubmitPostReq.
+type OptAPIV1ChallengeIDSubmitPostReq struct {
+	Value APIV1ChallengeIDSubmitPostReq
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1RegisterPostReq was set.
-func (o OptAPIV1RegisterPostReq) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeIDSubmitPostReq was set.
+func (o OptAPIV1ChallengeIDSubmitPostReq) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1RegisterPostReq) Reset() {
-	var v APIV1RegisterPostReq
+func (o *OptAPIV1ChallengeIDSubmitPostReq) Reset() {
+	var v APIV1ChallengeIDSubmitPostReq
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1RegisterPostReq) SetTo(v APIV1RegisterPostReq) {
+func (o *OptAPIV1ChallengeIDSubmitPostReq) SetTo(v APIV1ChallengeIDSubmitPostReq) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1RegisterPostReq) Get() (v APIV1RegisterPostReq, ok bool) {
+func (o OptAPIV1ChallengeIDSubmitPostReq) Get() (v APIV1ChallengeIDSubmitPostReq, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1297,7 +1718,145 @@ func (o OptAPIV1RegisterPostReq) Get() (v APIV1RegisterPostReq, ok bool) {
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1RegisterPostReq) Or(d APIV1RegisterPostReq) APIV1RegisterPostReq {
+func (o OptAPIV1ChallengeIDSubmitPostReq) Or(d APIV1ChallengeIDSubmitPostReq) APIV1ChallengeIDSubmitPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType returns new OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType with value set to v.
+func NewOptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+	return OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType is optional APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType.
+type OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType struct {
+	Value APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType
+	Set   bool
+}
+
+// IsSet returns true if OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType was set.
+func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Reset() {
+	var v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) SetTo(v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Get() (v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Or(d APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptAPIV1MemberRegisterPostReq returns new OptAPIV1MemberRegisterPostReq with value set to v.
+func NewOptAPIV1MemberRegisterPostReq(v APIV1MemberRegisterPostReq) OptAPIV1MemberRegisterPostReq {
+	return OptAPIV1MemberRegisterPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIV1MemberRegisterPostReq is optional APIV1MemberRegisterPostReq.
+type OptAPIV1MemberRegisterPostReq struct {
+	Value APIV1MemberRegisterPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPIV1MemberRegisterPostReq was set.
+func (o OptAPIV1MemberRegisterPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIV1MemberRegisterPostReq) Reset() {
+	var v APIV1MemberRegisterPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIV1MemberRegisterPostReq) SetTo(v APIV1MemberRegisterPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIV1MemberRegisterPostReq) Get() (v APIV1MemberRegisterPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIV1MemberRegisterPostReq) Or(d APIV1MemberRegisterPostReq) APIV1MemberRegisterPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptBool returns new OptBool with value set to v.
+func NewOptBool(v bool) OptBool {
+	return OptBool{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptBool is optional bool.
+type OptBool struct {
+	Value bool
+	Set   bool
+}
+
+// IsSet returns true if OptBool was set.
+func (o OptBool) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptBool) Reset() {
+	var v bool
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptBool) SetTo(v bool) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptBool) Get() (v bool, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptBool) Or(d bool) bool {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -1344,6 +1903,98 @@ func (o OptHealthcheckGetOKMessage) Get() (v HealthcheckGetOKMessage, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptHealthcheckGetOKMessage) Or(d HealthcheckGetOKMessage) HealthcheckGetOKMessage {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptInt returns new OptInt with value set to v.
+func NewOptInt(v int) OptInt {
+	return OptInt{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptInt is optional int.
+type OptInt struct {
+	Value int
+	Set   bool
+}
+
+// IsSet returns true if OptInt was set.
+func (o OptInt) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptInt) Reset() {
+	var v int
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptInt) SetTo(v int) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptInt) Get() (v int, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptInt) Or(d int) int {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptString returns new OptString with value set to v.
+func NewOptString(v string) OptString {
+	return OptString{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptString is optional string.
+type OptString struct {
+	Value string
+	Set   bool
+}
+
+// IsSet returns true if OptString was set.
+func (o OptString) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptString) Reset() {
+	var v string
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptString) SetTo(v string) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptString) Get() (v string, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptString) Or(d string) string {
 	if v, ok := o.Get(); ok {
 		return v
 	}
