@@ -42,11 +42,20 @@ func (h Handler) APIV1MemberGet(ctx context.Context, params api.APIV1MemberGetPa
 func (h Handler) APIV1MemberRegisterPost(ctx context.Context, req api.OptAPIV1MemberRegisterPostReq) (api.APIV1MemberRegisterPostRes, error) {
 	email := req.Value.GetEmail()
 	nuid := req.Value.GetNuid()
+	// Validate EMAIL and NUID
 	if !validateNEUEmail(email) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid northeastern email address."}, nil
 	}
 	if !validateNUID(nuid) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid NUID."}, nil
+	}
+	// Check if the member has already registered.
+	exists, err := h.memberService.CheckMemberExists(email, nuid)
+	if err != nil {
+		return &api.APIV1MemberRegisterPostInternalServerError{Message: "Database error querying for user."}, err
+	}
+	if *exists {
+		return &api.APIV1MemberRegisterPostConflict{Message: "Member already exists."}, nil
 	}
 	// Deserialize input into internal model of users.
 	member := models.CreateMember(email, nuid)

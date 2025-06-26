@@ -939,37 +939,19 @@ func (s GetOK) Read(p []byte) (n int, err error) {
 
 func (*GetOK) getRes() {}
 
-type HealthcheckGetInternalServerError struct {
-	Message string `json:"message"`
-}
-
-// GetMessage returns the value of Message.
-func (s *HealthcheckGetInternalServerError) GetMessage() string {
-	return s.Message
-}
-
-// SetMessage sets the value of Message.
-func (s *HealthcheckGetInternalServerError) SetMessage(val string) {
-	s.Message = val
-}
-
-func (*HealthcheckGetInternalServerError) healthcheckGetRes() {}
-
 type HealthcheckGetOK struct {
-	Message OptHealthcheckGetOKMessage `json:"message"`
+	Message HealthcheckGetOKMessage `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *HealthcheckGetOK) GetMessage() OptHealthcheckGetOKMessage {
+func (s *HealthcheckGetOK) GetMessage() HealthcheckGetOKMessage {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *HealthcheckGetOK) SetMessage(val OptHealthcheckGetOKMessage) {
+func (s *HealthcheckGetOK) SetMessage(val HealthcheckGetOKMessage) {
 	s.Message = val
 }
-
-func (*HealthcheckGetOK) healthcheckGetRes() {}
 
 type HealthcheckGetOKMessage string
 
@@ -1873,52 +1855,6 @@ func (o OptBool) Get() (v bool, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptBool) Or(d bool) bool {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptHealthcheckGetOKMessage returns new OptHealthcheckGetOKMessage with value set to v.
-func NewOptHealthcheckGetOKMessage(v HealthcheckGetOKMessage) OptHealthcheckGetOKMessage {
-	return OptHealthcheckGetOKMessage{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptHealthcheckGetOKMessage is optional HealthcheckGetOKMessage.
-type OptHealthcheckGetOKMessage struct {
-	Value HealthcheckGetOKMessage
-	Set   bool
-}
-
-// IsSet returns true if OptHealthcheckGetOKMessage was set.
-func (o OptHealthcheckGetOKMessage) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptHealthcheckGetOKMessage) Reset() {
-	var v HealthcheckGetOKMessage
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptHealthcheckGetOKMessage) SetTo(v HealthcheckGetOKMessage) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptHealthcheckGetOKMessage) Get() (v HealthcheckGetOKMessage, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptHealthcheckGetOKMessage) Or(d HealthcheckGetOKMessage) HealthcheckGetOKMessage {
 	if v, ok := o.Get(); ok {
 		return v
 	}

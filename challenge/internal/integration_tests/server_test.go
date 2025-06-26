@@ -27,7 +27,7 @@ var (
 	CLIENT = func() *utils.TestClient { return utils.CreateTestClient(PORT, LOGGER) }
 )
 
-func runServer() {
+func RunTestServer() {
 	ctx := context.Background()
 
 	dbName := "users"
@@ -79,7 +79,7 @@ func runServer() {
 
 func TestMain(m *testing.M) {
 	LOGGER.Info("Starting test server in a seperate go routine..")
-	go runServer()
+	go RunTestServer()
 	if !CLIENT().CheckServer(time.Second * 30) {
 		os.Exit(1)
 	}

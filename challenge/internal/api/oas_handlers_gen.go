@@ -774,7 +774,7 @@ func (s *Server) handleHealthcheckGetRequest(args [0]string, argsEscaped bool, w
 		err error
 	)
 
-	var response HealthcheckGetRes
+	var response *HealthcheckGetOK
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
@@ -789,7 +789,7 @@ func (s *Server) handleHealthcheckGetRequest(args [0]string, argsEscaped bool, w
 		type (
 			Request  = struct{}
 			Params   = struct{}
-			Response = HealthcheckGetRes
+			Response = *HealthcheckGetOK
 		)
 		response, err = middleware.HookMiddleware[
 			Request,

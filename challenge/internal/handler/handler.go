@@ -23,14 +23,14 @@ func (h Handler) Get(ctx context.Context) (api.GetRes, error) {
 		SpecURL: challenge.GetSpecPath(),
 	})
 	if err != nil {
-		return &api.GetOK{}, err
+		return &api.GetInternalServerError{Message: "Could not parse API HTML"}, err
 	}
 	return &api.GetOK{Data: strings.NewReader(html)}, nil
 }
 
 // HealthcheckGet implements api.Handler.
-func (h Handler) HealthcheckGet(ctx context.Context) (api.HealthcheckGetRes, error) {
-	return &api.HealthcheckGetOK{Message: api.OptHealthcheckGetOKMessage{Value: "OK", Set: true}}, nil
+func (h Handler) HealthcheckGet(ctx context.Context) (*api.HealthcheckGetOK, error) {
+	return &api.HealthcheckGetOK{Message: "OK"}, nil
 }
 
 // Creates a new handler for all defined API endpoints

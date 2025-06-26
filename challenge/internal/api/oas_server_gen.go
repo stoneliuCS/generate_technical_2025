@@ -33,7 +33,7 @@ type Handler interface {
 	// HealthcheckGet implements GET /healthcheck operation.
 	//
 	// GET /healthcheck
-	HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error)
+	HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

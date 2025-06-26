@@ -764,15 +764,8 @@ func (s *HealthcheckGetOK) Validate() error {
 
 	var failures []validate.FieldError
 	if err := func() error {
-		if value, ok := s.Message.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
+		if err := s.Message.Validate(); err != nil {
+			return err
 		}
 		return nil
 	}(); err != nil {

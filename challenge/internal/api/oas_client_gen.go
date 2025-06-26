@@ -52,7 +52,7 @@ type Invoker interface {
 	// HealthcheckGet invokes GET /healthcheck operation.
 	//
 	// GET /healthcheck
-	HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error)
+	HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error)
 }
 
 // Client implements OAS client.
@@ -524,12 +524,12 @@ func (c *Client) sendGet(ctx context.Context) (res GetRes, err error) {
 // HealthcheckGet invokes GET /healthcheck operation.
 //
 // GET /healthcheck
-func (c *Client) HealthcheckGet(ctx context.Context) (HealthcheckGetRes, error) {
+func (c *Client) HealthcheckGet(ctx context.Context) (*HealthcheckGetOK, error) {
 	res, err := c.sendHealthcheckGet(ctx)
 	return res, err
 }
 
-func (c *Client) sendHealthcheckGet(ctx context.Context) (res HealthcheckGetRes, err error) {
+func (c *Client) sendHealthcheckGet(ctx context.Context) (res *HealthcheckGetOK, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
 		semconv.HTTPRouteKey.String("/healthcheck"),

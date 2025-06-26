@@ -53,6 +53,6 @@ func (UnimplementedHandler) Get(ctx context.Context) (r GetRes, _ error) {
 // HealthcheckGet implements GET /healthcheck operation.
 //
 // GET /healthcheck
-func (UnimplementedHandler) HealthcheckGet(ctx context.Context) (r HealthcheckGetRes, _ error) {
+func (UnimplementedHandler) HealthcheckGet(ctx context.Context) (r *HealthcheckGetOK, _ error) {
 	return r, ht.ErrNotImplemented
 }

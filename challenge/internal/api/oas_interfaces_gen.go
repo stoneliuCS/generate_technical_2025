@@ -20,7 +20,3 @@ type APIV1MemberRegisterPostRes interface {
 type GetRes interface {
 	getRes()
 }
-
-type HealthcheckGetRes interface {
-	healthcheckGetRes()
-}

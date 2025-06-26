@@ -3059,28 +3059,28 @@ func (s *GetInternalServerError) UnmarshalJSON(data []byte) error {
 }
 
 // Encode implements json.Marshaler.
-func (s *HealthcheckGetInternalServerError) Encode(e *jx.Encoder) {
+func (s *HealthcheckGetOK) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *HealthcheckGetInternalServerError) encodeFields(e *jx.Encoder) {
+func (s *HealthcheckGetOK) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
-		e.Str(s.Message)
+		s.Message.Encode(e)
 	}
 }
 
-var jsonFieldsNameOfHealthcheckGetInternalServerError = [1]string{
+var jsonFieldsNameOfHealthcheckGetOK = [1]string{
 	0: "message",
 }
 
-// Decode decodes HealthcheckGetInternalServerError from json.
-func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
+// Decode decodes HealthcheckGetOK from json.
+func (s *HealthcheckGetOK) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode HealthcheckGetInternalServerError to nil")
+		return errors.New("invalid: unable to decode HealthcheckGetOK to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -3089,9 +3089,7 @@ func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
 		case "message":
 			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				v, err := d.Str()
-				s.Message = string(v)
-				if err != nil {
+				if err := s.Message.Decode(d); err != nil {
 					return err
 				}
 				return nil
@@ -3103,7 +3101,7 @@ func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode HealthcheckGetInternalServerError")
+		return errors.Wrap(err, "decode HealthcheckGetOK")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -3120,8 +3118,8 @@ func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfHealthcheckGetInternalServerError) {
-					name = jsonFieldsNameOfHealthcheckGetInternalServerError[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfHealthcheckGetOK) {
+					name = jsonFieldsNameOfHealthcheckGetOK[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -3136,69 +3134,6 @@ func (s *HealthcheckGetInternalServerError) Decode(d *jx.Decoder) error {
 	}
 	if len(failures) > 0 {
 		return &validate.Error{Fields: failures}
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *HealthcheckGetInternalServerError) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *HealthcheckGetInternalServerError) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
-func (s *HealthcheckGetOK) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *HealthcheckGetOK) encodeFields(e *jx.Encoder) {
-	{
-		if s.Message.Set {
-			e.FieldStart("message")
-			s.Message.Encode(e)
-		}
-	}
-}
-
-var jsonFieldsNameOfHealthcheckGetOK = [1]string{
-	0: "message",
-}
-
-// Decode decodes HealthcheckGetOK from json.
-func (s *HealthcheckGetOK) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode HealthcheckGetOK to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "message":
-			if err := func() error {
-				s.Message.Reset()
-				if err := s.Message.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"message\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode HealthcheckGetOK")
 	}
 
 	return nil
@@ -3880,39 +3815,6 @@ func (s OptBool) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptBool) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes HealthcheckGetOKMessage as json.
-func (o OptHealthcheckGetOKMessage) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	e.Str(string(o.Value))
-}
-
-// Decode decodes HealthcheckGetOKMessage from json.
-func (o *OptHealthcheckGetOKMessage) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptHealthcheckGetOKMessage to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptHealthcheckGetOKMessage) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptHealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
