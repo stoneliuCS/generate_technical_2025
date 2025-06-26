@@ -7,12 +7,10 @@ import (
 )
 
 func TestUserWithNonValidNUIDReceives400(t *testing.T) {
-	client := CLIENT()
-	client.AddBody(map[string]any{
+	client := CLIENT.AddBody(map[string]any{
 		"email": "notavalidemail@gmail.com",
 		"nuid":  "1231",
-	})
-	client.AddHeaders(map[string]string{
+	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
 	testVerify := client.POST("/api/v1/member/register")
@@ -22,12 +20,10 @@ func TestUserWithNonValidNUIDReceives400(t *testing.T) {
 }
 
 func TestUserWithBadNUIDReceives400(t *testing.T) {
-	client := CLIENT()
-	client.AddBody(map[string]any{
+	client := CLIENT.AddBody(map[string]any{
 		"email": "somebody@northeastern.edu",
 		"nuid":  "1231",
-	})
-	client.AddHeaders(map[string]string{
+	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
 	testVerify := client.POST("/api/v1/member/register")
@@ -37,12 +33,10 @@ func TestUserWithBadNUIDReceives400(t *testing.T) {
 }
 
 func TestUserReceives201OnGoodRequest(t *testing.T) {
-	client := CLIENT()
-	client.AddBody(map[string]any{
+	client := CLIENT.AddBody(map[string]any{
 		"email": "somebody@northeastern.edu",
 		"nuid":  "123456789", // NUID is 9 characters long
-	})
-	client.AddHeaders(map[string]string{
+	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
 
@@ -59,12 +53,10 @@ func TestUserReceives201OnGoodRequest(t *testing.T) {
 }
 
 func TestMemberCannotRegisterTwice(t *testing.T) {
-	client := CLIENT()
-	client.AddBody(map[string]any{
+	client := CLIENT.AddBody(map[string]any{
 		"email": "somebody@northeastern.edu",
 		"nuid":  "123456789", // NUID is 9 characters long
-	})
-	client.AddHeaders(map[string]string{
+	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
 
@@ -73,7 +65,7 @@ func TestMemberCannotRegisterTwice(t *testing.T) {
 }
 
 func TestMemberGets200IfUserIsFoundInDatabase(t *testing.T) {
-	client := CLIENT()
+	client := CLIENT
 	testVerifyGET := client.GET("/api/v1/member?email=somebody%40northeastern.edu&nuid=123456789")
 	pred := func(prop any) bool {
 		s, ok := prop.(string)
@@ -87,7 +79,7 @@ func TestMemberGets200IfUserIsFoundInDatabase(t *testing.T) {
 }
 
 func TestMemberGets400ForMalformedNUIDOrEmail(t *testing.T) {
-	client := CLIENT()
+	client := CLIENT
 	testVerifyGET := client.GET("/api/v1/member?email=somebody%40gmail.com&nuid=2134")
 
 	testVerifyGET.AssertStatusCode(400, t)
@@ -96,7 +88,7 @@ func TestMemberGets400ForMalformedNUIDOrEmail(t *testing.T) {
 }
 
 func TestMemberGets404IfNotFound(t *testing.T) {
-	client := CLIENT()
+	client := CLIENT
 	testVerifyGET := client.GET("/api/v1/member?email=somebodyNotExist%40northeastern.edu&nuid=123456789")
 	testVerifyGET.AssertStatusCode(404, t)
 }

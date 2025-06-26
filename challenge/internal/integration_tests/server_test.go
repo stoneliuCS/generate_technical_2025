@@ -23,7 +23,7 @@ import (
 var (
 	PORT   = 8008
 	LOGGER = slog.New(slog.Default().Handler())
-	CLIENT = func() *utils.TestClient { return utils.CreateTestClient(PORT, LOGGER) }
+	CLIENT = utils.CreateTestClient(PORT, LOGGER)
 )
 
 func RunTestServer() {
@@ -79,7 +79,7 @@ func RunTestServer() {
 func TestMain(m *testing.M) {
 	LOGGER.Info("Starting test server in a seperate go routine..")
 	go RunTestServer()
-	if !CLIENT().CheckServer(time.Second * 30) {
+	if !CLIENT.CheckServer(time.Second * 30) {
 		os.Exit(1)
 	}
 	LOGGER.Info("Finished setting up mock postgres container and server...")
@@ -93,6 +93,6 @@ func TestHealthCheck(t *testing.T) {
 		"message": "OK",
 	}
 
-	testVerify := CLIENT().GET("/healthcheck")
+	testVerify := CLIENT.GET("/healthcheck")
 	testVerify.AssertStatusCode(200, t).AssertBody(expectedBody, t)
 }

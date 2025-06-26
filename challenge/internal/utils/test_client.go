@@ -26,9 +26,9 @@ type TestVerify struct {
 	res *http.Response
 }
 
-func CreateTestClient(port int, logger *slog.Logger) *TestClient {
+func CreateTestClient(port int, logger *slog.Logger) TestClient {
 	portString := fmt.Sprintf("%d", port)
-	return &TestClient{
+	return TestClient{
 		client:  http.Client{Timeout: 30 * time.Second},
 		baseurl: "http://localhost:" + portString,
 		logger:  logger,
@@ -98,17 +98,17 @@ func (t TestClient) internalWrapper(reqSupplier func(body io.Reader) (*http.Requ
 	return TestVerify{res: res}
 }
 
-func (t *TestClient) AddHeaders(headers map[string]string) {
-	t.headers = headers
+func (t TestClient) AddHeaders(headers map[string]string) TestClient {
+	return TestClient{client: t.client, baseurl: t.baseurl, logger: t.logger, headers: headers, body: t.body}
 }
 
-func (t *TestClient) AddBody(body map[string]any) {
+func (t TestClient) AddBody(body map[string]any) TestClient {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		panic(err)
 	}
 	bodyReader := bytes.NewReader(jsonBody)
-	t.body = bodyReader
+	return TestClient{client: t.client, baseurl: t.baseurl, logger: t.logger, headers: t.headers, body: bodyReader}
 }
 
 func (v TestVerify) AssertStatusCode(statusCode int, t *testing.T) TestVerify {
