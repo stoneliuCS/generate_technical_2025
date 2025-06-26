@@ -23,6 +23,6 @@ type EnvConfig struct {
 func LoadEnv() EnvConfig {
 	var config EnvConfig
 	envFun := func() error { return envconfig.Process(context.Background(), &config) }
-	SafeCallErrorSupplier(envFun)
+	FatalCallErrorSupplier(envFun)
 	return config
 }

@@ -15,7 +15,7 @@ func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 
 	// Create server
 	srvFunc := func() (*api.Server, error) { return api.NewServer(handler,  opts) }
-	srv := utils.SafeCall(srvFunc)
+	srv := utils.FatalCall(srvFunc)
 	addr := fmt.Sprintf(":%d", cfg.PORT)
 	servFunc := func() error {
 		logger.Info("Started server on http://localhost" + addr)
@@ -23,5 +23,5 @@ func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 	}
 
 	// Run server indefinitely
-	utils.SafeCallErrorSupplier(servFunc)
+	utils.FatalCallErrorSupplier(servFunc)
 }

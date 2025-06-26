@@ -349,7 +349,7 @@ func (c *Client) sendAPIV1MemberGet(ctx context.Context, params APIV1MemberGetPa
 		}
 
 		if err := q.EncodeParam(cfg, func(e uri.Encoder) error {
-			return e.EncodeValue(conv.IntToString(params.Nuid))
+			return e.EncodeValue(conv.StringToString(params.Nuid))
 		}); err != nil {
 			return res, errors.Wrap(err, "encode query")
 		}

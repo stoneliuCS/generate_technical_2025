@@ -3,25 +3,49 @@ package handler
 
 import (
 	"context"
+	"errors"
 	api "generate_technical_challenge_2025/internal/api"
 	models "generate_technical_challenge_2025/internal/database/models"
 	"strings"
+
+	"gorm.io/gorm"
 )
+
+func validateNEUEmail(email string) bool {
+	splitEmail := strings.SplitN(email, "@", 2)
+	return splitEmail[1] == "northeastern.edu"
+}
+
+func validateNUID(nuid string) bool {
+	return len(nuid) == 9
+}
 
 // APIV1MemberGet implements api.Handler.
 func (h Handler) APIV1MemberGet(ctx context.Context, params api.APIV1MemberGetParams) (api.APIV1MemberGetRes, error) {
-	panic("unimplemented")
+	if !validateNEUEmail(params.Email) {
+		return &api.APIV1MemberGetBadRequest{Message: "Not a valid northeastern email address"}, nil
+	}
+	if !validateNUID(params.Nuid) {
+		return &api.APIV1MemberGetBadRequest{Message: "Not a valid NUID"}, nil
+	}
+	id, err := h.memberService.GetMember(params.Email, params.Nuid)
+	if err == nil {
+		return &api.APIV1MemberGetOK{ID: *id}, nil
+	}
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return &api.APIV1MemberGetNotFound{Message: "Could not find a northeastern email address or nuid associated."}, err
+	}
+	return &api.APIV1MemberGetInternalServerError{Message: "Internal server error."}, err
 }
 
 // APIV1MemberRegisterPost implements api.Handler.
 func (h Handler) APIV1MemberRegisterPost(ctx context.Context, req api.OptAPIV1MemberRegisterPostReq) (api.APIV1MemberRegisterPostRes, error) {
 	email := req.Value.GetEmail()
 	nuid := req.Value.GetNuid()
-	splitEmail := strings.SplitN(email, "@", 2)
-	if splitEmail[1] != "northeastern.edu" {
+	if !validateNEUEmail(email) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid northeastern email address."}, nil
 	}
-	if len(nuid) != 9 {
+	if !validateNUID(nuid) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid NUID."}, nil
 	}
 	// Deserialize input into internal model of users.

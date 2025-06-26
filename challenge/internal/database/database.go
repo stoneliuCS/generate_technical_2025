@@ -23,7 +23,7 @@ func CreateDatabase(cfg utils.EnvConfig, logger *slog.Logger) *gorm.DB {
 			SkipDefaultTransaction: true,
 		})
 	}
-	db := utils.SafeCall(db_creator)
+	db := utils.FatalCall(db_creator)
 	return db
 }
 

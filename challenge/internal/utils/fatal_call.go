@@ -4,7 +4,7 @@ import (
 	"log"
 )
 
-func SafeCall[T any](fn func() (T, error)) T {
+func FatalCall[T any](fn func() (T, error)) T {
 	val, err := fn()
 	if err != nil {
 		log.Fatal(err)
@@ -12,7 +12,7 @@ func SafeCall[T any](fn func() (T, error)) T {
 	return val
 }
 
-func SafeCallErrorSupplier(fn func() error) {
+func FatalCallErrorSupplier(fn func() error) {
 	err := fn()
 	if err != nil {
 		log.Fatal(err)

@@ -1,14 +1,12 @@
 import {
-  Integer,
   MediaType,
   Operation,
   Parameter,
   PathItem,
   Response,
   Responses,
-  String,
 } from "fluid-oas";
-import { ERROR, ID_RESPONSE } from "../schema";
+import { EMAIL, ERROR, ID_RESPONSE, NUID } from "../schema";
 
 export const MEMBER_ENDPOINT = PathItem.addSummary(
   "Get the associated id from the northeastern email address and nuid incase you forgot.",
@@ -19,13 +17,13 @@ export const MEMBER_ENDPOINT = PathItem.addSummary(
       .addName("email")
       .addDescription("Northeastern email address.")
       .addRequired(true)
-      .addSchema(String.addFormat("email")),
+      .addSchema(EMAIL),
     Parameter.schema
       .addIn("query")
       .addName("nuid")
       .addDescription("Northeastern NUID")
       .addRequired(true)
-      .addSchema(Integer),
+      .addSchema(NUID),
   ]).addResponses(
     Responses({
       "200": Response.addDescription(
@@ -36,6 +34,12 @@ export const MEMBER_ENDPOINT = PathItem.addSummary(
 
       "400": Response.addDescription(
         "Invalid northeastern email address or nuid provided.",
+      ).addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
+
+      "404": Response.addDescription(
+        "Northeastern email and nuid not found, please reregister again.",
       ).addContents({
         "application/json": MediaType.addSchema(ERROR),
       }),

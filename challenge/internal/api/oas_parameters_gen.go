@@ -151,7 +151,7 @@ type APIV1MemberGetParams struct {
 	// Northeastern email address.
 	Email string
 	// Northeastern NUID.
-	Nuid int
+	Nuid string
 }
 
 func unpackAPIV1MemberGetParams(packed middleware.Parameters) (params APIV1MemberGetParams) {
@@ -167,7 +167,7 @@ func unpackAPIV1MemberGetParams(packed middleware.Parameters) (params APIV1Membe
 			Name: "nuid",
 			In:   "query",
 		}
-		params.Nuid = packed[key].(int)
+		params.Nuid = packed[key].(string)
 	}
 	return params
 }
@@ -241,7 +241,7 @@ func decodeAPIV1MemberGetParams(args [0]string, argsEscaped bool, r *http.Reques
 					return err
 				}
 
-				c, err := conv.ToInt(val)
+				c, err := conv.ToString(val)
 				if err != nil {
 					return err
 				}

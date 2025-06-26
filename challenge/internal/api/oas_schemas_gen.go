@@ -782,6 +782,22 @@ func (s *APIV1MemberGetInternalServerError) SetMessage(val string) {
 
 func (*APIV1MemberGetInternalServerError) aPIV1MemberGetRes() {}
 
+type APIV1MemberGetNotFound struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1MemberGetNotFound) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1MemberGetNotFound) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1MemberGetNotFound) aPIV1MemberGetRes() {}
+
 // Unique identifier associated with the registered northeastern email.
 type APIV1MemberGetOK struct {
 	ID uuid.UUID `json:"id"`
@@ -867,7 +883,7 @@ func (*APIV1MemberRegisterPostInternalServerError) aPIV1MemberRegisterPostRes() 
 type APIV1MemberRegisterPostReq struct {
 	// Must be a valid Northeastern email address.
 	Email string `json:"email"`
-	// Valid nuid.
+	// Valid nuid, must be 9 digits in length.
 	Nuid string `json:"nuid"`
 }
 

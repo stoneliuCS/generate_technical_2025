@@ -10,6 +10,7 @@ import (
 
 type MemberTransactions interface {
 	InsertMember(*models.Member) (*uuid.UUID, error)
+	GetMember(string, string) (*uuid.UUID, error)
 }
 
 type MemberTransactionsImpl struct {
@@ -23,6 +24,16 @@ func CreateMemberTransactions(logger *slog.Logger, db *gorm.DB) MemberTransactio
 
 func (u MemberTransactionsImpl) InsertMember(member *models.Member) (*uuid.UUID, error) {
 	res := u.db.Create(&member)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	return &member.ID, nil
+}
+
+// GetMember implements MemberTransactions.
+func (u *MemberTransactionsImpl) GetMember(email string, nuid string) (*uuid.UUID, error) {
+	var member models.Member
+	res := u.db.First(&member).Where("email = ?", email).Where("nuid = ?", nuid)
 	if res.Error != nil {
 		return nil, res.Error
 	}

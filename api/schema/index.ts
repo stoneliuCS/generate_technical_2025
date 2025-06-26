@@ -13,11 +13,16 @@ export const ERROR = Object.addProperties({
   message: String,
 }).addRequired(["message"]);
 
+export const EMAIL = String.addFormat("email")
+  .addDescription("Must be a valid Northeastern email address.")
+  .addExample("foobar@northeastern.edu");
+export const NUID = String.addFormat("nuid")
+  .addDescription("Valid nuid, must be 9 digits in length")
+  .addExample("123456789");
+
 export const MEMBER_DETAILS = Object.addProperties({
-  email: String.addFormat("email").addDescription(
-    "Must be a valid Northeastern email address.",
-  ),
-  nuid: String.addFormat("nuid").addDescription("Valid nuid"),
+  email: EMAIL,
+  nuid: NUID,
 }).addRequired(["email", "nuid"]);
 
 export const ID_RESPONSE = Object.addProperties({

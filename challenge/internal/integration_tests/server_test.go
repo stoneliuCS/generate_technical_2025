@@ -52,10 +52,10 @@ func runServer() {
 		return
 	}
 	dbHostFn := func() (string, error) { return postgresContainer.Host(ctx) }
-	dbHost := utils.SafeCall(dbHostFn)
+	dbHost := utils.FatalCall(dbHostFn)
 
 	dbHostPortFn := func() (nat.Port, error) { return postgresContainer.MappedPort(ctx, nat.Port(dbPort)) }
-	dbPort = utils.SafeCall(dbHostPortFn).Port()
+	dbPort = utils.FatalCall(dbHostPortFn).Port()
 
 	envConfig := &utils.EnvConfig{
 		DB_HOST:     dbHost,
@@ -148,4 +148,30 @@ func TestUserReceives201OnGoodRequest(t *testing.T) {
 		return err == nil
 	}
 	testVerify.AssertStatusCode(201, t).AssertProperty("id", pred, t)
+}
+
+func TestMemberGets200IfUserIsFoundInDatabase(t *testing.T) {
+	// Registers the user.
+	client := CLIENT()
+	testVerifyGET := client.GET("/api/v1/member?email=somebody%40northeastern.edu&nuid=123456789")
+
+	pred := func(prop any) bool {
+		s, ok := prop.(string)
+		if !ok {
+			return ok
+		}
+		_, err := uuid.Parse(s)
+		return err == nil
+	}
+	testVerifyGET.AssertStatusCode(200, t).AssertProperty("id", pred, t)
+}
+
+func TestMemberGets400ForMalformedNUIDOrEmail(t *testing.T) {
+	// Registers the user.
+	client := CLIENT()
+	testVerifyGET := client.GET("/api/v1/member?email=somebody%40gmail.com&nuid=2134")
+
+	testVerifyGET.AssertStatusCode(400, t)
+	testVerifyGET = client.GET("/api/v1/member?email=somebody%40northeastern.com&nuid=1234")
+	testVerifyGET.AssertStatusCode(400, t)
 }

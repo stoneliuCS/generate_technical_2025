@@ -82,9 +82,9 @@ func (t TestClient) POST(endpoint string) TestVerify {
 func (t TestClient) internalWrapper(reqSupplier func(body io.Reader) (*http.Request, error)) TestVerify {
 	var req *http.Request
 	if t.body != nil {
-		req = SafeCall(func() (*http.Request, error) { return reqSupplier(t.body) })
+		req = FatalCall(func() (*http.Request, error) { return reqSupplier(t.body) })
 	} else {
-		req = SafeCall(func() (*http.Request, error) { return reqSupplier(nil) })
+		req = FatalCall(func() (*http.Request, error) { return reqSupplier(nil) })
 	}
 	if t.headers != nil {
 		for key, val := range t.headers {
@@ -94,7 +94,7 @@ func (t TestClient) internalWrapper(reqSupplier func(body io.Reader) (*http.Requ
 	resSupplier := func() (*http.Response, error) {
 		return t.client.Do(req)
 	}
-	res := SafeCall(resSupplier)
+	res := FatalCall(resSupplier)
 	return TestVerify{res: res}
 }
 
