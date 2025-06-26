@@ -3,12 +3,9 @@ package handler
 
 import (
 	"context"
-	"errors"
 	api "generate_technical_challenge_2025/internal/api"
 	models "generate_technical_challenge_2025/internal/database/models"
 	"strings"
-
-	"gorm.io/gorm"
 )
 
 func validateNEUEmail(email string) bool {
@@ -29,13 +26,10 @@ func (h Handler) APIV1MemberGet(ctx context.Context, params api.APIV1MemberGetPa
 		return &api.APIV1MemberGetBadRequest{Message: "Not a valid NUID"}, nil
 	}
 	id, err := h.memberService.GetMember(params.Email, params.Nuid)
-	if err == nil {
-		return &api.APIV1MemberGetOK{ID: *id}, nil
+	if err != nil {
+		return &api.APIV1MemberGetNotFound{Message: "Could not find a northeastern email address or nuid associated."}, nil
 	}
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return &api.APIV1MemberGetNotFound{Message: "Could not find a northeastern email address or nuid associated."}, err
-	}
-	return &api.APIV1MemberGetInternalServerError{Message: "Internal server error."}, err
+	return &api.APIV1MemberGetOK{ID: *id}, nil
 }
 
 // APIV1MemberRegisterPost implements api.Handler.
@@ -49,12 +43,11 @@ func (h Handler) APIV1MemberRegisterPost(ctx context.Context, req api.OptAPIV1Me
 	if !validateNUID(nuid) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid NUID."}, nil
 	}
-	// Check if the member has already registered.
 	exists, err := h.memberService.CheckMemberExists(email, nuid)
 	if err != nil {
-		return &api.APIV1MemberRegisterPostInternalServerError{Message: "Database error querying for user."}, err
+		return &api.APIV1MemberRegisterPostInternalServerError{Message: "Database error querying for user."}, nil
 	}
-	if *exists {
+	if exists {
 		return &api.APIV1MemberRegisterPostConflict{Message: "Member already exists."}, nil
 	}
 	// Deserialize input into internal model of users.

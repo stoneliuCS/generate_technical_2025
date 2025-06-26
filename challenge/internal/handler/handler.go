@@ -23,7 +23,7 @@ func (h Handler) Get(ctx context.Context) (api.GetRes, error) {
 		SpecURL: challenge.GetSpecPath(),
 	})
 	if err != nil {
-		return &api.GetInternalServerError{Message: "Could not parse API HTML"}, err
+		return &api.GetInternalServerError{Message: "Error fetching API documentation."}, nil
 	}
 	return &api.GetOK{Data: strings.NewReader(html)}, nil
 }

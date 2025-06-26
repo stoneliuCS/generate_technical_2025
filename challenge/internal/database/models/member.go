@@ -13,7 +13,7 @@ type Member struct {
 	// Northeastern email.
 	Email string
 	// NUID of the user.
-	NUID string
+	Nuid string
 	// Metadata
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -23,7 +23,7 @@ func CreateMember(email string, nuid string) *Member {
 	user := &Member{}
 	user.ID = uuid.New()
 	user.Email = email
-	user.NUID = nuid
+	user.Nuid = nuid
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
 	return user

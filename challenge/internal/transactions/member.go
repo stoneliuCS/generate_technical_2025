@@ -11,7 +11,7 @@ import (
 type MemberTransactions interface {
 	InsertMember(*models.Member) (*uuid.UUID, error)
 	GetMember(string, string) (*uuid.UUID, error)
-	MemberExists(string, string) (*bool, error)
+	MemberExists(string, string) (bool, error)
 }
 
 type MemberTransactionsImpl struct {
@@ -24,14 +24,13 @@ func CreateMemberTransactions(logger *slog.Logger, db *gorm.DB) MemberTransactio
 }
 
 // MemberExists implements MemberTransactions.
-func (u *MemberTransactionsImpl) MemberExists(email string, nuid string) (*bool, error) {
+func (u *MemberTransactionsImpl) MemberExists(email string, nuid string) (bool, error) {
 	var member models.Member
 	res := u.db.Where("email = ?", email).Where("nuid = ?", nuid).Limit(1).Find(&member)
 	if res.Error != nil {
-		return nil, res.Error
+		return false, res.Error
 	}
-	flag := res.RowsAffected > 0
-	return &flag, nil
+	return res.RowsAffected > 0, nil
 }
 
 func (u MemberTransactionsImpl) InsertMember(member *models.Member) (*uuid.UUID, error) {
@@ -45,7 +44,7 @@ func (u MemberTransactionsImpl) InsertMember(member *models.Member) (*uuid.UUID,
 // GetMember implements MemberTransactions.
 func (u *MemberTransactionsImpl) GetMember(email string, nuid string) (*uuid.UUID, error) {
 	var member models.Member
-	res := u.db.First(&member).Where("email = ?", email).Where("nuid = ?", nuid)
+	res := u.db.Where("email = ?", email).Where("nuid = ?", nuid).First(&member)
 	if res.Error != nil {
 		return nil, res.Error
 	}
