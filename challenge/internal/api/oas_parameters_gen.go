@@ -16,12 +16,12 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-// APIV1ChallengeIDAliensGetParams is parameters of GET /api/v1/challenge/{id}/aliens operation.
-type APIV1ChallengeIDAliensGetParams struct {
+// APIV1ChallengeBackendIDAliensGetParams is parameters of GET /api/v1/challenge/backend/{id}/aliens operation.
+type APIV1ChallengeBackendIDAliensGetParams struct {
 	ID uuid.UUID
 }
 
-func unpackAPIV1ChallengeIDAliensGetParams(packed middleware.Parameters) (params APIV1ChallengeIDAliensGetParams) {
+func unpackAPIV1ChallengeBackendIDAliensGetParams(packed middleware.Parameters) (params APIV1ChallengeBackendIDAliensGetParams) {
 	{
 		key := middleware.ParameterKey{
 			Name: "id",
@@ -32,7 +32,7 @@ func unpackAPIV1ChallengeIDAliensGetParams(packed middleware.Parameters) (params
 	return params
 }
 
-func decodeAPIV1ChallengeIDAliensGetParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeIDAliensGetParams, _ error) {
+func decodeAPIV1ChallengeBackendIDAliensGetParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeBackendIDAliensGetParams, _ error) {
 	// Decode path: id.
 	if err := func() error {
 		param := args[0]
@@ -81,12 +81,12 @@ func decodeAPIV1ChallengeIDAliensGetParams(args [1]string, argsEscaped bool, r *
 	return params, nil
 }
 
-// APIV1ChallengeIDSubmitPostParams is parameters of POST /api/v1/challenge/{id}/submit operation.
-type APIV1ChallengeIDSubmitPostParams struct {
+// APIV1ChallengeBackendIDAliensSubmitPostParams is parameters of POST /api/v1/challenge/backend/{id}/aliens/submit operation.
+type APIV1ChallengeBackendIDAliensSubmitPostParams struct {
 	ID uuid.UUID
 }
 
-func unpackAPIV1ChallengeIDSubmitPostParams(packed middleware.Parameters) (params APIV1ChallengeIDSubmitPostParams) {
+func unpackAPIV1ChallengeBackendIDAliensSubmitPostParams(packed middleware.Parameters) (params APIV1ChallengeBackendIDAliensSubmitPostParams) {
 	{
 		key := middleware.ParameterKey{
 			Name: "id",
@@ -97,7 +97,7 @@ func unpackAPIV1ChallengeIDSubmitPostParams(packed middleware.Parameters) (param
 	return params
 }
 
-func decodeAPIV1ChallengeIDSubmitPostParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeIDSubmitPostParams, _ error) {
+func decodeAPIV1ChallengeBackendIDAliensSubmitPostParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeBackendIDAliensSubmitPostParams, _ error) {
 	// Decode path: id.
 	if err := func() error {
 		param := args[0]

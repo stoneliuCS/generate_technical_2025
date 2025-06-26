@@ -11,7 +11,8 @@ import (
 type MemberTransactions interface {
 	InsertMember(*models.Member) (*uuid.UUID, error)
 	GetMember(string, string) (*uuid.UUID, error)
-	MemberExists(string, string) (bool, error)
+	MemberExistsByEmailAndNuid(string, string) (bool, error)
+	MemberExistsById(uuid.UUID) (bool, error)
 }
 
 type MemberTransactionsImpl struct {
@@ -19,12 +20,22 @@ type MemberTransactionsImpl struct {
 	db     *gorm.DB
 }
 
+// MemberExistsById implements MemberTransactions.
+func (u *MemberTransactionsImpl) MemberExistsById(id uuid.UUID) (bool, error) {
+	var member models.Member
+	res := u.db.Where("id = ?", id).Limit(1).Find(&member)
+	if res.Error != nil {
+		return false, res.Error
+	}
+	return res.RowsAffected > 0, nil
+}
+
 func CreateMemberTransactions(logger *slog.Logger, db *gorm.DB) MemberTransactions {
 	return &MemberTransactionsImpl{logger: logger, db: db}
 }
 
 // MemberExists implements MemberTransactions.
-func (u *MemberTransactionsImpl) MemberExists(email string, nuid string) (bool, error) {
+func (u *MemberTransactionsImpl) MemberExistsByEmailAndNuid(email string, nuid string) (bool, error) {
 	var member models.Member
 	res := u.db.Where("email = ?", email).Where("nuid = ?", nuid).Limit(1).Find(&member)
 	if res.Error != nil {

@@ -6,10 +6,10 @@ package api
 type OperationName = string
 
 const (
-	APIV1ChallengeIDAliensGetOperation  OperationName = "APIV1ChallengeIDAliensGet"
-	APIV1ChallengeIDSubmitPostOperation OperationName = "APIV1ChallengeIDSubmitPost"
-	APIV1MemberGetOperation             OperationName = "APIV1MemberGet"
-	APIV1MemberRegisterPostOperation    OperationName = "APIV1MemberRegisterPost"
-	GetOperation                        OperationName = "Get"
-	HealthcheckGetOperation             OperationName = "HealthcheckGet"
+	APIV1ChallengeBackendIDAliensGetOperation        OperationName = "APIV1ChallengeBackendIDAliensGet"
+	APIV1ChallengeBackendIDAliensSubmitPostOperation OperationName = "APIV1ChallengeBackendIDAliensSubmitPost"
+	APIV1MemberGetOperation                          OperationName = "APIV1MemberGet"
+	APIV1MemberRegisterPostOperation                 OperationName = "APIV1MemberRegisterPost"
+	GetOperation                                     OperationName = "Get"
+	HealthcheckGetOperation                          OperationName = "HealthcheckGet"
 )

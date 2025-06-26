@@ -17,6 +17,7 @@ tasks:
     summary: Run development db and server in docker.
     cmds:
       - docker rmi -f generate_technical_2025-challenge:latest
+      - docker compose down --volumes
       - docker compose up --watch
   sync:
     summary: Syncs up both generate api schema and server code.

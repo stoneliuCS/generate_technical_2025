@@ -9,422 +9,438 @@ import (
 	"github.com/google/uuid"
 )
 
-type APIV1ChallengeIDAliensGetInternalServerError struct {
+type APIV1ChallengeBackendIDAliensGetInternalServerError struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) GetMessage() string {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) SetMessage(val string) {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1ChallengeIDAliensGetInternalServerError) aPIV1ChallengeIDAliensGetRes() {}
+func (*APIV1ChallengeBackendIDAliensGetInternalServerError) aPIV1ChallengeBackendIDAliensGetRes() {}
 
-type APIV1ChallengeIDAliensGetOK struct {
-	Waves          []APIV1ChallengeIDAliensGetOKWavesItem       `json:"waves"`
-	AlienTypes     OptAPIV1ChallengeIDAliensGetOKAlienTypes     `json:"alienTypes"`
-	Budget         OptAPIV1ChallengeIDAliensGetOKBudget         `json:"budget"`
-	WallDurability OptAPIV1ChallengeIDAliensGetOKWallDurability `json:"wallDurability"`
+type APIV1ChallengeBackendIDAliensGetNotFound struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDAliensGetNotFound) aPIV1ChallengeBackendIDAliensGetRes() {}
+
+type APIV1ChallengeBackendIDAliensGetOK struct {
+	Waves          []APIV1ChallengeBackendIDAliensGetOKWavesItem       `json:"waves"`
+	AlienTypes     OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes     `json:"alienTypes"`
+	Budget         OptAPIV1ChallengeBackendIDAliensGetOKBudget         `json:"budget"`
+	WallDurability OptAPIV1ChallengeBackendIDAliensGetOKWallDurability `json:"wallDurability"`
 }
 
 // GetWaves returns the value of Waves.
-func (s *APIV1ChallengeIDAliensGetOK) GetWaves() []APIV1ChallengeIDAliensGetOKWavesItem {
+func (s *APIV1ChallengeBackendIDAliensGetOK) GetWaves() []APIV1ChallengeBackendIDAliensGetOKWavesItem {
 	return s.Waves
 }
 
 // GetAlienTypes returns the value of AlienTypes.
-func (s *APIV1ChallengeIDAliensGetOK) GetAlienTypes() OptAPIV1ChallengeIDAliensGetOKAlienTypes {
+func (s *APIV1ChallengeBackendIDAliensGetOK) GetAlienTypes() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes {
 	return s.AlienTypes
 }
 
 // GetBudget returns the value of Budget.
-func (s *APIV1ChallengeIDAliensGetOK) GetBudget() OptAPIV1ChallengeIDAliensGetOKBudget {
+func (s *APIV1ChallengeBackendIDAliensGetOK) GetBudget() OptAPIV1ChallengeBackendIDAliensGetOKBudget {
 	return s.Budget
 }
 
 // GetWallDurability returns the value of WallDurability.
-func (s *APIV1ChallengeIDAliensGetOK) GetWallDurability() OptAPIV1ChallengeIDAliensGetOKWallDurability {
+func (s *APIV1ChallengeBackendIDAliensGetOK) GetWallDurability() OptAPIV1ChallengeBackendIDAliensGetOKWallDurability {
 	return s.WallDurability
 }
 
 // SetWaves sets the value of Waves.
-func (s *APIV1ChallengeIDAliensGetOK) SetWaves(val []APIV1ChallengeIDAliensGetOKWavesItem) {
+func (s *APIV1ChallengeBackendIDAliensGetOK) SetWaves(val []APIV1ChallengeBackendIDAliensGetOKWavesItem) {
 	s.Waves = val
 }
 
 // SetAlienTypes sets the value of AlienTypes.
-func (s *APIV1ChallengeIDAliensGetOK) SetAlienTypes(val OptAPIV1ChallengeIDAliensGetOKAlienTypes) {
+func (s *APIV1ChallengeBackendIDAliensGetOK) SetAlienTypes(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) {
 	s.AlienTypes = val
 }
 
 // SetBudget sets the value of Budget.
-func (s *APIV1ChallengeIDAliensGetOK) SetBudget(val OptAPIV1ChallengeIDAliensGetOKBudget) {
+func (s *APIV1ChallengeBackendIDAliensGetOK) SetBudget(val OptAPIV1ChallengeBackendIDAliensGetOKBudget) {
 	s.Budget = val
 }
 
 // SetWallDurability sets the value of WallDurability.
-func (s *APIV1ChallengeIDAliensGetOK) SetWallDurability(val OptAPIV1ChallengeIDAliensGetOKWallDurability) {
+func (s *APIV1ChallengeBackendIDAliensGetOK) SetWallDurability(val OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) {
 	s.WallDurability = val
 }
 
-func (*APIV1ChallengeIDAliensGetOK) aPIV1ChallengeIDAliensGetRes() {}
+func (*APIV1ChallengeBackendIDAliensGetOK) aPIV1ChallengeBackendIDAliensGetRes() {}
 
-type APIV1ChallengeIDAliensGetOKAlienTypes struct {
-	Regular OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular `json:"regular"`
-	Swift   OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift   `json:"swift"`
-	Boss    OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss    `json:"boss"`
+type APIV1ChallengeBackendIDAliensGetOKAlienTypes struct {
+	Regular OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular `json:"regular"`
+	Swift   OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift   `json:"swift"`
+	Boss    OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss    `json:"boss"`
 }
 
 // GetRegular returns the value of Regular.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) GetRegular() OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) GetRegular() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular {
 	return s.Regular
 }
 
 // GetSwift returns the value of Swift.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) GetSwift() OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) GetSwift() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift {
 	return s.Swift
 }
 
 // GetBoss returns the value of Boss.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) GetBoss() OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) GetBoss() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss {
 	return s.Boss
 }
 
 // SetRegular sets the value of Regular.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) SetRegular(val OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) SetRegular(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) {
 	s.Regular = val
 }
 
 // SetSwift sets the value of Swift.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) SetSwift(val OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) SetSwift(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) {
 	s.Swift = val
 }
 
 // SetBoss sets the value of Boss.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) SetBoss(val OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) SetBoss(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) {
 	s.Boss = val
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesBoss struct {
-	Hp  OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp  `json:"hp"`
-	ID  OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID  `json:"id"`
-	Atk OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk `json:"atk"`
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss struct {
+	Hp  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp  `json:"hp"`
+	ID  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID  `json:"id"`
+	Atk OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk `json:"atk"`
 }
 
 // GetHp returns the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) GetHp() OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) GetHp() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp {
 	return s.Hp
 }
 
 // GetID returns the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) GetID() OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) GetID() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID {
 	return s.ID
 }
 
 // GetAtk returns the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) GetAtk() OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) GetAtk() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk {
 	return s.Atk
 }
 
 // SetHp sets the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) SetHp(val OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) SetHp(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) {
 	s.Hp = val
 }
 
 // SetID sets the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) SetID(val OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) SetID(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) {
 	s.ID = val
 }
 
 // SetAtk sets the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) SetAtk(val OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) SetAtk(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) {
 	s.Atk = val
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesBossAtk int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesBossAtk10 APIV1ChallengeIDAliensGetOKAlienTypesBossAtk = 10
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk10 APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk = 10
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesBossAtk values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesBossAtk {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesBossAtk{
-		APIV1ChallengeIDAliensGetOKAlienTypesBossAtk10,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk10,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesBossHp int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesBossHp10 APIV1ChallengeIDAliensGetOKAlienTypesBossHp = 10
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp10 APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp = 10
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesBossHp values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesBossHp) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesBossHp {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesBossHp{
-		APIV1ChallengeIDAliensGetOKAlienTypesBossHp10,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp10,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesBossID int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesBossID3 APIV1ChallengeIDAliensGetOKAlienTypesBossID = 3
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID3 APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID = 3
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesBossID values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesBossID) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesBossID {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesBossID{
-		APIV1ChallengeIDAliensGetOKAlienTypesBossID3,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID3,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesRegular struct {
-	Hp  OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp  `json:"hp"`
-	ID  OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID  `json:"id"`
-	Atk OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk `json:"atk"`
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular struct {
+	Hp  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp  `json:"hp"`
+	ID  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID  `json:"id"`
+	Atk OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk `json:"atk"`
 }
 
 // GetHp returns the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) GetHp() OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) GetHp() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp {
 	return s.Hp
 }
 
 // GetID returns the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) GetID() OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) GetID() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID {
 	return s.ID
 }
 
 // GetAtk returns the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) GetAtk() OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) GetAtk() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk {
 	return s.Atk
 }
 
 // SetHp sets the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) SetHp(val OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) SetHp(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) {
 	s.Hp = val
 }
 
 // SetID sets the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) SetID(val OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) SetID(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) {
 	s.ID = val
 }
 
 // SetAtk sets the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) SetAtk(val OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) SetAtk(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) {
 	s.Atk = val
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk3 APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk = 3
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk3 APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk = 3
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk{
-		APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk3,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk3,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesRegularHp int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesRegularHp2 APIV1ChallengeIDAliensGetOKAlienTypesRegularHp = 2
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp2 APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp = 2
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesRegularHp values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesRegularHp {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesRegularHp{
-		APIV1ChallengeIDAliensGetOKAlienTypesRegularHp2,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp2,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesRegularID int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesRegularID1 APIV1ChallengeIDAliensGetOKAlienTypesRegularID = 1
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID1 APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID = 1
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesRegularID values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesRegularID) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesRegularID {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesRegularID{
-		APIV1ChallengeIDAliensGetOKAlienTypesRegularID1,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID1,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesSwift struct {
-	Hp  OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp  `json:"hp"`
-	ID  OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID  `json:"id"`
-	Atk OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk `json:"atk"`
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift struct {
+	Hp  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp  `json:"hp"`
+	ID  OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID  `json:"id"`
+	Atk OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk `json:"atk"`
 }
 
 // GetHp returns the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) GetHp() OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) GetHp() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp {
 	return s.Hp
 }
 
 // GetID returns the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) GetID() OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) GetID() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID {
 	return s.ID
 }
 
 // GetAtk returns the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) GetAtk() OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) GetAtk() OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk {
 	return s.Atk
 }
 
 // SetHp sets the value of Hp.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) SetHp(val OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) SetHp(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) {
 	s.Hp = val
 }
 
 // SetID sets the value of ID.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) SetID(val OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) SetID(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) {
 	s.ID = val
 }
 
 // SetAtk sets the value of Atk.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) SetAtk(val OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) SetAtk(val OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) {
 	s.Atk = val
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk5 APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk = 5
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk5 APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk = 5
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk{
-		APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk5,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk5,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp1 APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp = 1
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp1 APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp = 1
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp{
-		APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp1,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp1,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKAlienTypesSwiftID int
+type APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID int
 
 const (
-	APIV1ChallengeIDAliensGetOKAlienTypesSwiftID2 APIV1ChallengeIDAliensGetOKAlienTypesSwiftID = 2
+	APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID2 APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID = 2
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKAlienTypesSwiftID values.
-func (APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) AllValues() []APIV1ChallengeIDAliensGetOKAlienTypesSwiftID {
-	return []APIV1ChallengeIDAliensGetOKAlienTypesSwiftID{
-		APIV1ChallengeIDAliensGetOKAlienTypesSwiftID2,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID values.
+func (APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) AllValues() []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID {
+	return []APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID{
+		APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID2,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKBudget int
+type APIV1ChallengeBackendIDAliensGetOKBudget int
 
 const (
-	APIV1ChallengeIDAliensGetOKBudget100 APIV1ChallengeIDAliensGetOKBudget = 100
+	APIV1ChallengeBackendIDAliensGetOKBudget100 APIV1ChallengeBackendIDAliensGetOKBudget = 100
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKBudget values.
-func (APIV1ChallengeIDAliensGetOKBudget) AllValues() []APIV1ChallengeIDAliensGetOKBudget {
-	return []APIV1ChallengeIDAliensGetOKBudget{
-		APIV1ChallengeIDAliensGetOKBudget100,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKBudget values.
+func (APIV1ChallengeBackendIDAliensGetOKBudget) AllValues() []APIV1ChallengeBackendIDAliensGetOKBudget {
+	return []APIV1ChallengeBackendIDAliensGetOKBudget{
+		APIV1ChallengeBackendIDAliensGetOKBudget100,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKWallDurability int
+type APIV1ChallengeBackendIDAliensGetOKWallDurability int
 
 const (
-	APIV1ChallengeIDAliensGetOKWallDurability100 APIV1ChallengeIDAliensGetOKWallDurability = 100
+	APIV1ChallengeBackendIDAliensGetOKWallDurability100 APIV1ChallengeBackendIDAliensGetOKWallDurability = 100
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKWallDurability values.
-func (APIV1ChallengeIDAliensGetOKWallDurability) AllValues() []APIV1ChallengeIDAliensGetOKWallDurability {
-	return []APIV1ChallengeIDAliensGetOKWallDurability{
-		APIV1ChallengeIDAliensGetOKWallDurability100,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKWallDurability values.
+func (APIV1ChallengeBackendIDAliensGetOKWallDurability) AllValues() []APIV1ChallengeBackendIDAliensGetOKWallDurability {
+	return []APIV1ChallengeBackendIDAliensGetOKWallDurability{
+		APIV1ChallengeBackendIDAliensGetOKWallDurability100,
 	}
 }
 
-type APIV1ChallengeIDAliensGetOKWavesItem struct {
-	Aliens []APIV1ChallengeIDAliensGetOKWavesItemAliensItem `json:"aliens"`
+type APIV1ChallengeBackendIDAliensGetOKWavesItem struct {
+	Aliens []APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem `json:"aliens"`
 }
 
 // GetAliens returns the value of Aliens.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) GetAliens() []APIV1ChallengeIDAliensGetOKWavesItemAliensItem {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) GetAliens() []APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem {
 	return s.Aliens
 }
 
 // SetAliens sets the value of Aliens.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) SetAliens(val []APIV1ChallengeIDAliensGetOKWavesItemAliensItem) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) SetAliens(val []APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) {
 	s.Aliens = val
 }
 
-type APIV1ChallengeIDAliensGetOKWavesItemAliensItem struct {
-	Type  APIV1ChallengeIDAliensGetOKWavesItemAliensItemType `json:"type"`
-	Count int                                                `json:"count"`
+type APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem struct {
+	Type  APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType `json:"type"`
+	Count int                                                       `json:"count"`
 }
 
 // GetType returns the value of Type.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) GetType() APIV1ChallengeIDAliensGetOKWavesItemAliensItemType {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) GetType() APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType {
 	return s.Type
 }
 
 // GetCount returns the value of Count.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) GetCount() int {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) GetCount() int {
 	return s.Count
 }
 
 // SetType sets the value of Type.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) SetType(val APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) SetType(val APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) {
 	s.Type = val
 }
 
 // SetCount sets the value of Count.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) SetCount(val int) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) SetCount(val int) {
 	s.Count = val
 }
 
-type APIV1ChallengeIDAliensGetOKWavesItemAliensItemType string
+type APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType string
 
 const (
-	APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular APIV1ChallengeIDAliensGetOKWavesItemAliensItemType = "regular"
-	APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift   APIV1ChallengeIDAliensGetOKWavesItemAliensItemType = "swift"
-	APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss    APIV1ChallengeIDAliensGetOKWavesItemAliensItemType = "boss"
+	APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType = "regular"
+	APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift   APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType = "swift"
+	APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss    APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType = "boss"
 )
 
-// AllValues returns all APIV1ChallengeIDAliensGetOKWavesItemAliensItemType values.
-func (APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) AllValues() []APIV1ChallengeIDAliensGetOKWavesItemAliensItemType {
-	return []APIV1ChallengeIDAliensGetOKWavesItemAliensItemType{
-		APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular,
-		APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift,
-		APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss,
+// AllValues returns all APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType values.
+func (APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) AllValues() []APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType {
+	return []APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType{
+		APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular,
+		APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift,
+		APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss,
 	}
 }
 
 // MarshalText implements encoding.TextMarshaler.
-func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) MarshalText() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) MarshalText() ([]byte, error) {
 	switch s {
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular:
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular:
 		return []byte(s), nil
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift:
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift:
 		return []byte(s), nil
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss:
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss:
 		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
@@ -432,301 +448,303 @@ func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) MarshalText() ([]byt
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) UnmarshalText(data []byte) error {
-	switch APIV1ChallengeIDAliensGetOKWavesItemAliensItemType(data) {
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) UnmarshalText(data []byte) error {
+	switch APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType(data) {
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular
 		return nil
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift
 		return nil
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
 	}
 }
 
-type APIV1ChallengeIDAliensGetUnauthorized struct {
+type APIV1ChallengeBackendIDAliensGetUnauthorized struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) GetMessage() string {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) SetMessage(val string) {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1ChallengeIDAliensGetUnauthorized) aPIV1ChallengeIDAliensGetRes() {}
+func (*APIV1ChallengeBackendIDAliensGetUnauthorized) aPIV1ChallengeBackendIDAliensGetRes() {}
 
-type APIV1ChallengeIDSubmitPostBadRequest struct {
+type APIV1ChallengeBackendIDAliensSubmitPostBadRequest struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) GetMessage() string {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) SetMessage(val string) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1ChallengeIDSubmitPostBadRequest) aPIV1ChallengeIDSubmitPostRes() {}
+func (*APIV1ChallengeBackendIDAliensSubmitPostBadRequest) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
+}
 
-type APIV1ChallengeIDSubmitPostInternalServerError struct {
+type APIV1ChallengeBackendIDAliensSubmitPostInternalServerError struct {
 	Message string `json:"message"`
 }
 
 // GetMessage returns the value of Message.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) GetMessage() string {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) GetMessage() string {
 	return s.Message
 }
 
 // SetMessage sets the value of Message.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) SetMessage(val string) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) SetMessage(val string) {
 	s.Message = val
 }
 
-func (*APIV1ChallengeIDSubmitPostInternalServerError) aPIV1ChallengeIDSubmitPostRes() {}
-
-// APIV1ChallengeIDSubmitPostOK represents sum type.
-type APIV1ChallengeIDSubmitPostOK struct {
-	Type                          APIV1ChallengeIDSubmitPostOKType // switch on this field
-	APIV1ChallengeIDSubmitPostOK0 APIV1ChallengeIDSubmitPostOK0
-	APIV1ChallengeIDSubmitPostOK1 APIV1ChallengeIDSubmitPostOK1
+func (*APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
 }
 
-// APIV1ChallengeIDSubmitPostOKType is oneOf type of APIV1ChallengeIDSubmitPostOK.
-type APIV1ChallengeIDSubmitPostOKType string
+// APIV1ChallengeBackendIDAliensSubmitPostOK represents sum type.
+type APIV1ChallengeBackendIDAliensSubmitPostOK struct {
+	Type                                       APIV1ChallengeBackendIDAliensSubmitPostOKType // switch on this field
+	APIV1ChallengeBackendIDAliensSubmitPostOK0 APIV1ChallengeBackendIDAliensSubmitPostOK0
+	APIV1ChallengeBackendIDAliensSubmitPostOK1 APIV1ChallengeBackendIDAliensSubmitPostOK1
+}
 
-// Possible values for APIV1ChallengeIDSubmitPostOKType.
+// APIV1ChallengeBackendIDAliensSubmitPostOKType is oneOf type of APIV1ChallengeBackendIDAliensSubmitPostOK.
+type APIV1ChallengeBackendIDAliensSubmitPostOKType string
+
+// Possible values for APIV1ChallengeBackendIDAliensSubmitPostOKType.
 const (
-	APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK APIV1ChallengeIDSubmitPostOKType = "APIV1ChallengeIDSubmitPostOK0"
-	APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK APIV1ChallengeIDSubmitPostOKType = "APIV1ChallengeIDSubmitPostOK1"
+	APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK APIV1ChallengeBackendIDAliensSubmitPostOKType = "APIV1ChallengeBackendIDAliensSubmitPostOK0"
+	APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK APIV1ChallengeBackendIDAliensSubmitPostOKType = "APIV1ChallengeBackendIDAliensSubmitPostOK1"
 )
 
-// IsAPIV1ChallengeIDSubmitPostOK0 reports whether APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK0.
-func (s APIV1ChallengeIDSubmitPostOK) IsAPIV1ChallengeIDSubmitPostOK0() bool {
-	return s.Type == APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
+// IsAPIV1ChallengeBackendIDAliensSubmitPostOK0 reports whether APIV1ChallengeBackendIDAliensSubmitPostOK is APIV1ChallengeBackendIDAliensSubmitPostOK0.
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) IsAPIV1ChallengeBackendIDAliensSubmitPostOK0() bool {
+	return s.Type == APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK
 }
 
-// IsAPIV1ChallengeIDSubmitPostOK1 reports whether APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK1.
-func (s APIV1ChallengeIDSubmitPostOK) IsAPIV1ChallengeIDSubmitPostOK1() bool {
-	return s.Type == APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
+// IsAPIV1ChallengeBackendIDAliensSubmitPostOK1 reports whether APIV1ChallengeBackendIDAliensSubmitPostOK is APIV1ChallengeBackendIDAliensSubmitPostOK1.
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) IsAPIV1ChallengeBackendIDAliensSubmitPostOK1() bool {
+	return s.Type == APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK
 }
 
-// SetAPIV1ChallengeIDSubmitPostOK0 sets APIV1ChallengeIDSubmitPostOK to APIV1ChallengeIDSubmitPostOK0.
-func (s *APIV1ChallengeIDSubmitPostOK) SetAPIV1ChallengeIDSubmitPostOK0(v APIV1ChallengeIDSubmitPostOK0) {
-	s.Type = APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
-	s.APIV1ChallengeIDSubmitPostOK0 = v
+// SetAPIV1ChallengeBackendIDAliensSubmitPostOK0 sets APIV1ChallengeBackendIDAliensSubmitPostOK to APIV1ChallengeBackendIDAliensSubmitPostOK0.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK) SetAPIV1ChallengeBackendIDAliensSubmitPostOK0(v APIV1ChallengeBackendIDAliensSubmitPostOK0) {
+	s.Type = APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK
+	s.APIV1ChallengeBackendIDAliensSubmitPostOK0 = v
 }
 
-// GetAPIV1ChallengeIDSubmitPostOK0 returns APIV1ChallengeIDSubmitPostOK0 and true boolean if APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK0.
-func (s APIV1ChallengeIDSubmitPostOK) GetAPIV1ChallengeIDSubmitPostOK0() (v APIV1ChallengeIDSubmitPostOK0, ok bool) {
-	if !s.IsAPIV1ChallengeIDSubmitPostOK0() {
+// GetAPIV1ChallengeBackendIDAliensSubmitPostOK0 returns APIV1ChallengeBackendIDAliensSubmitPostOK0 and true boolean if APIV1ChallengeBackendIDAliensSubmitPostOK is APIV1ChallengeBackendIDAliensSubmitPostOK0.
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) GetAPIV1ChallengeBackendIDAliensSubmitPostOK0() (v APIV1ChallengeBackendIDAliensSubmitPostOK0, ok bool) {
+	if !s.IsAPIV1ChallengeBackendIDAliensSubmitPostOK0() {
 		return v, false
 	}
-	return s.APIV1ChallengeIDSubmitPostOK0, true
+	return s.APIV1ChallengeBackendIDAliensSubmitPostOK0, true
 }
 
-// NewAPIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK returns new APIV1ChallengeIDSubmitPostOK from APIV1ChallengeIDSubmitPostOK0.
-func NewAPIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK(v APIV1ChallengeIDSubmitPostOK0) APIV1ChallengeIDSubmitPostOK {
-	var s APIV1ChallengeIDSubmitPostOK
-	s.SetAPIV1ChallengeIDSubmitPostOK0(v)
+// NewAPIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK returns new APIV1ChallengeBackendIDAliensSubmitPostOK from APIV1ChallengeBackendIDAliensSubmitPostOK0.
+func NewAPIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK(v APIV1ChallengeBackendIDAliensSubmitPostOK0) APIV1ChallengeBackendIDAliensSubmitPostOK {
+	var s APIV1ChallengeBackendIDAliensSubmitPostOK
+	s.SetAPIV1ChallengeBackendIDAliensSubmitPostOK0(v)
 	return s
 }
 
-// SetAPIV1ChallengeIDSubmitPostOK1 sets APIV1ChallengeIDSubmitPostOK to APIV1ChallengeIDSubmitPostOK1.
-func (s *APIV1ChallengeIDSubmitPostOK) SetAPIV1ChallengeIDSubmitPostOK1(v APIV1ChallengeIDSubmitPostOK1) {
-	s.Type = APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
-	s.APIV1ChallengeIDSubmitPostOK1 = v
+// SetAPIV1ChallengeBackendIDAliensSubmitPostOK1 sets APIV1ChallengeBackendIDAliensSubmitPostOK to APIV1ChallengeBackendIDAliensSubmitPostOK1.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK) SetAPIV1ChallengeBackendIDAliensSubmitPostOK1(v APIV1ChallengeBackendIDAliensSubmitPostOK1) {
+	s.Type = APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK
+	s.APIV1ChallengeBackendIDAliensSubmitPostOK1 = v
 }
 
-// GetAPIV1ChallengeIDSubmitPostOK1 returns APIV1ChallengeIDSubmitPostOK1 and true boolean if APIV1ChallengeIDSubmitPostOK is APIV1ChallengeIDSubmitPostOK1.
-func (s APIV1ChallengeIDSubmitPostOK) GetAPIV1ChallengeIDSubmitPostOK1() (v APIV1ChallengeIDSubmitPostOK1, ok bool) {
-	if !s.IsAPIV1ChallengeIDSubmitPostOK1() {
+// GetAPIV1ChallengeBackendIDAliensSubmitPostOK1 returns APIV1ChallengeBackendIDAliensSubmitPostOK1 and true boolean if APIV1ChallengeBackendIDAliensSubmitPostOK is APIV1ChallengeBackendIDAliensSubmitPostOK1.
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) GetAPIV1ChallengeBackendIDAliensSubmitPostOK1() (v APIV1ChallengeBackendIDAliensSubmitPostOK1, ok bool) {
+	if !s.IsAPIV1ChallengeBackendIDAliensSubmitPostOK1() {
 		return v, false
 	}
-	return s.APIV1ChallengeIDSubmitPostOK1, true
+	return s.APIV1ChallengeBackendIDAliensSubmitPostOK1, true
 }
 
-// NewAPIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK returns new APIV1ChallengeIDSubmitPostOK from APIV1ChallengeIDSubmitPostOK1.
-func NewAPIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK(v APIV1ChallengeIDSubmitPostOK1) APIV1ChallengeIDSubmitPostOK {
-	var s APIV1ChallengeIDSubmitPostOK
-	s.SetAPIV1ChallengeIDSubmitPostOK1(v)
+// NewAPIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK returns new APIV1ChallengeBackendIDAliensSubmitPostOK from APIV1ChallengeBackendIDAliensSubmitPostOK1.
+func NewAPIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK(v APIV1ChallengeBackendIDAliensSubmitPostOK1) APIV1ChallengeBackendIDAliensSubmitPostOK {
+	var s APIV1ChallengeBackendIDAliensSubmitPostOK
+	s.SetAPIV1ChallengeBackendIDAliensSubmitPostOK1(v)
 	return s
 }
 
-func (*APIV1ChallengeIDSubmitPostOK) aPIV1ChallengeIDSubmitPostRes() {}
+func (*APIV1ChallengeBackendIDAliensSubmitPostOK) aPIV1ChallengeBackendIDAliensSubmitPostRes() {}
 
-type APIV1ChallengeIDSubmitPostOK0 struct {
+type APIV1ChallengeBackendIDAliensSubmitPostOK0 struct {
 	Valid OptBool `json:"valid"`
 	Score OptInt  `json:"score"`
 }
 
 // GetValid returns the value of Valid.
-func (s *APIV1ChallengeIDSubmitPostOK0) GetValid() OptBool {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) GetValid() OptBool {
 	return s.Valid
 }
 
 // GetScore returns the value of Score.
-func (s *APIV1ChallengeIDSubmitPostOK0) GetScore() OptInt {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) GetScore() OptInt {
 	return s.Score
 }
 
 // SetValid sets the value of Valid.
-func (s *APIV1ChallengeIDSubmitPostOK0) SetValid(val OptBool) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) SetValid(val OptBool) {
 	s.Valid = val
 }
 
 // SetScore sets the value of Score.
-func (s *APIV1ChallengeIDSubmitPostOK0) SetScore(val OptInt) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) SetScore(val OptInt) {
 	s.Score = val
 }
 
-type APIV1ChallengeIDSubmitPostOK1 struct {
+type APIV1ChallengeBackendIDAliensSubmitPostOK1 struct {
 	Valid  OptBool   `json:"valid"`
 	Reason OptString `json:"reason"`
 }
 
 // GetValid returns the value of Valid.
-func (s *APIV1ChallengeIDSubmitPostOK1) GetValid() OptBool {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) GetValid() OptBool {
 	return s.Valid
 }
 
 // GetReason returns the value of Reason.
-func (s *APIV1ChallengeIDSubmitPostOK1) GetReason() OptString {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) GetReason() OptString {
 	return s.Reason
 }
 
 // SetValid sets the value of Valid.
-func (s *APIV1ChallengeIDSubmitPostOK1) SetValid(val OptBool) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) SetValid(val OptBool) {
 	s.Valid = val
 }
 
 // SetReason sets the value of Reason.
-func (s *APIV1ChallengeIDSubmitPostOK1) SetReason(val OptString) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) SetReason(val OptString) {
 	s.Reason = val
 }
 
-type APIV1ChallengeIDSubmitPostReq struct {
-	GunsPurchased []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem `json:"gunsPurchased"`
-	TotalCost     OptInt                                           `json:"totalCost"`
-	Assignments   []APIV1ChallengeIDSubmitPostReqAssignmentsItem   `json:"assignments"`
+type APIV1ChallengeBackendIDAliensSubmitPostReq struct {
+	GunsPurchased []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem `json:"gunsPurchased"`
+	TotalCost     OptInt                                                        `json:"totalCost"`
+	Assignments   []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem   `json:"assignments"`
 }
 
 // GetGunsPurchased returns the value of GunsPurchased.
-func (s *APIV1ChallengeIDSubmitPostReq) GetGunsPurchased() []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetGunsPurchased() []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem {
 	return s.GunsPurchased
 }
 
 // GetTotalCost returns the value of TotalCost.
-func (s *APIV1ChallengeIDSubmitPostReq) GetTotalCost() OptInt {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetTotalCost() OptInt {
 	return s.TotalCost
 }
 
 // GetAssignments returns the value of Assignments.
-func (s *APIV1ChallengeIDSubmitPostReq) GetAssignments() []APIV1ChallengeIDSubmitPostReqAssignmentsItem {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetAssignments() []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem {
 	return s.Assignments
 }
 
 // SetGunsPurchased sets the value of GunsPurchased.
-func (s *APIV1ChallengeIDSubmitPostReq) SetGunsPurchased(val []APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetGunsPurchased(val []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) {
 	s.GunsPurchased = val
 }
 
 // SetTotalCost sets the value of TotalCost.
-func (s *APIV1ChallengeIDSubmitPostReq) SetTotalCost(val OptInt) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetTotalCost(val OptInt) {
 	s.TotalCost = val
 }
 
 // SetAssignments sets the value of Assignments.
-func (s *APIV1ChallengeIDSubmitPostReq) SetAssignments(val []APIV1ChallengeIDSubmitPostReqAssignmentsItem) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetAssignments(val []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) {
 	s.Assignments = val
 }
 
-type APIV1ChallengeIDSubmitPostReqAssignmentsItem struct {
+type APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem struct {
 	Wave                    OptInt  `json:"wave"`
 	GunQueues               [][]int `json:"gunQueues"`
 	WallDurabilityRemaining OptInt  `json:"wallDurabilityRemaining"`
 }
 
 // GetWave returns the value of Wave.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetWave() OptInt {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetWave() OptInt {
 	return s.Wave
 }
 
 // GetGunQueues returns the value of GunQueues.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetGunQueues() [][]int {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetGunQueues() [][]int {
 	return s.GunQueues
 }
 
 // GetWallDurabilityRemaining returns the value of WallDurabilityRemaining.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) GetWallDurabilityRemaining() OptInt {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetWallDurabilityRemaining() OptInt {
 	return s.WallDurabilityRemaining
 }
 
 // SetWave sets the value of Wave.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetWave(val OptInt) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetWave(val OptInt) {
 	s.Wave = val
 }
 
 // SetGunQueues sets the value of GunQueues.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetGunQueues(val [][]int) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetGunQueues(val [][]int) {
 	s.GunQueues = val
 }
 
 // SetWallDurabilityRemaining sets the value of WallDurabilityRemaining.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) SetWallDurabilityRemaining(val OptInt) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetWallDurabilityRemaining(val OptInt) {
 	s.WallDurabilityRemaining = val
 }
 
-type APIV1ChallengeIDSubmitPostReqGunsPurchasedItem struct {
-	Type OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType `json:"type"`
+type APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem struct {
+	Type OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType `json:"type"`
 }
 
 // GetType returns the value of Type.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) GetType() OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) GetType() OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
 	return s.Type
 }
 
 // SetType sets the value of Type.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) SetType(val OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) SetType(val OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) {
 	s.Type = val
 }
 
-type APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType string
+type APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType string
 
 const (
-	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret     APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "turret"
-	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "machineGun"
-	APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun     APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType = "rayGun"
+	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret     APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "turret"
+	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "machineGun"
+	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun     APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "rayGun"
 )
 
-// AllValues returns all APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType values.
-func (APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) AllValues() []APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
-	return []APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType{
-		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret,
-		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun,
-		APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun,
+// AllValues returns all APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType values.
+func (APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) AllValues() []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
+	return []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType{
+		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret,
+		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun,
+		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun,
 	}
 }
 
 // MarshalText implements encoding.TextMarshaler.
-func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalText() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalText() ([]byte, error) {
 	switch s {
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
 		return []byte(s), nil
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
 		return []byte(s), nil
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
 		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
@@ -734,16 +752,16 @@ func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalText() ([]byt
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalText(data []byte) error {
-	switch APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(data) {
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalText(data []byte) error {
+	switch APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(data) {
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret
 		return nil
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun
 		return nil
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
@@ -987,38 +1005,38 @@ func (s *HealthcheckGetOKMessage) UnmarshalText(data []byte) error {
 	}
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypes returns new OptAPIV1ChallengeIDAliensGetOKAlienTypes with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypes(v APIV1ChallengeIDAliensGetOKAlienTypes) OptAPIV1ChallengeIDAliensGetOKAlienTypes {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypes{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypes returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypes(v APIV1ChallengeBackendIDAliensGetOKAlienTypes) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypes is optional APIV1ChallengeIDAliensGetOKAlienTypes.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypes struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypes
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes is optional APIV1ChallengeBackendIDAliensGetOKAlienTypes.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypes
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypes was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypes) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypes) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypes
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypes
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypes) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypes) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypes) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypes) Get() (v APIV1ChallengeIDAliensGetOKAlienTypes, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypes, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1026,45 +1044,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypes) Get() (v APIV1ChallengeIDAlien
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypes) Or(d APIV1ChallengeIDAliensGetOKAlienTypes) APIV1ChallengeIDAliensGetOKAlienTypes {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypes) APIV1ChallengeBackendIDAliensGetOKAlienTypes {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBoss returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBoss(v APIV1ChallengeIDAliensGetOKAlienTypesBoss) OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss is optional APIV1ChallengeIDAliensGetOKAlienTypesBoss.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesBoss
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesBoss
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesBoss) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesBoss, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1072,45 +1090,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Get() (v APIV1ChallengeIDA
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Or(d APIV1ChallengeIDAliensGetOKAlienTypesBoss) APIV1ChallengeIDAliensGetOKAlienTypesBoss {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk(v APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk is optional APIV1ChallengeIDAliensGetOKAlienTypesBossAtk.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesBossAtk
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesBossAtk
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesBossAtk, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1118,45 +1136,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Get() (v APIV1Challenge
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Or(d APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) APIV1ChallengeIDAliensGetOKAlienTypesBossAtk {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp(v APIV1ChallengeIDAliensGetOKAlienTypesBossHp) OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp is optional APIV1ChallengeIDAliensGetOKAlienTypesBossHp.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesBossHp
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesBossHp
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesBossHp) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesBossHp, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1164,45 +1182,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Get() (v APIV1ChallengeI
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Or(d APIV1ChallengeIDAliensGetOKAlienTypesBossHp) APIV1ChallengeIDAliensGetOKAlienTypesBossHp {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossID returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesBossID(v APIV1ChallengeIDAliensGetOKAlienTypesBossID) OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID is optional APIV1ChallengeIDAliensGetOKAlienTypesBossID.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesBossID
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesBossID
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesBossID) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesBossID, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1210,45 +1228,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Get() (v APIV1ChallengeI
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Or(d APIV1ChallengeIDAliensGetOKAlienTypesBossID) APIV1ChallengeIDAliensGetOKAlienTypesBossID {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegular returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegular(v APIV1ChallengeIDAliensGetOKAlienTypesRegular) OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular is optional APIV1ChallengeIDAliensGetOKAlienTypesRegular.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesRegular
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesRegular
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesRegular) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesRegular, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1256,45 +1274,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Get() (v APIV1Challenge
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Or(d APIV1ChallengeIDAliensGetOKAlienTypesRegular) APIV1ChallengeIDAliensGetOKAlienTypesRegular {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk(v APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk is optional APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1302,45 +1320,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Get() (v APIV1Challe
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Or(d APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp(v APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp is optional APIV1ChallengeIDAliensGetOKAlienTypesRegularHp.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesRegularHp
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesRegularHp
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesRegularHp, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1348,45 +1366,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Get() (v APIV1Challen
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Or(d APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) APIV1ChallengeIDAliensGetOKAlienTypesRegularHp {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID(v APIV1ChallengeIDAliensGetOKAlienTypesRegularID) OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID is optional APIV1ChallengeIDAliensGetOKAlienTypesRegularID.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesRegularID
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesRegularID
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesRegularID) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesRegularID, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1394,45 +1412,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Get() (v APIV1Challen
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Or(d APIV1ChallengeIDAliensGetOKAlienTypesRegularID) APIV1ChallengeIDAliensGetOKAlienTypesRegularID {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwift returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwift(v APIV1ChallengeIDAliensGetOKAlienTypesSwift) OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift is optional APIV1ChallengeIDAliensGetOKAlienTypesSwift.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesSwift
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesSwift
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesSwift) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesSwift, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1440,45 +1458,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Get() (v APIV1ChallengeID
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Or(d APIV1ChallengeIDAliensGetOKAlienTypesSwift) APIV1ChallengeIDAliensGetOKAlienTypesSwift {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk is optional APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1486,45 +1504,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Get() (v APIV1Challeng
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Or(d APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp is optional APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1532,45 +1550,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Get() (v APIV1Challenge
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Or(d APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID returns new OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID {
-	return OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID returns new OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID {
+	return OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID is optional APIV1ChallengeIDAliensGetOKAlienTypesSwiftID.
-type OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID struct {
-	Value APIV1ChallengeIDAliensGetOKAlienTypesSwiftID
+// OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID is optional APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID.
+type OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID struct {
+	Value APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Reset() {
-	var v APIV1ChallengeIDAliensGetOKAlienTypesSwiftID
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) SetTo(v APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) SetTo(v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Get() (v APIV1ChallengeIDAliensGetOKAlienTypesSwiftID, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Get() (v APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1578,45 +1596,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Get() (v APIV1Challenge
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Or(d APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) APIV1ChallengeIDAliensGetOKAlienTypesSwiftID {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Or(d APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKBudget returns new OptAPIV1ChallengeIDAliensGetOKBudget with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKBudget(v APIV1ChallengeIDAliensGetOKBudget) OptAPIV1ChallengeIDAliensGetOKBudget {
-	return OptAPIV1ChallengeIDAliensGetOKBudget{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKBudget returns new OptAPIV1ChallengeBackendIDAliensGetOKBudget with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKBudget(v APIV1ChallengeBackendIDAliensGetOKBudget) OptAPIV1ChallengeBackendIDAliensGetOKBudget {
+	return OptAPIV1ChallengeBackendIDAliensGetOKBudget{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKBudget is optional APIV1ChallengeIDAliensGetOKBudget.
-type OptAPIV1ChallengeIDAliensGetOKBudget struct {
-	Value APIV1ChallengeIDAliensGetOKBudget
+// OptAPIV1ChallengeBackendIDAliensGetOKBudget is optional APIV1ChallengeBackendIDAliensGetOKBudget.
+type OptAPIV1ChallengeBackendIDAliensGetOKBudget struct {
+	Value APIV1ChallengeBackendIDAliensGetOKBudget
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKBudget was set.
-func (o OptAPIV1ChallengeIDAliensGetOKBudget) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKBudget was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKBudget) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKBudget) Reset() {
-	var v APIV1ChallengeIDAliensGetOKBudget
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKBudget) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKBudget
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKBudget) SetTo(v APIV1ChallengeIDAliensGetOKBudget) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKBudget) SetTo(v APIV1ChallengeBackendIDAliensGetOKBudget) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKBudget) Get() (v APIV1ChallengeIDAliensGetOKBudget, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKBudget) Get() (v APIV1ChallengeBackendIDAliensGetOKBudget, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1624,45 +1642,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKBudget) Get() (v APIV1ChallengeIDAliensGet
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKBudget) Or(d APIV1ChallengeIDAliensGetOKBudget) APIV1ChallengeIDAliensGetOKBudget {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKBudget) Or(d APIV1ChallengeBackendIDAliensGetOKBudget) APIV1ChallengeBackendIDAliensGetOKBudget {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDAliensGetOKWallDurability returns new OptAPIV1ChallengeIDAliensGetOKWallDurability with value set to v.
-func NewOptAPIV1ChallengeIDAliensGetOKWallDurability(v APIV1ChallengeIDAliensGetOKWallDurability) OptAPIV1ChallengeIDAliensGetOKWallDurability {
-	return OptAPIV1ChallengeIDAliensGetOKWallDurability{
+// NewOptAPIV1ChallengeBackendIDAliensGetOKWallDurability returns new OptAPIV1ChallengeBackendIDAliensGetOKWallDurability with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensGetOKWallDurability(v APIV1ChallengeBackendIDAliensGetOKWallDurability) OptAPIV1ChallengeBackendIDAliensGetOKWallDurability {
+	return OptAPIV1ChallengeBackendIDAliensGetOKWallDurability{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDAliensGetOKWallDurability is optional APIV1ChallengeIDAliensGetOKWallDurability.
-type OptAPIV1ChallengeIDAliensGetOKWallDurability struct {
-	Value APIV1ChallengeIDAliensGetOKWallDurability
+// OptAPIV1ChallengeBackendIDAliensGetOKWallDurability is optional APIV1ChallengeBackendIDAliensGetOKWallDurability.
+type OptAPIV1ChallengeBackendIDAliensGetOKWallDurability struct {
+	Value APIV1ChallengeBackendIDAliensGetOKWallDurability
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDAliensGetOKWallDurability was set.
-func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensGetOKWallDurability was set.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDAliensGetOKWallDurability) Reset() {
-	var v APIV1ChallengeIDAliensGetOKWallDurability
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) Reset() {
+	var v APIV1ChallengeBackendIDAliensGetOKWallDurability
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDAliensGetOKWallDurability) SetTo(v APIV1ChallengeIDAliensGetOKWallDurability) {
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) SetTo(v APIV1ChallengeBackendIDAliensGetOKWallDurability) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) Get() (v APIV1ChallengeIDAliensGetOKWallDurability, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) Get() (v APIV1ChallengeBackendIDAliensGetOKWallDurability, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1670,45 +1688,45 @@ func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) Get() (v APIV1ChallengeIDA
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) Or(d APIV1ChallengeIDAliensGetOKWallDurability) APIV1ChallengeIDAliensGetOKWallDurability {
+func (o OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) Or(d APIV1ChallengeBackendIDAliensGetOKWallDurability) APIV1ChallengeBackendIDAliensGetOKWallDurability {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDSubmitPostReq returns new OptAPIV1ChallengeIDSubmitPostReq with value set to v.
-func NewOptAPIV1ChallengeIDSubmitPostReq(v APIV1ChallengeIDSubmitPostReq) OptAPIV1ChallengeIDSubmitPostReq {
-	return OptAPIV1ChallengeIDSubmitPostReq{
+// NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq returns new OptAPIV1ChallengeBackendIDAliensSubmitPostReq with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq(v APIV1ChallengeBackendIDAliensSubmitPostReq) OptAPIV1ChallengeBackendIDAliensSubmitPostReq {
+	return OptAPIV1ChallengeBackendIDAliensSubmitPostReq{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDSubmitPostReq is optional APIV1ChallengeIDSubmitPostReq.
-type OptAPIV1ChallengeIDSubmitPostReq struct {
-	Value APIV1ChallengeIDSubmitPostReq
+// OptAPIV1ChallengeBackendIDAliensSubmitPostReq is optional APIV1ChallengeBackendIDAliensSubmitPostReq.
+type OptAPIV1ChallengeBackendIDAliensSubmitPostReq struct {
+	Value APIV1ChallengeBackendIDAliensSubmitPostReq
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDSubmitPostReq was set.
-func (o OptAPIV1ChallengeIDSubmitPostReq) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensSubmitPostReq was set.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) IsSet() bool { return o.Set }
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDSubmitPostReq) Reset() {
-	var v APIV1ChallengeIDSubmitPostReq
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Reset() {
+	var v APIV1ChallengeBackendIDAliensSubmitPostReq
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDSubmitPostReq) SetTo(v APIV1ChallengeIDSubmitPostReq) {
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) SetTo(v APIV1ChallengeBackendIDAliensSubmitPostReq) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDSubmitPostReq) Get() (v APIV1ChallengeIDSubmitPostReq, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Get() (v APIV1ChallengeBackendIDAliensSubmitPostReq, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1716,45 +1734,47 @@ func (o OptAPIV1ChallengeIDSubmitPostReq) Get() (v APIV1ChallengeIDSubmitPostReq
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDSubmitPostReq) Or(d APIV1ChallengeIDSubmitPostReq) APIV1ChallengeIDSubmitPostReq {
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Or(d APIV1ChallengeBackendIDAliensSubmitPostReq) APIV1ChallengeBackendIDAliensSubmitPostReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}
 	return d
 }
 
-// NewOptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType returns new OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType with value set to v.
-func NewOptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
-	return OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType{
+// NewOptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType returns new OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
+	return OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType{
 		Value: v,
 		Set:   true,
 	}
 }
 
-// OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType is optional APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType.
-type OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType struct {
-	Value APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType
+// OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType is optional APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType.
+type OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType struct {
+	Value APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType
 	Set   bool
 }
 
-// IsSet returns true if OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType was set.
-func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) IsSet() bool { return o.Set }
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType was set.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) IsSet() bool {
+	return o.Set
+}
 
 // Reset unsets value.
-func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Reset() {
-	var v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Reset() {
+	var v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType
 	o.Value = v
 	o.Set = false
 }
 
 // SetTo sets value to v.
-func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) SetTo(v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) {
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) SetTo(v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) {
 	o.Set = true
 	o.Value = v
 }
 
 // Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Get() (v APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType, ok bool) {
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Get() (v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType, ok bool) {
 	if !o.Set {
 		return v, false
 	}
@@ -1762,7 +1782,7 @@ func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Get() (v APIV1Cha
 }
 
 // Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Or(d APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType {
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Or(d APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
 	if v, ok := o.Get(); ok {
 		return v
 	}

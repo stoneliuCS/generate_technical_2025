@@ -10,7 +10,7 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func (s *APIV1ChallengeIDAliensGetOK) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOK) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -101,7 +101,7 @@ func (s *APIV1ChallengeIDAliensGetOK) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -167,7 +167,7 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypes) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -233,7 +233,7 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) Validate() error {
 	return nil
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Validate() error {
 	switch s {
 	case 10:
 		return nil
@@ -242,7 +242,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossHp) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Validate() error {
 	switch s {
 	case 10:
 		return nil
@@ -251,7 +251,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesBossHp) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossID) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Validate() error {
 	switch s {
 	case 3:
 		return nil
@@ -260,7 +260,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesBossID) Validate() error {
 	}
 }
 
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -326,7 +326,7 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) Validate() error {
 	return nil
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Validate() error {
 	switch s {
 	case 3:
 		return nil
@@ -335,7 +335,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Validate() error {
 	switch s {
 	case 2:
 		return nil
@@ -344,7 +344,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularID) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Validate() error {
 	switch s {
 	case 1:
 		return nil
@@ -353,7 +353,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularID) Validate() error {
 	}
 }
 
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -419,7 +419,7 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) Validate() error {
 	return nil
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Validate() error {
 	switch s {
 	case 5:
 		return nil
@@ -428,7 +428,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Validate() error {
 	switch s {
 	case 1:
 		return nil
@@ -437,7 +437,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Validate() error {
 	switch s {
 	case 2:
 		return nil
@@ -446,7 +446,7 @@ func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKBudget) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKBudget) Validate() error {
 	switch s {
 	case 100:
 		return nil
@@ -455,7 +455,7 @@ func (s APIV1ChallengeIDAliensGetOKBudget) Validate() error {
 	}
 }
 
-func (s APIV1ChallengeIDAliensGetOKWallDurability) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKWallDurability) Validate() error {
 	switch s {
 	case 100:
 		return nil
@@ -464,7 +464,7 @@ func (s APIV1ChallengeIDAliensGetOKWallDurability) Validate() error {
 	}
 }
 
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -501,7 +501,7 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItem) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -544,7 +544,7 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Validate() error {
 	return nil
 }
 
-func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) Validate() error {
+func (s APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) Validate() error {
 	switch s {
 	case "regular":
 		return nil
@@ -557,7 +557,7 @@ func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) Validate() error {
 	}
 }
 
-func (s *APIV1ChallengeIDSubmitPostReq) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -619,7 +619,7 @@ func (s *APIV1ChallengeIDSubmitPostReq) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -683,7 +683,7 @@ func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
@@ -713,7 +713,7 @@ func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Validate() error {
 	return nil
 }
 
-func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Validate() error {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Validate() error {
 	switch s {
 	case "turret":
 		return nil

@@ -34,6 +34,11 @@ export const ALIEN_CHALLENGE_ENDPOINT = PathItem.addMethod({
       ).addContents({
         "application/json": MediaType.addSchema(ERROR),
       }),
+      "404": Response.addDescription(
+        "ID not found.",
+      ).addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
       "500": Response.addDescription("Internal Server Error.").addContents({
         "application/json": MediaType.addSchema(ERROR),
       }),

@@ -13,8 +13,9 @@ import (
 
 // Handles incoming API requests
 type Handler struct {
-	memberService services.MemberService
-	logger        *slog.Logger // event logger
+	memberService    services.MemberService
+	challengeService services.ChallengeService
+	logger           *slog.Logger // event logger
 }
 
 // Get implements api.Handler.
@@ -34,9 +35,10 @@ func (h Handler) HealthcheckGet(ctx context.Context) (*api.HealthcheckGetOK, err
 }
 
 // Creates a new handler for all defined API endpoints
-func CreateHandler(logger *slog.Logger, memberService services.MemberService) api.Handler {
+func CreateHandler(logger *slog.Logger, memberService services.MemberService, challengeService services.ChallengeService) api.Handler {
 	return Handler{
 		memberService,
+		challengeService,
 		logger,
 	}
 }

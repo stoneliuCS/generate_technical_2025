@@ -12,9 +12,9 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func encodeAPIV1ChallengeIDAliensGetResponse(response APIV1ChallengeIDAliensGetRes, w http.ResponseWriter, span trace.Span) error {
+func encodeAPIV1ChallengeBackendIDAliensGetResponse(response APIV1ChallengeBackendIDAliensGetRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *APIV1ChallengeIDAliensGetOK:
+	case *APIV1ChallengeBackendIDAliensGetOK:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
@@ -27,7 +27,7 @@ func encodeAPIV1ChallengeIDAliensGetResponse(response APIV1ChallengeIDAliensGetR
 
 		return nil
 
-	case *APIV1ChallengeIDAliensGetUnauthorized:
+	case *APIV1ChallengeBackendIDAliensGetUnauthorized:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(401)
 		span.SetStatus(codes.Error, http.StatusText(401))
@@ -40,7 +40,20 @@ func encodeAPIV1ChallengeIDAliensGetResponse(response APIV1ChallengeIDAliensGetR
 
 		return nil
 
-	case *APIV1ChallengeIDAliensGetInternalServerError:
+	case *APIV1ChallengeBackendIDAliensGetNotFound:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(404)
+		span.SetStatus(codes.Error, http.StatusText(404))
+
+		e := new(jx.Encoder)
+		response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
+
+		return nil
+
+	case *APIV1ChallengeBackendIDAliensGetInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))
@@ -58,9 +71,9 @@ func encodeAPIV1ChallengeIDAliensGetResponse(response APIV1ChallengeIDAliensGetR
 	}
 }
 
-func encodeAPIV1ChallengeIDSubmitPostResponse(response APIV1ChallengeIDSubmitPostRes, w http.ResponseWriter, span trace.Span) error {
+func encodeAPIV1ChallengeBackendIDAliensSubmitPostResponse(response APIV1ChallengeBackendIDAliensSubmitPostRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *APIV1ChallengeIDSubmitPostOK:
+	case *APIV1ChallengeBackendIDAliensSubmitPostOK:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))
@@ -73,7 +86,7 @@ func encodeAPIV1ChallengeIDSubmitPostResponse(response APIV1ChallengeIDSubmitPos
 
 		return nil
 
-	case *APIV1ChallengeIDSubmitPostBadRequest:
+	case *APIV1ChallengeBackendIDAliensSubmitPostBadRequest:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(400)
 		span.SetStatus(codes.Error, http.StatusText(400))
@@ -86,7 +99,7 @@ func encodeAPIV1ChallengeIDSubmitPostResponse(response APIV1ChallengeIDSubmitPos
 
 		return nil
 
-	case *APIV1ChallengeIDSubmitPostInternalServerError:
+	case *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
 		span.SetStatus(codes.Error, http.StatusText(500))

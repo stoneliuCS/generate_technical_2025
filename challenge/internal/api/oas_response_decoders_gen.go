@@ -15,7 +15,7 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res APIV1ChallengeIDAliensGetRes, _ error) {
+func decodeAPIV1ChallengeBackendIDAliensGetResponse(resp *http.Response) (res APIV1ChallengeBackendIDAliensGetRes, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
@@ -31,7 +31,7 @@ func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res APIV1Chal
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDAliensGetOK
+			var response APIV1ChallengeBackendIDAliensGetOK
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -75,7 +75,42 @@ func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res APIV1Chal
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDAliensGetUnauthorized
+			var response APIV1ChallengeBackendIDAliensGetUnauthorized
+			if err := func() error {
+				if err := response.Decode(d); err != nil {
+					return err
+				}
+				if err := d.Skip(); err != io.EOF {
+					return errors.New("unexpected trailing data")
+				}
+				return nil
+			}(); err != nil {
+				err = &ogenerrors.DecodeBodyError{
+					ContentType: ct,
+					Body:        buf,
+					Err:         err,
+				}
+				return res, err
+			}
+			return &response, nil
+		default:
+			return res, validate.InvalidContentType(ct)
+		}
+	case 404:
+		// Code 404.
+		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		if err != nil {
+			return res, errors.Wrap(err, "parse media type")
+		}
+		switch {
+		case ct == "application/json":
+			buf, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return res, err
+			}
+			d := jx.DecodeBytes(buf)
+
+			var response APIV1ChallengeBackendIDAliensGetNotFound
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -110,7 +145,7 @@ func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res APIV1Chal
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDAliensGetInternalServerError
+			var response APIV1ChallengeBackendIDAliensGetInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -135,7 +170,7 @@ func decodeAPIV1ChallengeIDAliensGetResponse(resp *http.Response) (res APIV1Chal
 	return res, validate.UnexpectedStatusCode(resp.StatusCode)
 }
 
-func decodeAPIV1ChallengeIDSubmitPostResponse(resp *http.Response) (res APIV1ChallengeIDSubmitPostRes, _ error) {
+func decodeAPIV1ChallengeBackendIDAliensSubmitPostResponse(resp *http.Response) (res APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
 	switch resp.StatusCode {
 	case 200:
 		// Code 200.
@@ -151,7 +186,7 @@ func decodeAPIV1ChallengeIDSubmitPostResponse(resp *http.Response) (res APIV1Cha
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDSubmitPostOK
+			var response APIV1ChallengeBackendIDAliensSubmitPostOK
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -186,7 +221,7 @@ func decodeAPIV1ChallengeIDSubmitPostResponse(resp *http.Response) (res APIV1Cha
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDSubmitPostBadRequest
+			var response APIV1ChallengeBackendIDAliensSubmitPostBadRequest
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err
@@ -221,7 +256,7 @@ func decodeAPIV1ChallengeIDSubmitPostResponse(resp *http.Response) (res APIV1Cha
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeIDSubmitPostInternalServerError
+			var response APIV1ChallengeBackendIDAliensSubmitPostInternalServerError
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

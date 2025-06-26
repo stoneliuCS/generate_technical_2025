@@ -25,12 +25,15 @@ func main() {
 
 	logger.Info("Initializing transaction layer...")
 	memberTransactions := transactions.CreateMemberTransactions(logger, db)
+	challengeTransactions := transactions.CreateMemberTransactions(logger, db)
 
 	logger.Info("Intializing service layer...")
 	memberServices := services.CreateMemberService(logger, memberTransactions)
+	challengeServices := services.CreateChallengeService(
+		logger, challengeTransactions)
 
 	logger.Info("Intializing handler layer...")
-	h := handler.CreateHandler(logger, memberServices)
+	h := handler.CreateHandler(logger, memberServices, challengeServices)
 
 	server.RunServer(h, env, logger)
 }

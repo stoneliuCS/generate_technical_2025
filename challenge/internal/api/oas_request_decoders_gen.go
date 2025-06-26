@@ -14,8 +14,8 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func (s *Server) decodeAPIV1ChallengeIDSubmitPostRequest(r *http.Request) (
-	req OptAPIV1ChallengeIDSubmitPostReq,
+func (s *Server) decodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(r *http.Request) (
+	req OptAPIV1ChallengeBackendIDAliensSubmitPostReq,
 	close func() error,
 	rerr error,
 ) {
@@ -57,7 +57,7 @@ func (s *Server) decodeAPIV1ChallengeIDSubmitPostRequest(r *http.Request) (
 
 		d := jx.DecodeBytes(buf)
 
-		var request OptAPIV1ChallengeIDSubmitPostReq
+		var request OptAPIV1ChallengeBackendIDAliensSubmitPostReq
 		if err := func() error {
 			request.Reset()
 			if err := request.Decode(d); err != nil {

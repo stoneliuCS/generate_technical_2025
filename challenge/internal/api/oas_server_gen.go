@@ -8,14 +8,14 @@ import (
 
 // Handler handles operations described by OpenAPI v3 specification.
 type Handler interface {
-	// APIV1ChallengeIDAliensGet implements GET /api/v1/challenge/{id}/aliens operation.
+	// APIV1ChallengeBackendIDAliensGet implements GET /api/v1/challenge/backend/{id}/aliens operation.
 	//
-	// GET /api/v1/challenge/{id}/aliens
-	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error)
-	// APIV1ChallengeIDSubmitPost implements POST /api/v1/challenge/{id}/submit operation.
+	// GET /api/v1/challenge/backend/{id}/aliens
+	APIV1ChallengeBackendIDAliensGet(ctx context.Context, params APIV1ChallengeBackendIDAliensGetParams) (APIV1ChallengeBackendIDAliensGetRes, error)
+	// APIV1ChallengeBackendIDAliensSubmitPost implements POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 	//
-	// POST /api/v1/challenge/{id}/submit
-	APIV1ChallengeIDSubmitPost(ctx context.Context, req OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error)
+	// POST /api/v1/challenge/backend/{id}/aliens/submit
+	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
 	// APIV1MemberGet implements GET /api/v1/member operation.
 	//
 	// GET /api/v1/member

@@ -13,17 +13,17 @@ type UnimplementedHandler struct{}
 
 var _ Handler = UnimplementedHandler{}
 
-// APIV1ChallengeIDAliensGet implements GET /api/v1/challenge/{id}/aliens operation.
+// APIV1ChallengeBackendIDAliensGet implements GET /api/v1/challenge/backend/{id}/aliens operation.
 //
-// GET /api/v1/challenge/{id}/aliens
-func (UnimplementedHandler) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (r APIV1ChallengeIDAliensGetRes, _ error) {
+// GET /api/v1/challenge/backend/{id}/aliens
+func (UnimplementedHandler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params APIV1ChallengeBackendIDAliensGetParams) (r APIV1ChallengeBackendIDAliensGetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
-// APIV1ChallengeIDSubmitPost implements POST /api/v1/challenge/{id}/submit operation.
+// APIV1ChallengeBackendIDAliensSubmitPost implements POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
-// POST /api/v1/challenge/{id}/submit
-func (UnimplementedHandler) APIV1ChallengeIDSubmitPost(ctx context.Context, req OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (r APIV1ChallengeIDSubmitPostRes, _ error) {
+// POST /api/v1/challenge/backend/{id}/aliens/submit
+func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (r APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

@@ -26,7 +26,7 @@ var (
 	CLIENT = utils.CreateTestClient(PORT, LOGGER)
 )
 
-func RunTestServer() {
+func runTestServer() {
 	ctx := context.Background()
 
 	dbName := "users"
@@ -69,16 +69,18 @@ func RunTestServer() {
 	database.AutoMigrate(db)
 
 	memberTransactions := transactions.CreateMemberTransactions(LOGGER, db)
+	challengeTransactions := transactions.CreateMemberTransactions(LOGGER, db)
 
 	memberServices := services.CreateMemberService(LOGGER, memberTransactions)
+	challengeServices := services.CreateChallengeService(LOGGER, challengeTransactions)
 
-	h := handler.CreateHandler(LOGGER, memberServices)
+	h := handler.CreateHandler(LOGGER, memberServices, challengeServices)
 	server.RunServer(h, *envConfig, LOGGER)
 }
 
 func TestMain(m *testing.M) {
 	LOGGER.Info("Starting test server in a seperate go routine..")
-	go RunTestServer()
+	go runTestServer()
 	if !CLIENT.CheckServer(time.Second * 30) {
 		os.Exit(1)
 	}

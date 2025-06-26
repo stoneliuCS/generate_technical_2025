@@ -27,14 +27,14 @@ func trimTrailingSlashes(u *url.URL) {
 
 // Invoker invokes operations described by OpenAPI v3 specification.
 type Invoker interface {
-	// APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
+	// APIV1ChallengeBackendIDAliensGet invokes GET /api/v1/challenge/backend/{id}/aliens operation.
 	//
-	// GET /api/v1/challenge/{id}/aliens
-	APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error)
-	// APIV1ChallengeIDSubmitPost invokes POST /api/v1/challenge/{id}/submit operation.
+	// GET /api/v1/challenge/backend/{id}/aliens
+	APIV1ChallengeBackendIDAliensGet(ctx context.Context, params APIV1ChallengeBackendIDAliensGetParams) (APIV1ChallengeBackendIDAliensGetRes, error)
+	// APIV1ChallengeBackendIDAliensSubmitPost invokes POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 	//
-	// POST /api/v1/challenge/{id}/submit
-	APIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error)
+	// POST /api/v1/challenge/backend/{id}/aliens/submit
+	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
 	// APIV1MemberGet invokes GET /api/v1/member operation.
 	//
 	// GET /api/v1/member
@@ -98,18 +98,18 @@ func (c *Client) requestURL(ctx context.Context) *url.URL {
 	return u
 }
 
-// APIV1ChallengeIDAliensGet invokes GET /api/v1/challenge/{id}/aliens operation.
+// APIV1ChallengeBackendIDAliensGet invokes GET /api/v1/challenge/backend/{id}/aliens operation.
 //
-// GET /api/v1/challenge/{id}/aliens
-func (c *Client) APIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (APIV1ChallengeIDAliensGetRes, error) {
-	res, err := c.sendAPIV1ChallengeIDAliensGet(ctx, params)
+// GET /api/v1/challenge/backend/{id}/aliens
+func (c *Client) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params APIV1ChallengeBackendIDAliensGetParams) (APIV1ChallengeBackendIDAliensGetRes, error) {
+	res, err := c.sendAPIV1ChallengeBackendIDAliensGet(ctx, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1ChallengeIDAliensGetParams) (res APIV1ChallengeIDAliensGetRes, err error) {
+func (c *Client) sendAPIV1ChallengeBackendIDAliensGet(ctx context.Context, params APIV1ChallengeBackendIDAliensGetParams) (res APIV1ChallengeBackendIDAliensGetRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/aliens"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/aliens"),
 	}
 
 	// Run stopwatch.
@@ -124,7 +124,7 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeIDAliensGetOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeBackendIDAliensGetOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -142,7 +142,7 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 	stage = "BuildURL"
 	u := uri.Clone(c.requestURL(ctx))
 	var pathParts [3]string
-	pathParts[0] = "/api/v1/challenge/"
+	pathParts[0] = "/api/v1/challenge/backend/"
 	{
 		// Encode "id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
@@ -178,7 +178,7 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 	defer resp.Body.Close()
 
 	stage = "DecodeResponse"
-	result, err := decodeAPIV1ChallengeIDAliensGetResponse(resp)
+	result, err := decodeAPIV1ChallengeBackendIDAliensGetResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}
@@ -186,18 +186,18 @@ func (c *Client) sendAPIV1ChallengeIDAliensGet(ctx context.Context, params APIV1
 	return result, nil
 }
 
-// APIV1ChallengeIDSubmitPost invokes POST /api/v1/challenge/{id}/submit operation.
+// APIV1ChallengeBackendIDAliensSubmitPost invokes POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
-// POST /api/v1/challenge/{id}/submit
-func (c *Client) APIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (APIV1ChallengeIDSubmitPostRes, error) {
-	res, err := c.sendAPIV1ChallengeIDSubmitPost(ctx, request, params)
+// POST /api/v1/challenge/backend/{id}/aliens/submit
+func (c *Client) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
+	res, err := c.sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx, request, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request OptAPIV1ChallengeIDSubmitPostReq, params APIV1ChallengeIDSubmitPostParams) (res APIV1ChallengeIDSubmitPostRes, err error) {
+func (c *Client) sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (res APIV1ChallengeBackendIDAliensSubmitPostRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/submit"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/aliens/submit"),
 	}
 
 	// Run stopwatch.
@@ -212,7 +212,7 @@ func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request Opt
 	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
 
 	// Start a span for this request.
-	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeIDSubmitPostOperation,
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeBackendIDAliensSubmitPostOperation,
 		trace.WithAttributes(otelAttrs...),
 		clientSpanKind,
 	)
@@ -230,7 +230,7 @@ func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request Opt
 	stage = "BuildURL"
 	u := uri.Clone(c.requestURL(ctx))
 	var pathParts [3]string
-	pathParts[0] = "/api/v1/challenge/"
+	pathParts[0] = "/api/v1/challenge/backend/"
 	{
 		// Encode "id" parameter.
 		e := uri.NewPathEncoder(uri.PathEncoderConfig{
@@ -249,7 +249,7 @@ func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request Opt
 		}
 		pathParts[1] = encoded
 	}
-	pathParts[2] = "/submit"
+	pathParts[2] = "/aliens/submit"
 	uri.AddPathParts(u, pathParts[:]...)
 
 	stage = "EncodeRequest"
@@ -257,7 +257,7 @@ func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request Opt
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
 	}
-	if err := encodeAPIV1ChallengeIDSubmitPostRequest(request, r); err != nil {
+	if err := encodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(request, r); err != nil {
 		return res, errors.Wrap(err, "encode request")
 	}
 
@@ -269,7 +269,7 @@ func (c *Client) sendAPIV1ChallengeIDSubmitPost(ctx context.Context, request Opt
 	defer resp.Body.Close()
 
 	stage = "DecodeResponse"
-	result, err := decodeAPIV1ChallengeIDSubmitPostResponse(resp)
+	result, err := decodeAPIV1ChallengeBackendIDAliensSubmitPostResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

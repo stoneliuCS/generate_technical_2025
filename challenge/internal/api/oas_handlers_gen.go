@@ -29,19 +29,19 @@ func (c *codeRecorder) WriteHeader(status int) {
 	c.ResponseWriter.WriteHeader(status)
 }
 
-// handleAPIV1ChallengeIDAliensGetRequest handles GET /api/v1/challenge/{id}/aliens operation.
+// handleAPIV1ChallengeBackendIDAliensGetRequest handles GET /api/v1/challenge/backend/{id}/aliens operation.
 //
-// GET /api/v1/challenge/{id}/aliens
-func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// GET /api/v1/challenge/backend/{id}/aliens
+func (s *Server) handleAPIV1ChallengeBackendIDAliensGetRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("GET"),
-		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/aliens"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/aliens"),
 	}
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1ChallengeIDAliensGetOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1ChallengeBackendIDAliensGetOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -96,11 +96,11 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 		}
 		err          error
 		opErrContext = ogenerrors.OperationContext{
-			Name: APIV1ChallengeIDAliensGetOperation,
+			Name: APIV1ChallengeBackendIDAliensGetOperation,
 			ID:   "",
 		}
 	)
-	params, err := decodeAPIV1ChallengeIDAliensGetParams(args, argsEscaped, r)
+	params, err := decodeAPIV1ChallengeBackendIDAliensGetParams(args, argsEscaped, r)
 	if err != nil {
 		err = &ogenerrors.DecodeParamsError{
 			OperationContext: opErrContext,
@@ -111,11 +111,11 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 		return
 	}
 
-	var response APIV1ChallengeIDAliensGetRes
+	var response APIV1ChallengeBackendIDAliensGetRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    APIV1ChallengeIDAliensGetOperation,
+			OperationName:    APIV1ChallengeBackendIDAliensGetOperation,
 			OperationSummary: "",
 			OperationID:      "",
 			Body:             nil,
@@ -130,8 +130,8 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 
 		type (
 			Request  = struct{}
-			Params   = APIV1ChallengeIDAliensGetParams
-			Response = APIV1ChallengeIDAliensGetRes
+			Params   = APIV1ChallengeBackendIDAliensGetParams
+			Response = APIV1ChallengeBackendIDAliensGetRes
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -140,14 +140,14 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 		](
 			m,
 			mreq,
-			unpackAPIV1ChallengeIDAliensGetParams,
+			unpackAPIV1ChallengeBackendIDAliensGetParams,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.APIV1ChallengeIDAliensGet(ctx, params)
+				response, err = s.h.APIV1ChallengeBackendIDAliensGet(ctx, params)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.APIV1ChallengeIDAliensGet(ctx, params)
+		response, err = s.h.APIV1ChallengeBackendIDAliensGet(ctx, params)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -155,7 +155,7 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 		return
 	}
 
-	if err := encodeAPIV1ChallengeIDAliensGetResponse(response, w, span); err != nil {
+	if err := encodeAPIV1ChallengeBackendIDAliensGetResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)
@@ -164,19 +164,19 @@ func (s *Server) handleAPIV1ChallengeIDAliensGetRequest(args [1]string, argsEsca
 	}
 }
 
-// handleAPIV1ChallengeIDSubmitPostRequest handles POST /api/v1/challenge/{id}/submit operation.
+// handleAPIV1ChallengeBackendIDAliensSubmitPostRequest handles POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
-// POST /api/v1/challenge/{id}/submit
-func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
+// POST /api/v1/challenge/backend/{id}/aliens/submit
+func (s *Server) handleAPIV1ChallengeBackendIDAliensSubmitPostRequest(args [1]string, argsEscaped bool, w http.ResponseWriter, r *http.Request) {
 	statusWriter := &codeRecorder{ResponseWriter: w}
 	w = statusWriter
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("POST"),
-		semconv.HTTPRouteKey.String("/api/v1/challenge/{id}/submit"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/aliens/submit"),
 	}
 
 	// Start a span for this request.
-	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1ChallengeIDSubmitPostOperation,
+	ctx, span := s.cfg.Tracer.Start(r.Context(), APIV1ChallengeBackendIDAliensSubmitPostOperation,
 		trace.WithAttributes(otelAttrs...),
 		serverSpanKind,
 	)
@@ -231,11 +231,11 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		}
 		err          error
 		opErrContext = ogenerrors.OperationContext{
-			Name: APIV1ChallengeIDSubmitPostOperation,
+			Name: APIV1ChallengeBackendIDAliensSubmitPostOperation,
 			ID:   "",
 		}
 	)
-	params, err := decodeAPIV1ChallengeIDSubmitPostParams(args, argsEscaped, r)
+	params, err := decodeAPIV1ChallengeBackendIDAliensSubmitPostParams(args, argsEscaped, r)
 	if err != nil {
 		err = &ogenerrors.DecodeParamsError{
 			OperationContext: opErrContext,
@@ -245,7 +245,7 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		s.cfg.ErrorHandler(ctx, w, r, err)
 		return
 	}
-	request, close, err := s.decodeAPIV1ChallengeIDSubmitPostRequest(r)
+	request, close, err := s.decodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(r)
 	if err != nil {
 		err = &ogenerrors.DecodeRequestError{
 			OperationContext: opErrContext,
@@ -261,11 +261,11 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		}
 	}()
 
-	var response APIV1ChallengeIDSubmitPostRes
+	var response APIV1ChallengeBackendIDAliensSubmitPostRes
 	if m := s.cfg.Middleware; m != nil {
 		mreq := middleware.Request{
 			Context:          ctx,
-			OperationName:    APIV1ChallengeIDSubmitPostOperation,
+			OperationName:    APIV1ChallengeBackendIDAliensSubmitPostOperation,
 			OperationSummary: "",
 			OperationID:      "",
 			Body:             request,
@@ -279,9 +279,9 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		}
 
 		type (
-			Request  = OptAPIV1ChallengeIDSubmitPostReq
-			Params   = APIV1ChallengeIDSubmitPostParams
-			Response = APIV1ChallengeIDSubmitPostRes
+			Request  = OptAPIV1ChallengeBackendIDAliensSubmitPostReq
+			Params   = APIV1ChallengeBackendIDAliensSubmitPostParams
+			Response = APIV1ChallengeBackendIDAliensSubmitPostRes
 		)
 		response, err = middleware.HookMiddleware[
 			Request,
@@ -290,14 +290,14 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		](
 			m,
 			mreq,
-			unpackAPIV1ChallengeIDSubmitPostParams,
+			unpackAPIV1ChallengeBackendIDAliensSubmitPostParams,
 			func(ctx context.Context, request Request, params Params) (response Response, err error) {
-				response, err = s.h.APIV1ChallengeIDSubmitPost(ctx, request, params)
+				response, err = s.h.APIV1ChallengeBackendIDAliensSubmitPost(ctx, request, params)
 				return response, err
 			},
 		)
 	} else {
-		response, err = s.h.APIV1ChallengeIDSubmitPost(ctx, request, params)
+		response, err = s.h.APIV1ChallengeBackendIDAliensSubmitPost(ctx, request, params)
 	}
 	if err != nil {
 		defer recordError("Internal", err)
@@ -305,7 +305,7 @@ func (s *Server) handleAPIV1ChallengeIDSubmitPostRequest(args [1]string, argsEsc
 		return
 	}
 
-	if err := encodeAPIV1ChallengeIDSubmitPostResponse(response, w, span); err != nil {
+	if err := encodeAPIV1ChallengeBackendIDAliensSubmitPostResponse(response, w, span); err != nil {
 		defer recordError("EncodeResponse", err)
 		if !errors.Is(err, ht.ErrInternalServerErrorResponse) {
 			s.cfg.ErrorHandler(ctx, w, r, err)

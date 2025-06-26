@@ -14,28 +14,28 @@ import (
 )
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetInternalServerError = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetInternalServerError from json.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetInternalServerError from json.
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetInternalServerError to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetInternalServerError to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -58,7 +58,7 @@ func (s *APIV1ChallengeIDAliensGetInternalServerError) Decode(d *jx.Decoder) err
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetInternalServerError")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetInternalServerError")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -75,8 +75,8 @@ func (s *APIV1ChallengeIDAliensGetInternalServerError) Decode(d *jx.Decoder) err
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError) {
-					name = jsonFieldsNameOfAPIV1ChallengeIDAliensGetInternalServerError[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetInternalServerError) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetInternalServerError[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -97,27 +97,123 @@ func (s *APIV1ChallengeIDAliensGetInternalServerError) Decode(d *jx.Decoder) err
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetInternalServerError) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetInternalServerError) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOK) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOK) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetNotFound = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1ChallengeBackendIDAliensGetNotFound from json.
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetNotFound to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetNotFound")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetNotFound) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetNotFound[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeBackendIDAliensGetNotFound) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeBackendIDAliensGetOK) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeBackendIDAliensGetOK) encodeFields(e *jx.Encoder) {
 	{
 		if s.Waves != nil {
 			e.FieldStart("waves")
@@ -148,26 +244,26 @@ func (s *APIV1ChallengeIDAliensGetOK) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOK = [4]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOK = [4]string{
 	0: "waves",
 	1: "alienTypes",
 	2: "budget",
 	3: "wallDurability",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOK from json.
-func (s *APIV1ChallengeIDAliensGetOK) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOK from json.
+func (s *APIV1ChallengeBackendIDAliensGetOK) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOK to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOK to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
 		case "waves":
 			if err := func() error {
-				s.Waves = make([]APIV1ChallengeIDAliensGetOKWavesItem, 0)
+				s.Waves = make([]APIV1ChallengeBackendIDAliensGetOKWavesItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeIDAliensGetOKWavesItem
+					var elem APIV1ChallengeBackendIDAliensGetOKWavesItem
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -215,34 +311,34 @@ func (s *APIV1ChallengeIDAliensGetOK) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOK")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOK")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOK) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOK) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOK) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOK) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) encodeFields(e *jx.Encoder) {
 	{
 		if s.Regular.Set {
 			e.FieldStart("regular")
@@ -263,16 +359,16 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypes) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKAlienTypes = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKAlienTypes = [3]string{
 	0: "regular",
 	1: "swift",
 	2: "boss",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypes from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypes from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypes to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypes to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -312,34 +408,34 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKAlienTypes")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKAlienTypes")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypes) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) encodeFields(e *jx.Encoder) {
 	{
 		if s.Hp.Set {
 			e.FieldStart("hp")
@@ -360,16 +456,16 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) encodeFields(e *jx.Encoder) 
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKAlienTypesBoss = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss = [3]string{
 	0: "hp",
 	1: "id",
 	2: "atk",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBoss from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesBoss to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -409,130 +505,130 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) error 
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKAlienTypesBoss")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBoss) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossAtk as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossAtk from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesBossAtk to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesBossAtk(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossAtk) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossHp as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossHp from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesBossHp to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesBossHp(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossHp) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossHp) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossID as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossID from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesBossID to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesBossID(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesBossID) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesBossID) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) encodeFields(e *jx.Encoder) {
 	{
 		if s.Hp.Set {
 			e.FieldStart("hp")
@@ -553,16 +649,16 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) encodeFields(e *jx.Encode
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKAlienTypesRegular = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular = [3]string{
 	0: "hp",
 	1: "id",
 	2: "atk",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegular from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesRegular to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -602,130 +698,130 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) err
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKAlienTypesRegular")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegular) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularHp as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularHp from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesRegularHp to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesRegularHp(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularHp) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularID as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularID from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesRegularID to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesRegularID(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesRegularID) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesRegularID) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) encodeFields(e *jx.Encoder) {
 	{
 		if s.Hp.Set {
 			e.FieldStart("hp")
@@ -746,16 +842,16 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) encodeFields(e *jx.Encoder)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKAlienTypesSwift = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift = [3]string{
 	0: "hp",
 	1: "id",
 	2: "atk",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwift from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesSwift to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -795,194 +891,194 @@ func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) error
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKAlienTypesSwift")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwift) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftID as json.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID as json.
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftID from json.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKAlienTypesSwiftID to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKAlienTypesSwiftID(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKAlienTypesSwiftID) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKBudget as json.
-func (s APIV1ChallengeIDAliensGetOKBudget) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKBudget as json.
+func (s APIV1ChallengeBackendIDAliensGetOKBudget) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKBudget from json.
-func (s *APIV1ChallengeIDAliensGetOKBudget) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKBudget from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKBudget) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKBudget to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKBudget to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKBudget(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKBudget(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKBudget) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKBudget) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKBudget) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKBudget) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKWallDurability as json.
-func (s APIV1ChallengeIDAliensGetOKWallDurability) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKWallDurability as json.
+func (s APIV1ChallengeBackendIDAliensGetOKWallDurability) Encode(e *jx.Encoder) {
 	e.Int(int(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKWallDurability from json.
-func (s *APIV1ChallengeIDAliensGetOKWallDurability) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKWallDurability from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKWallDurability) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKWallDurability to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKWallDurability to nil")
 	}
 	v, err := d.Int()
 	if err != nil {
 		return err
 	}
-	*s = APIV1ChallengeIDAliensGetOKWallDurability(v)
+	*s = APIV1ChallengeBackendIDAliensGetOKWallDurability(v)
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKWallDurability) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKWallDurability) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKWallDurability) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWallDurability) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) encodeFields(e *jx.Encoder) {
 	{
 		if s.Aliens != nil {
 			e.FieldStart("aliens")
@@ -995,23 +1091,23 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItem) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKWavesItem = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKWavesItem = [1]string{
 	0: "aliens",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKWavesItem from json.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKWavesItem from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKWavesItem to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKWavesItem to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
 		case "aliens":
 			if err := func() error {
-				s.Aliens = make([]APIV1ChallengeIDAliensGetOKWavesItemAliensItem, 0)
+				s.Aliens = make([]APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeIDAliensGetOKWavesItemAliensItem
+					var elem APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -1029,34 +1125,34 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItem) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKWavesItem")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKWavesItem")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItem) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("type")
 		s.Type.Encode(e)
@@ -1067,15 +1163,15 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) encodeFields(e *jx.Enco
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKWavesItemAliensItem = [2]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem = [2]string{
 	0: "type",
 	1: "count",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKWavesItemAliensItem from json.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKWavesItemAliensItem to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1108,7 +1204,7 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Decode(d *jx.Decoder) e
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetOKWavesItemAliensItem")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1125,8 +1221,8 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Decode(d *jx.Decoder) e
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKWavesItemAliensItem) {
-					name = jsonFieldsNameOfAPIV1ChallengeIDAliensGetOKWavesItemAliensItem[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1147,83 +1243,83 @@ func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) Decode(d *jx.Decoder) e
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItem) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKWavesItemAliensItemType as json.
-func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType as json.
+func (s APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) Encode(e *jx.Encoder) {
 	e.Str(string(s))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKWavesItemAliensItemType from json.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType from json.
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetOKWavesItemAliensItemType to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType to nil")
 	}
 	v, err := d.StrBytes()
 	if err != nil {
 		return err
 	}
 	// Try to use constant string.
-	switch APIV1ChallengeIDAliensGetOKWavesItemAliensItemType(v) {
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeRegular
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeSwift
-	case APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemTypeBoss
+	switch APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType(v) {
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeRegular
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeSwift
+	case APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss:
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemTypeBoss
 	default:
-		*s = APIV1ChallengeIDAliensGetOKWavesItemAliensItemType(v)
+		*s = APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType(v)
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetOKWavesItemAliensItemType) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetUnauthorized = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetUnauthorized from json.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetUnauthorized from json.
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDAliensGetUnauthorized to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensGetUnauthorized to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1246,7 +1342,7 @@ func (s *APIV1ChallengeIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDAliensGetUnauthorized")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensGetUnauthorized")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1263,8 +1359,8 @@ func (s *APIV1ChallengeIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized) {
-					name = jsonFieldsNameOfAPIV1ChallengeIDAliensGetUnauthorized[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetUnauthorized) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensGetUnauthorized[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1285,41 +1381,41 @@ func (s *APIV1ChallengeIDAliensGetUnauthorized) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDAliensGetUnauthorized) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensGetUnauthorized) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostBadRequest = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostBadRequest from json.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostBadRequest from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostBadRequest to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostBadRequest to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1342,7 +1438,7 @@ func (s *APIV1ChallengeIDSubmitPostBadRequest) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostBadRequest")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostBadRequest")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1359,8 +1455,8 @@ func (s *APIV1ChallengeIDSubmitPostBadRequest) Decode(d *jx.Decoder) error {
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest) {
-					name = jsonFieldsNameOfAPIV1ChallengeIDSubmitPostBadRequest[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostBadRequest) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostBadRequest[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1381,41 +1477,41 @@ func (s *APIV1ChallengeIDSubmitPostBadRequest) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostBadRequest) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostBadRequest) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) encodeFields(e *jx.Encoder) {
 	{
 		e.FieldStart("message")
 		e.Str(s.Message)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostInternalServerError = [1]string{
 	0: "message",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostInternalServerError from json.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostInternalServerError from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostInternalServerError to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostInternalServerError to nil")
 	}
 	var requiredBitSet [1]uint8
 
@@ -1438,7 +1534,7 @@ func (s *APIV1ChallengeIDSubmitPostInternalServerError) Decode(d *jx.Decoder) er
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostInternalServerError")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostInternalServerError")
 	}
 	// Validate required fields.
 	var failures []validate.FieldError
@@ -1455,8 +1551,8 @@ func (s *APIV1ChallengeIDSubmitPostInternalServerError) Decode(d *jx.Decoder) er
 				bitIdx := bits.TrailingZeros8(result)
 				fieldIdx := i*8 + bitIdx
 				var name string
-				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError) {
-					name = jsonFieldsNameOfAPIV1ChallengeIDSubmitPostInternalServerError[fieldIdx]
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostInternalServerError) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostInternalServerError[fieldIdx]
 				} else {
 					name = strconv.Itoa(fieldIdx)
 				}
@@ -1477,41 +1573,41 @@ func (s *APIV1ChallengeIDSubmitPostInternalServerError) Decode(d *jx.Decoder) er
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostInternalServerError) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDSubmitPostOK as json.
-func (s APIV1ChallengeIDSubmitPostOK) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostOK as json.
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) Encode(e *jx.Encoder) {
 	switch s.Type {
-	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
-		s.APIV1ChallengeIDSubmitPostOK0.Encode(e)
-	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
-		s.APIV1ChallengeIDSubmitPostOK1.Encode(e)
+	case APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK:
+		s.APIV1ChallengeBackendIDAliensSubmitPostOK0.Encode(e)
+	case APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK:
+		s.APIV1ChallengeBackendIDAliensSubmitPostOK1.Encode(e)
 	}
 }
 
-func (s APIV1ChallengeIDSubmitPostOK) encodeFields(e *jx.Encoder) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) encodeFields(e *jx.Encoder) {
 	switch s.Type {
-	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
-		s.APIV1ChallengeIDSubmitPostOK0.encodeFields(e)
-	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
-		s.APIV1ChallengeIDSubmitPostOK1.encodeFields(e)
+	case APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK:
+		s.APIV1ChallengeBackendIDAliensSubmitPostOK0.encodeFields(e)
+	case APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK:
+		s.APIV1ChallengeBackendIDAliensSubmitPostOK1.encodeFields(e)
 	}
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostOK from json.
-func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostOK from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostOK to nil")
 	}
 	// Sum type fields.
 	if typ := d.Next(); typ != jx.Object {
@@ -1523,7 +1619,7 @@ func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
 		return d.ObjBytes(func(d *jx.Decoder, key []byte) error {
 			switch string(key) {
 			case "score":
-				match := APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK
+				match := APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK
 				if found && s.Type != match {
 					s.Type = ""
 					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
@@ -1531,7 +1627,7 @@ func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
 				found = true
 				s.Type = match
 			case "reason":
-				match := APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK
+				match := APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK
 				if found && s.Type != match {
 					s.Type = ""
 					return errors.Errorf("multiple oneOf matches: (%v, %v)", s.Type, match)
@@ -1548,12 +1644,12 @@ func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
 		return errors.New("unable to detect sum type variant")
 	}
 	switch s.Type {
-	case APIV1ChallengeIDSubmitPostOK0APIV1ChallengeIDSubmitPostOK:
-		if err := s.APIV1ChallengeIDSubmitPostOK0.Decode(d); err != nil {
+	case APIV1ChallengeBackendIDAliensSubmitPostOK0APIV1ChallengeBackendIDAliensSubmitPostOK:
+		if err := s.APIV1ChallengeBackendIDAliensSubmitPostOK0.Decode(d); err != nil {
 			return err
 		}
-	case APIV1ChallengeIDSubmitPostOK1APIV1ChallengeIDSubmitPostOK:
-		if err := s.APIV1ChallengeIDSubmitPostOK1.Decode(d); err != nil {
+	case APIV1ChallengeBackendIDAliensSubmitPostOK1APIV1ChallengeBackendIDAliensSubmitPostOK:
+		if err := s.APIV1ChallengeBackendIDAliensSubmitPostOK1.Decode(d); err != nil {
 			return err
 		}
 	default:
@@ -1563,27 +1659,27 @@ func (s *APIV1ChallengeIDSubmitPostOK) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDSubmitPostOK) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostOK) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostOK) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostOK0) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostOK0) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) encodeFields(e *jx.Encoder) {
 	{
 		if s.Valid.Set {
 			e.FieldStart("valid")
@@ -1598,15 +1694,15 @@ func (s *APIV1ChallengeIDSubmitPostOK0) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostOK0 = [2]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostOK0 = [2]string{
 	0: "valid",
 	1: "score",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostOK0 from json.
-func (s *APIV1ChallengeIDSubmitPostOK0) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostOK0 from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK0 to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostOK0 to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -1636,34 +1732,34 @@ func (s *APIV1ChallengeIDSubmitPostOK0) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostOK0")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostOK0")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostOK0) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostOK0) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK0) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostOK1) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostOK1) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) encodeFields(e *jx.Encoder) {
 	{
 		if s.Valid.Set {
 			e.FieldStart("valid")
@@ -1678,15 +1774,15 @@ func (s *APIV1ChallengeIDSubmitPostOK1) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostOK1 = [2]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostOK1 = [2]string{
 	0: "valid",
 	1: "reason",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostOK1 from json.
-func (s *APIV1ChallengeIDSubmitPostOK1) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostOK1 from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostOK1 to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostOK1 to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -1716,34 +1812,34 @@ func (s *APIV1ChallengeIDSubmitPostOK1) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostOK1")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostOK1")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostOK1) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostOK1) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReq) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostReq) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) encodeFields(e *jx.Encoder) {
 	{
 		if s.GunsPurchased != nil {
 			e.FieldStart("gunsPurchased")
@@ -1772,25 +1868,25 @@ func (s *APIV1ChallengeIDSubmitPostReq) encodeFields(e *jx.Encoder) {
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReq = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReq = [3]string{
 	0: "gunsPurchased",
 	1: "totalCost",
 	2: "assignments",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReq from json.
-func (s *APIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReq from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReq to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReq to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
 		case "gunsPurchased":
 			if err := func() error {
-				s.GunsPurchased = make([]APIV1ChallengeIDSubmitPostReqGunsPurchasedItem, 0)
+				s.GunsPurchased = make([]APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeIDSubmitPostReqGunsPurchasedItem
+					var elem APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -1815,9 +1911,9 @@ func (s *APIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
 			}
 		case "assignments":
 			if err := func() error {
-				s.Assignments = make([]APIV1ChallengeIDSubmitPostReqAssignmentsItem, 0)
+				s.Assignments = make([]APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem, 0)
 				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeIDSubmitPostReqAssignmentsItem
+					var elem APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem
 					if err := elem.Decode(d); err != nil {
 						return err
 					}
@@ -1835,34 +1931,34 @@ func (s *APIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReq")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReq")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReq) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostReq) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) encodeFields(e *jx.Encoder) {
 	{
 		if s.Wave.Set {
 			e.FieldStart("wave")
@@ -1891,16 +1987,16 @@ func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) encodeFields(e *jx.Encode
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReqAssignmentsItem = [3]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem = [3]string{
 	0: "wave",
 	1: "gunQueues",
 	2: "wallDurabilityRemaining",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReqAssignmentsItem from json.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqAssignmentsItem to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -1957,34 +2053,34 @@ func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) Decode(d *jx.Decoder) err
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReqAssignmentsItem")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostReqAssignmentsItem) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
 // Encode implements json.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Encode(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) Encode(e *jx.Encoder) {
 	e.ObjStart()
 	s.encodeFields(e)
 	e.ObjEnd()
 }
 
 // encodeFields encodes fields.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) encodeFields(e *jx.Encoder) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) encodeFields(e *jx.Encoder) {
 	{
 		if s.Type.Set {
 			e.FieldStart("type")
@@ -1993,14 +2089,14 @@ func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) encodeFields(e *jx.Enco
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeIDSubmitPostReqGunsPurchasedItem = [1]string{
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem = [1]string{
 	0: "type",
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItem from json.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItem to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem to nil")
 	}
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
@@ -2020,63 +2116,63 @@ func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) Decode(d *jx.Decoder) e
 		}
 		return nil
 	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItem")
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem")
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) MarshalJSON() ([]byte, error) {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItem) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType as json.
-func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType as json.
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
 	e.Str(string(s))
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType from json.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType to nil")
 	}
 	v, err := d.StrBytes()
 	if err != nil {
 		return err
 	}
 	// Try to use constant string.
-	switch APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v) {
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeTurret
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeMachineGun
-	case APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemTypeRayGun
+	switch APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v) {
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun
+	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun
 	default:
-		*s = APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType(v)
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v)
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -3190,18 +3286,18 @@ func (s *HealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypes as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypes) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypes as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypes from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypes from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypes to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3211,30 +3307,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypes) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypes) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypes) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypes) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBoss as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBoss from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3244,30 +3340,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) Decode(d *jx.Decoder) err
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesBoss) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossAtk as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossAtk from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3277,30 +3373,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) Decode(d *jx.Decoder) 
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossAtk) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossHp as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossHp from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3310,30 +3406,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) Decode(d *jx.Decoder) e
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossHp) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesBossID as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesBossID from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3343,30 +3439,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) Decode(d *jx.Decoder) e
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesBossID) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegular as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegular from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3376,30 +3472,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) Decode(d *jx.Decoder) 
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegular) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularAtk from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3409,30 +3505,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) Decode(d *jx.Decode
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularAtk) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularHp as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularHp from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3442,30 +3538,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) Decode(d *jx.Decoder
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularHp) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesRegularID as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesRegularID from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3475,30 +3571,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) Decode(d *jx.Decoder
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesRegularID) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwift as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwift from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3508,30 +3604,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) Decode(d *jx.Decoder) er
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwift) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3541,30 +3637,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) Decode(d *jx.Decoder)
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftAtk) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftHp from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3574,30 +3670,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) Decode(d *jx.Decoder) 
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftHp) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftID as json.
-func (o OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKAlienTypesSwiftID from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3607,30 +3703,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) Decode(d *jx.Decoder) 
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKAlienTypesSwiftID) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKBudget as json.
-func (o OptAPIV1ChallengeIDAliensGetOKBudget) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKBudget as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKBudget) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKBudget from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKBudget) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKBudget from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKBudget) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKBudget to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKBudget to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3640,30 +3736,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKBudget) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKBudget) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKBudget) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKBudget) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKBudget) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDAliensGetOKWallDurability as json.
-func (o OptAPIV1ChallengeIDAliensGetOKWallDurability) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensGetOKWallDurability as json.
+func (o OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Int(int(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDAliensGetOKWallDurability from json.
-func (o *OptAPIV1ChallengeIDAliensGetOKWallDurability) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensGetOKWallDurability from json.
+func (o *OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDAliensGetOKWallDurability to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensGetOKWallDurability to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3673,30 +3769,30 @@ func (o *OptAPIV1ChallengeIDAliensGetOKWallDurability) Decode(d *jx.Decoder) err
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDAliensGetOKWallDurability) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDAliensGetOKWallDurability) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensGetOKWallDurability) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDSubmitPostReq as json.
-func (o OptAPIV1ChallengeIDSubmitPostReq) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReq as json.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	o.Value.Encode(e)
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReq from json.
-func (o *OptAPIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReq from json.
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDSubmitPostReq to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensSubmitPostReq to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3706,30 +3802,30 @@ func (o *OptAPIV1ChallengeIDSubmitPostReq) Decode(d *jx.Decoder) error {
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDSubmitPostReq) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensSubmitPostReq) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDSubmitPostReq) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType as json.
-func (o OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType as json.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
 	if !o.Set {
 		return
 	}
 	e.Str(string(o.Value))
 }
 
-// Decode decodes APIV1ChallengeIDSubmitPostReqGunsPurchasedItemType from json.
-func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType from json.
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
 	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType to nil")
+		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType to nil")
 	}
 	o.Set = true
 	if err := o.Value.Decode(d); err != nil {
@@ -3739,14 +3835,14 @@ func (o *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Dec
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
+func (s OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeIDSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
+func (s *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

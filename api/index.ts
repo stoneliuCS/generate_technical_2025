@@ -18,8 +18,8 @@ let oas = OpenApiV3.addOpenApiVersion("3.1.0")
       "/healthcheck": HEALTHCHECK_ENDPOINT,
       "/api/v1/member/register": REGISTER_ENDPOINT,
       "/api/v1/member": MEMBER_ENDPOINT,
-      "/api/v1/challenge/{id}/aliens": ALIEN_CHALLENGE_ENDPOINT,
-      "/api/v1/challenge/{id}/submit": SUBMIT_ENDPOINT,
+      "/api/v1/challenge/backend/{id}/aliens": ALIEN_CHALLENGE_ENDPOINT,
+      "/api/v1/challenge/backend/{id}/aliens/submit": SUBMIT_ENDPOINT,
     }),
   );
 

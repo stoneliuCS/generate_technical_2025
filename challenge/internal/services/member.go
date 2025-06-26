@@ -11,17 +11,20 @@ import (
 // Pointers could be nil or have the actual value, always check if the error is nil
 // before dereferencing a pointer otherwise you may get a null pointer dereference.
 type MemberService interface {
-	// Inserts a user into the database, returning its unique identifier upon success.
 	CreateMember(*models.Member) (*uuid.UUID, error)
-	// Gets the id for a member from its email and nuid, or an error if not found.
 	GetMember(string, string) (*uuid.UUID, error)
-	// Checks if the member exists in the database.
-	CheckMemberExists(string, string) (bool, error)
+	CheckMemberExistsByEmailAndNuid(string, string) (bool, error)
+	CheckMemberExistsById(uuid.UUID) (bool, error)
 }
 
 type MemberServiceImpl struct {
 	logger       *slog.Logger
 	transactions transactions.MemberTransactions
+}
+
+// CheckMemberExistsById implements MemberService.
+func (u *MemberServiceImpl) CheckMemberExistsById(id uuid.UUID) (bool, error) {
+	return u.transactions.MemberExistsById(id)
 }
 
 func CreateMemberService(logger *slog.Logger, transactions transactions.MemberTransactions) MemberService {
@@ -31,8 +34,8 @@ func CreateMemberService(logger *slog.Logger, transactions transactions.MemberTr
 	}
 }
 
-func (u *MemberServiceImpl) CheckMemberExists(email string, nuid string) (bool, error) {
-	return u.transactions.MemberExists(email, nuid)
+func (u *MemberServiceImpl) CheckMemberExistsByEmailAndNuid(email string, nuid string) (bool, error) {
+	return u.transactions.MemberExistsByEmailAndNuid(email, nuid)
 }
 
 // CreateUser implements UserService.

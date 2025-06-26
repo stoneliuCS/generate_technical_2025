@@ -43,7 +43,7 @@ func (h Handler) APIV1MemberRegisterPost(ctx context.Context, req api.OptAPIV1Me
 	if !validateNUID(nuid) {
 		return &api.APIV1MemberRegisterPostBadRequest{Message: "Not a valid NUID."}, nil
 	}
-	exists, err := h.memberService.CheckMemberExists(email, nuid)
+	exists, err := h.memberService.CheckMemberExistsByEmailAndNuid(email, nuid)
 	if err != nil {
 		return &api.APIV1MemberRegisterPostInternalServerError{Message: "Database error querying for user."}, nil
 	}
