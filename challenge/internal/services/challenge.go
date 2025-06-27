@@ -117,9 +117,11 @@ type ChallengeServiceImpl struct {
 	transactions transactions.ChallengeTransactions
 }
 
-type Bounds struct {
-	lower uint // Inclusive
-	upper uint // Inclusive
+// Instructs the generator to generate a range of a type of alien.
+type AlienGenerator struct {
+	lower    uint // Inclusive
+	upper    uint // Inclusive
+	supplier func() Alien
 }
 
 // GenerateUniqueChallenge implements ChallengeService.
@@ -152,11 +154,11 @@ func (c ChallengeServiceImpl) generateWaves(rng *rand.Rand) [][]Alien {
 	const WAVE_3_NUM_ALIENS = WAVE_2_NUM_ALIENS * 2
 
 	// Wave 1, generate 5 Aliens, 3 to 5 Regular Aliens and 0 to 1 Swift Aliens
-	waveOneBounds := map[Bounds]func() Alien{{lower: 3, upper: 5}: CreateRegularAlien, {lower: 0, upper: 1}: CreateSwiftAlien}
+	waveOneBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 0, upper: 1, supplier: CreateSwiftAlien}}
 	// Wave 2, generate 10 Aliens, 3 to 5 Regular Aliens and 3 to 5 Swift Aliens and 0 to 1 Boss Aliens
-	waveTwoBounds := map[Bounds]func() Alien{{lower: 3, upper: 5}: CreateRegularAlien, {lower: 3, upper: 5}: CreateSwiftAlien, {lower: 0, upper: 1}: CreateBossAlien}
+	waveTwoBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 3, upper: 5, supplier: CreateSwiftAlien}, {lower: 0, upper: 1, supplier: CreateBossAlien}}
 	// Wave 3, generate 20 Aliens, 5 to 10 Regular Aliens, 5 to 9 Swift Aliens and 1 to 3 Boss Aliens
-	waveThreeBounds := map[Bounds]func() Alien{{lower: 5, upper: 10}: CreateRegularAlien, {lower: 5, upper: 9}: CreateSwiftAlien, {lower: 1, upper: 3}: CreateBossAlien}
+	waveThreeBounds := []AlienGenerator{{lower: 5, upper: 10, supplier: CreateRegularAlien}, {lower: 5, upper: 9, supplier: CreateSwiftAlien}, {lower: 1, upper: 3, supplier: CreateBossAlien}}
 
 	waveOneAliens := c.generateAliens(rng, WAVE_1_NUM_ALIENS, waveOneBounds)
 	waveTwoAliens := c.generateAliens(rng, WAVE_2_NUM_ALIENS, waveTwoBounds)
@@ -168,14 +170,14 @@ func (c ChallengeServiceImpl) generateWaves(rng *rand.Rand) [][]Alien {
 	return waves
 }
 
-func (c ChallengeServiceImpl) generateAliens(rng *rand.Rand, numberOfAliens uint, ranges map[Bounds]func() Alien) []Alien {
+func (c ChallengeServiceImpl) generateAliens(rng *rand.Rand, numberOfAliens uint, ranges []AlienGenerator) []Alien {
 	var aliens []Alien
 	for uint(len(aliens)) < numberOfAliens {
-		for bounds, alienSupplier := range ranges {
-			numToGenerate := rng.Intn(int(bounds.upper) - int(bounds.lower) + 1) + int(bounds.lower)
-			var i = 0
-			for i < numToGenerate {
-				aliens = append(aliens, alienSupplier())
+		for _, alienGenerator := range ranges {
+			numToGenerate := rng.Intn(int(alienGenerator.upper)-int(alienGenerator.lower)+1) + int(alienGenerator.lower)
+			i := 0
+			for i < numToGenerate && len(aliens) < int(numberOfAliens) {
+				aliens = append(aliens, alienGenerator.supplier())
 				i = i + 1
 			}
 		}

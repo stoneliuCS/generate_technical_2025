@@ -23,4 +23,11 @@ func TestGenerateAlienInvasion(t *testing.T) {
 	assert.ElementsMatch(t, invasionState.DefaultWeapons, []services.Weapon{services.CreateTurretWeapon(), services.CreateMachineGunWeapon(), services.CreateRayGunWeapon()})
 	// Test that the waves generate the proper number of aliens
 	assert.True(t, len(invasionState.Waves) == 3)
+	assert.True(t, len(invasionState.Waves[0]) == 5)
+	assert.True(t, len(invasionState.Waves[1]) == 10)
+	assert.True(t, len(invasionState.Waves[2]) == 20)
+
+	invasionState2 := SERVICE_CHALLENGE.GenerateUniqueChallenge(UUID)
+	// Assert that the same uuid will always generate the same invasion state.
+	assert.True(t, assert.ObjectsAreEqualValues(invasionState, invasionState2))
 }
