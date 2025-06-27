@@ -14,7 +14,7 @@ func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 	opts := api.WithMiddleware(logging(logger))
 
 	// Create server
-	srvFunc := func() (*api.Server, error) { return api.NewServer(handler,  opts) }
+	srvFunc := func() (*api.Server, error) { return api.NewServer(handler, opts) }
 	srv := utils.FatalCall(srvFunc)
 	addr := fmt.Sprintf(":%d", cfg.PORT)
 	servFunc := func() error {
