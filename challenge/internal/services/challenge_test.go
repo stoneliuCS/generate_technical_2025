@@ -14,14 +14,14 @@ var (
 )
 
 func TestGenerateAlienInvasion(t *testing.T) {
-	invasionState := SERVICE_CHALLENGE.GenerateUniqueChallenge(UUID)
+	invasionState := services.GenerateInvasionState(UUID)
 	// Test that the waves generate the proper number of aliens
 	assert.True(t, len(invasionState.Waves) == 3)
 	assert.True(t, len(invasionState.Waves[0]) == 5)
 	assert.True(t, len(invasionState.Waves[1]) == 10)
 	assert.True(t, len(invasionState.Waves[2]) == 20)
 
-	invasionState2 := SERVICE_CHALLENGE.GenerateUniqueChallenge(UUID)
+	invasionState2 := services.GenerateInvasionState(UUID)
 	// Assert that the same uuid will always generate the same invasion state.
-	assert.True(t, assert.ObjectsAreEqualValues(invasionState, invasionState2))
+	assert.Equal(t, invasionState, invasionState2)
 }
