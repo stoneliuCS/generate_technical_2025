@@ -8,6 +8,7 @@ import (
 
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 )
 
 // Represents the state of the invasion
@@ -72,8 +73,28 @@ func generateAliens(rng *rand.Rand, ranges []AlienGenerator) []Alien {
 	return aliens
 }
 
-func createAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
-	panic("")
+func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
+	// Begin with a decision tree, You can either purchase 3 Guns
+	// Recursively call your backtracking algorithm. At each stage you can purchase one of three items, unless you run out of money then it stops.
+	weapons := [][]Weapon{}
+	var backtrack func(candidates []Weapon, remainingBudget int)
+	weaponsSupplier := []func() Weapon{CreateTurretWeapon, CreateMachineGunWeapon, CreateRayGunWeapon}
+	backtrack = func(candidates []Weapon, remainingBudget int) {
+		for _, supplier := range weaponsSupplier {
+			w := supplier()
+			// Attempt to buy that weapon, only add to the final list and recur if we can afford it. 
+			newCandidates := append(candidates, w)
+			totalCost := lo.Reduce(newCandidates, func(acc int, weapon Weapon, _ int) int {
+				return acc + int(weapon.Cost)
+			}, 0)
+			if totalCost <= remainingBudget {
+				weapons = append(weapons, newCandidates)
+				backtrack(newCandidates, remainingBudget-totalCost)
+			}
+		}
+	}
+	backtrack([]Weapon{}, budget)
+	return weapons
 }
 
 // Determines if the invasion is over on these conditions:
