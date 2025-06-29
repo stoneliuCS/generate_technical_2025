@@ -8,7 +8,6 @@ import (
 
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 )
 
 // Represents the state of the invasion
@@ -82,19 +81,21 @@ func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 	backtrack = func(candidates []Weapon, remainingBudget int) {
 		for _, supplier := range weaponsSupplier {
 			w := supplier()
-			// Attempt to buy that weapon, only add to the final list and recur if we can afford it. 
-			newCandidates := append(candidates, w)
-			totalCost := lo.Reduce(newCandidates, func(acc int, weapon Weapon, _ int) int {
-				return acc + int(weapon.Cost)
-			}, 0)
-			if totalCost <= remainingBudget {
+			// Attempt to buy that weapon, only add to the final list and recur if we can afford it.
+			if int(w.Cost) <= remainingBudget {
+				newCandidates := append(slices.Clone(candidates), w)
 				weapons = append(weapons, newCandidates)
-				backtrack(newCandidates, remainingBudget-totalCost)
+				backtrack(newCandidates, remainingBudget-int(w.Cost))
 			}
 		}
 	}
 	backtrack([]Weapon{}, budget)
 	return weapons
+}
+
+// From the given weapons and aliens, compute all possible arrangement of valid weapon queues.
+func GenerateAllPossibleValidWeaponQueues(weapon []Weapon, aliens []Alien) []map[Weapon][]Alien {
+	panic("")
 }
 
 // Determines if the invasion is over on these conditions:
