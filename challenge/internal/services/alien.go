@@ -1,10 +1,15 @@
 package services
 
 import (
+	"generate_technical_challenge_2025/internal/utils"
 	"hash/fnv"
 	"maps"
 	"math/rand"
 	"slices"
+
+	"github.com/docker/docker/libcontainerd/queue"
+	"github.com/etnz/permute"
+	"github.com/samber/lo"
 
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/google/uuid"
@@ -47,7 +52,7 @@ func generateWaves(rng *rand.Rand) [][]Alien {
 	// Wave 2, generate 10 Aliens, 3 to 5 Regular Aliens and 3 to 5 Swift Aliens and 0 to 1 Boss Aliens
 	waveTwoBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 3, upper: 5, supplier: CreateSwiftAlien}, {lower: 0, upper: 1, supplier: CreateBossAlien}}
 	// Wave 3, generate 20 Aliens, 5 to 10 Regular Aliens, 5 to 9 Swift Aliens and 1 to 3 Boss Aliens
-	waveThreeBounds := []AlienGenerator{{lower: 5, upper: 10, supplier: CreateRegularAlien}, {lower: 5, upper: 7, supplier: CreateSwiftAlien}, {lower: 1, upper: 3, supplier: CreateBossAlien}}
+	waveThreeBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 5, upper: 7, supplier: CreateSwiftAlien}, {lower: 1, upper: 3, supplier: CreateBossAlien}}
 
 	waveOneAliens := generateAliens(rng, waveOneBounds)
 	waveTwoAliens := generateAliens(rng, waveTwoBounds)
@@ -72,6 +77,8 @@ func generateAliens(rng *rand.Rand, ranges []AlienGenerator) []Alien {
 	return aliens
 }
 
+// Generate all possible weapon purchases given the budget.
+// NOTE: This can include equivalent purchases such as Weapon 1 and Weapon 2 aswell as Weapon 2 and Weapon 1
 func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 	// Begin with a decision tree, You can either purchase 3 Guns
 	// Recursively call your backtracking algorithm. At each stage you can purchase one of three items, unless you run out of money then it stops.
@@ -94,8 +101,66 @@ func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 }
 
 // From the given weapons and aliens, compute all possible arrangement of valid weapon queues.
-func GenerateAllPossibleValidWeaponQueues(weapon []Weapon, aliens []Alien) []map[Weapon][]Alien {
-	panic("")
+// Invariant: The assigned queues must have only distinct aliens
+func GenerateAllPossibleValidWeaponQueuesCrazy(weapons []Weapon, aliens []Alien) []map[Weapon][]Alien {
+
+	queues := []map[Weapon][]Alien{}
+	// Algorithm:
+	// Generate all possible subsets from the given aliens.
+	// From there, get every single possible list of sets of size exactly of length weapons
+	// This is a combinatorial problem, essential boils down to the number of ways we can choose 4 queues from each arrangement of aliens.
+	// From there filter out all of the list of sets whose union is not equal to the original alien set
+	// and whose intersection is not all empty.
+	// This should leave us with all the sets that satisify the invariants.
+
+	originalAlienSet := mapset.NewSet(aliens...)
+	alienPowerSet := utils.PowerSet[Alien](aliens)
+	// Next convert each alien sublist to a set so order doesn't matter
+	convertedAlienPowerSet := lo.Map(alienPowerSet, func(items []Alien, _ int) mapset.Set[Alien] {
+		return mapset.NewSet(items...)
+	})
+	allPossibleSubSets := permute.Combinations(len(weapons), convertedAlienPowerSet)
+	allPossibleValidSubSets := [][]mapset.Set[Alien]{}
+	for combination := range allPossibleSubSets {
+		// Condition One, The union of all aliens must be equal to the original Alien Set
+		unionedAlienSet := lo.Reduce(combination, func(unionAcc mapset.Set[Alien], curr mapset.Set[Alien], _ int) mapset.Set[Alien] {
+			return unionAcc.Union(curr)
+		}, mapset.NewSet[Alien]())
+		if !unionedAlienSet.Equal(originalAlienSet) {
+			continue
+		}
+		// Condition Two, all sets must be mutually exclusive to one another
+		mutuallyExclusiveCheck := lo.Reduce(combination, func(intersectAcc mapset.Set[Alien], curr mapset.Set[Alien], _ int) mapset.Set[Alien] {
+			return intersectAcc.Intersect(curr)
+		}, mapset.NewSet[Alien]())
+		if mutuallyExclusiveCheck.Cardinality() != 0 {
+			continue
+		}
+		// Finally once these conditions are met, we now have the valid subset
+		allPossibleValidSubSets = append(allPossibleValidSubSets, combination)
+	}
+
+	for _, validSubSets := range allPossibleValidSubSets {
+		// We have guranteed that each of our validSubSet lists are of size weapon len
+		// However we care about the order so lets convert these sets back into lists and take the
+		// permutation of each valid list
+		validLists := lo.Map(validSubSets, func(alienSet mapset.Set[Alien], _ int) []Alien {
+			return alienSet.ToSlice()
+		})
+		weaponQueue := map[Weapon][]Alien{}
+		for _, weapon := range weapons {
+			// Create the hasmap of all weapons
+			for _, validList := range validLists {
+				// There are validLists however we need to permute them since order matters
+				allPossibleLists := permute.Permutations(validList)
+				for _, alienQueue := range allPossibleLists {
+						weaponQueue[weapon] = alienQueue
+				}
+			}
+		}
+		queues = append(queues, weaponQueue)
+	}
+	return queues
 }
 
 // Determines if the invasion is over on these conditions:

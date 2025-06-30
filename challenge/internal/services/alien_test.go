@@ -50,7 +50,7 @@ func TestGenerateAlienInvasion(t *testing.T) {
 	numOfRegularAliens = getAlienCountsPerWave(invasionState.Waves[2], services.Regular)
 	numOfSwiftAliens = getAlienCountsPerWave(invasionState.Waves[2], services.Swift)
 	numOfBossAliens = getAlienCountsPerWave(invasionState.Waves[2], services.Boss)
-	assert.True(t, numOfRegularAliens >= 5 && numOfRegularAliens <= 10)
+	assert.True(t, numOfRegularAliens >= 3 && numOfRegularAliens <= 5)
 	assert.True(t, numOfSwiftAliens >= 5 && numOfSwiftAliens <= 7)
 	assert.True(t, numOfBossAliens >= 1 && numOfBossAliens <= 3)
 }
