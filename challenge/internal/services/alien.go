@@ -7,7 +7,6 @@ import (
 	"math/rand"
 	"slices"
 
-	"github.com/docker/docker/libcontainerd/queue"
 	"github.com/etnz/permute"
 	"github.com/samber/lo"
 
@@ -100,10 +99,31 @@ func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 	return weapons
 }
 
+func FindWeaponQueueAssignments(weapons []Weapon, aliens []Alien) map[Weapon][]Alien {
+	// Case 1: The amount of weapons is greater than or equal to the number of aliens.
+	// It is always optimal to assign the higher ranking aliens to to the more expensive weapons
+
+	if len(weapons) >= len(aliens) {
+		// Sort by ascending order, I.E. the weapons with the highest attack power first.
+		sortedWeapons := slices.SortedFunc(slices.Values(weapons), func(w1 Weapon, w2 Weapon) int { return int(w2.Atk) - int(w1.Atk) })
+		sortedAliensByRank := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int { return int(a2.Type) - int(a1.Type)})
+		queues := map[Weapon][]Alien{}
+		for idx, alien := range sortedAliensByRank {
+			weapon := sortedWeapons[idx]
+			queues[weapon] = []Alien{alien}
+		}
+		return queues
+	}
+
+	// Case 2: There are more aliens than weapons, in this case try to distribute the aliens as evenly as possible.
+	// It is probably a good idea to evenly distribute the aliens as much as possible. 
+	panic("A new way")
+
+}
+
 // From the given weapons and aliens, compute all possible arrangement of valid weapon queues.
 // Invariant: The assigned queues must have only distinct aliens
 func GenerateAllPossibleValidWeaponQueuesCrazy(weapons []Weapon, aliens []Alien) []map[Weapon][]Alien {
-
 	queues := []map[Weapon][]Alien{}
 	// Algorithm:
 	// Generate all possible subsets from the given aliens.
@@ -154,7 +174,7 @@ func GenerateAllPossibleValidWeaponQueuesCrazy(weapons []Weapon, aliens []Alien)
 				// There are validLists however we need to permute them since order matters
 				allPossibleLists := permute.Permutations(validList)
 				for _, alienQueue := range allPossibleLists {
-						weaponQueue[weapon] = alienQueue
+					weaponQueue[weapon] = alienQueue
 				}
 			}
 		}
@@ -249,8 +269,8 @@ type Alien struct {
 
 func CreateRegularAlien() Alien {
 	return Alien{
-		Hp:   5,
-		Atk:  1,
+		Hp:   2,
+		Atk:  2,
 		Type: Regular,
 		ID:   uuid.New(),
 	}
