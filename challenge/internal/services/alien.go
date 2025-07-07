@@ -109,7 +109,9 @@ func FindWeaponQueueAssignments(weapons []Weapon, aliens []Alien) []map[Weapon][
 	assignments := []map[Weapon][]Alien{}
 	var backtrack func(aliensLeft []Alien, candidates map[Weapon][]Alien)
 	backtrack = func(aliensLeft []Alien, candidates map[Weapon][]Alien) {
-		if len(aliensLeft) == 0 {
+		if len(aliensLeft) == 0 || lo.Reduce(lo.Values(candidates), func(acc bool, queue []Alien, _ int) bool {
+			return acc && len(queue) == 3
+		}, true) {
 			assignments = append(assignments, candidates)
 			return
 		}
