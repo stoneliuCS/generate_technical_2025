@@ -47,11 +47,11 @@ func GenerateInvasionState(id uuid.UUID) InvasionState {
 func generateWaves(rng *rand.Rand) [][]Alien {
 	var waves [][]Alien
 	// Wave 1, generate 5 Aliens, 3 to 5 Regular Aliens and 0 to 1 Swift Aliens
-	waveOneBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 0, upper: 1, supplier: CreateSwiftAlien}}
+	waveOneBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateAlien}}
 	// Wave 2, generate 10 Aliens, 3 to 5 Regular Aliens and 3 to 5 Swift Aliens and 0 to 1 Boss Aliens
-	waveTwoBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 3, upper: 5, supplier: CreateSwiftAlien}, {lower: 0, upper: 1, supplier: CreateBossAlien}}
+	waveTwoBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateAlien}}
 	// Wave 3, generate 20 Aliens, 5 to 10 Regular Aliens, 5 to 9 Swift Aliens and 1 to 3 Boss Aliens
-	waveThreeBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateRegularAlien}, {lower: 5, upper: 7, supplier: CreateSwiftAlien}, {lower: 1, upper: 3, supplier: CreateBossAlien}}
+	waveThreeBounds := []AlienGenerator{{lower: 3, upper: 5, supplier: CreateAlien}}
 
 	waveOneAliens := generateAliens(rng, waveOneBounds)
 	waveTwoAliens := generateAliens(rng, waveTwoBounds)
@@ -90,7 +90,13 @@ func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 			// Attempt to buy that weapon, only add to the final list and recur if we can afford it.
 			if int(w.Cost) <= remainingBudget {
 				newCandidates := append(slices.Clone(candidates), w)
-				weapons = append(weapons, newCandidates)
+				if !lo.ContainsBy(weapons, func(wpns []Weapon) bool {
+					weaponSet1 := mapset.NewSet(wpns...)
+					weaponSet2 := mapset.NewSet(newCandidates...)
+					return weaponSet1.Equal(weaponSet2)
+				}) {
+					weapons = append(weapons, newCandidates)
+				}
 				backtrack(newCandidates, remainingBudget-int(w.Cost))
 			}
 		}
@@ -99,26 +105,26 @@ func GenerateAllPossibleWeaponPurchasesFromBudget(budget int) [][]Weapon {
 	return weapons
 }
 
-func FindWeaponQueueAssignments(weapons []Weapon, aliens []Alien) map[Weapon][]Alien {
-	// Case 1: The amount of weapons is greater than or equal to the number of aliens.
-	// It is always optimal to assign the higher ranking aliens to to the more expensive weapons
-
-	if len(weapons) >= len(aliens) {
-		// Sort by ascending order, I.E. the weapons with the highest attack power first.
-		sortedWeapons := slices.SortedFunc(slices.Values(weapons), func(w1 Weapon, w2 Weapon) int { return int(w2.Atk) - int(w1.Atk) })
-		sortedAliensByRank := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int { return int(a2.Type) - int(a1.Type)})
-		queues := map[Weapon][]Alien{}
-		for idx, alien := range sortedAliensByRank {
-			weapon := sortedWeapons[idx]
-			queues[weapon] = []Alien{alien}
+func FindWeaponQueueAssignments(weapons []Weapon, aliens []Alien) []map[Weapon][]Alien {
+	assignments := []map[Weapon][]Alien{}
+	var backtrack func(aliensLeft []Alien, candidates map[Weapon][]Alien)
+	backtrack = func(aliensLeft []Alien, candidates map[Weapon][]Alien) {
+		if len(aliensLeft) == 0 {
+			assignments = append(assignments, candidates)
+			return
 		}
-		return queues
+		alien := aliensLeft[0]
+		for wpn, queue := range candidates {
+			if len(queue) >= 3 {
+				continue
+			}
+			copied := lo.Assign(map[Weapon][]Alien{}, candidates)
+			copied[wpn] = append(queue, alien)
+			backtrack(aliensLeft[1:], copied)
+		}
 	}
-
-	// Case 2: There are more aliens than weapons, in this case try to distribute the aliens as evenly as possible.
-	// It is probably a good idea to evenly distribute the aliens as much as possible. 
-	panic("A new way")
-
+	backtrack(aliens, map[Weapon][]Alien{})
+	return assignments
 }
 
 // From the given weapons and aliens, compute all possible arrangement of valid weapon queues.
@@ -247,50 +253,25 @@ func (s InvasionState) ConfigureWeapon(wave uint, weapon Weapon, queue []Alien) 
 
 // Begin Alien Data Definitions
 
-// An AlienType is One Of:
-// Regular
-// Swift
-// Boss
-
-type AlienType int
-
-const (
-	Regular AlienType = iota
-	Swift
-	Boss
-)
-
 type Alien struct {
-	Hp   uint
-	Atk  uint
-	Type AlienType
-	ID   uuid.UUID
+	Hp  int
+	Atk uint
+	ID  uuid.UUID
 }
 
-func CreateRegularAlien() Alien {
+func CreateAlien() Alien {
 	return Alien{
-		Hp:   2,
-		Atk:  2,
-		Type: Regular,
-		ID:   uuid.New(),
+		Hp:  5,
+		Atk: 5,
+		ID:  uuid.New(),
 	}
 }
 
-func CreateSwiftAlien() Alien {
+func (a Alien) TakeDamage(damage int) Alien {
 	return Alien{
-		Hp:   3,
-		Atk:  5,
-		Type: Swift,
-		ID:   uuid.New(),
-	}
-}
-
-func CreateBossAlien() Alien {
-	return Alien{
-		Hp:   10,
-		Atk:  10,
-		Type: Boss,
-		ID:   uuid.New(),
+		Hp:  a.Hp - damage,
+		Atk: a.Atk,
+		ID:  a.ID,
 	}
 }
 
@@ -322,6 +303,24 @@ type Weapon struct {
 	Cost uint
 	Type WeaponType
 	ID   uuid.UUID
+}
+
+// Given the alien queue, determines the number of turns it would take to kill all aliens.
+func (w Weapon) MaxTurnsToKill(aliens []Alien) int {
+	turns := 0
+	currentAliens := aliens
+
+	for len(currentAliens) != 0 {
+		// Get the front of the alien
+		alien := currentAliens[0].TakeDamage(int(w.Atk))
+		if alien.Hp <= 0 {
+			currentAliens = currentAliens[1:]
+		} else {
+			currentAliens[0] = alien
+		}
+		turns += 1
+	}
+	return turns
 }
 
 func CreateTurretWeapon() Weapon {
