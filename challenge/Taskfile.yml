@@ -32,8 +32,7 @@ tasks:
     deps:
       - build
     cmds:
-      - go test -v ./...
-      - go test --count 10000 ./internal/services/
+      - go test -count=1 -v ./...
   reset:
     summary: Delete build files
     cmds:

@@ -4,7 +4,6 @@ import (
 	"math/rand"
 	"slices"
 
-	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
 
@@ -17,14 +16,20 @@ type InvasionState struct {
 
 func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	// Sort all the aliens by attack power.
-	sortedAliens := slices.SortedFunc(slices.Values(aliens), func(alien1 Alien, alien2 Alien) int {
-		return alien2.Atk - alien1.Atk
+	sortedAliens := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int {
+		power1 := a1.Atk + a1.Hp
+		power2 := a2.Atk + a2.Hp
+		return power2 - power1 // Highest total power first
 	})
 	return InvasionState{
 		aliensLeft: sortedAliens,
 		hpLeft:     startingHp,
 		commands:   []string{},
 	}
+}
+
+func (i InvasionState) SurveyRemainingAlienInvasion() []Alien {
+	return slices.Clone(i.aliensLeft)
 }
 
 func (i InvasionState) GetAliensLeft() int {
@@ -50,10 +55,11 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 	backtrack = func(currentState InvasionState) {
 		if currentState.IsOver() {
 			endingStates = append(endingStates, currentState)
+		} else {
+			backtrack(currentState.AttackAllAliens().AliensAttack())
+			backtrack(currentState.AttackHighestDamageAlien().AliensAttack())
+			backtrack(currentState.AttackHighestDamagingHalf().AliensAttack())
 		}
-		backtrack(currentState.AttackAllAliens().AliensAttack())
-		backtrack(currentState.AttackHighestDamageAlien().AliensAttack())
-		backtrack(currentState.AttackHighestDamagingHalf().AliensAttack())
 	}
 
 	backtrack(initialState)
@@ -145,7 +151,7 @@ func GenerateAlienInvasion(rng *rand.Rand) []Alien {
 	for range numAliens {
 		alienHPVal := rng.Intn(ALIEN_ATK_HP_UPPER-ALIEN_ATK_HP_LOWER) + ALIEN_ATK_HP_LOWER
 		alienAtkVal := rng.Intn(ALIEN_ATK_HP_UPPER-ALIEN_ATK_HP_LOWER) + ALIEN_ATK_HP_LOWER
-		alien := CreateAlien(rng, alienHPVal, alienAtkVal)
+		alien := CreateAlien(alienHPVal, alienAtkVal)
 		aliens = append(aliens, alien)
 	}
 	return aliens
@@ -154,22 +160,17 @@ func GenerateAlienInvasion(rng *rand.Rand) []Alien {
 type Alien struct {
 	Hp  int
 	Atk int
-	ID  uuid.UUID
 }
 
 // Creates an Alien with HP and ATK ranging from the upper and lower bounds
-func CreateAlien(rng *rand.Rand, hp int, atk int) Alien {
+func CreateAlien(hp int, atk int) Alien {
 	// Temporarily make the uuid generation dependent on the rng.
-	uuid.SetRand(rng)
-	id := uuid.New()
-	uuid.SetRand(nil)
-	return Alien{Hp: hp, Atk: atk, ID: id}
+	return Alien{Hp: hp, Atk: atk}
 }
 
 func (a Alien) TakeDamage(dmg int) Alien {
 	return Alien{
 		Hp:  a.Hp - dmg,
 		Atk: a.Atk,
-		ID:  a.ID,
 	}
 }
