@@ -28,6 +28,10 @@ func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	}
 }
 
+func (i InvasionState) GetNumberOfCommandsUsed() int {
+	return len(i.commands)
+}
+
 func (i InvasionState) SurveyRemainingAlienInvasion() []Alien {
 	return slices.Clone(i.aliensLeft)
 }
@@ -45,6 +49,56 @@ func (i InvasionState) GetCurrentHighestDamagingAlien() Alien {
 		panic("No more aliens left.")
 	}
 	return i.aliensLeft[0]
+}
+
+// From all possible states, filter out the invasion states by these criteria
+// The states with the least amount of aliens.
+// The states with the highest hp left over.
+// The states with the least number of commands left over.
+func FilterToFindTheMostOptimalInvasions(states []InvasionState) []InvasionState {
+	filterByMostAliensKilled := func(remainingStates []InvasionState) []InvasionState {
+		leastNumAliensLeft := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
+			return s1.GetAliensLeft() < s2.GetAliensLeft()
+		}).GetAliensLeft()
+
+		filteredStatesByMostAliensKilled := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
+			return state.GetAliensLeft() == leastNumAliensLeft
+		})
+		return filteredStatesByMostAliensKilled
+	}
+
+	filteredByHighestHpLeftOver := func(remainingStates []InvasionState) []InvasionState {
+		highestHpLeft := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
+			return s1.hpLeft > s2.hpLeft
+		}).GetHpLeft()
+
+		filteredStatesByHighestHp := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
+			return state.hpLeft == highestHpLeft
+		})
+		return filteredStatesByHighestHp
+	}
+
+	filteredByLeastNumberOfCommandsUsed := func(remainingStates []InvasionState) []InvasionState {
+		leastNumberOfCommandsUsed := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
+			return s1.GetNumberOfCommandsUsed() < s2.GetNumberOfCommandsUsed()
+		}).GetHpLeft()
+
+		filteredStatesByLeastCommands := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
+			return state.GetNumberOfCommandsUsed() == leastNumberOfCommandsUsed
+		})
+		return filteredStatesByLeastCommands
+	}
+
+	filters := []func(remainingStates []InvasionState) []InvasionState{filterByMostAliensKilled, filteredByHighestHpLeftOver, filteredByLeastNumberOfCommandsUsed}
+
+	currentStates := states
+	for _, filter := range filters {
+		if len(currentStates) == 0 {
+			break
+		}
+		currentStates = filter(currentStates)
+	}
+	return currentStates
 }
 
 func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []InvasionState {
