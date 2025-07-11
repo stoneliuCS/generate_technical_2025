@@ -22,3 +22,8 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req api.OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params api.APIV1ChallengeBackendIDAliensSubmitPostParams) (api.APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
 	panic("unimplemented")
 }
+
+// APIV1ChallengeFrontendIDAliensGet implements api.Handler.
+func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params api.APIV1ChallengeFrontendIDAliensGetParams) (api.APIV1ChallengeFrontendIDAliensGetRes, error) {
+	panic("unimplemented")
+}

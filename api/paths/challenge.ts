@@ -1,4 +1,5 @@
 import {
+  Array,
   Boolean,
   Integer,
   MediaType,
@@ -34,9 +35,7 @@ export const ALIEN_CHALLENGE_ENDPOINT = PathItem.addMethod({
       ).addContents({
         "application/json": MediaType.addSchema(ERROR),
       }),
-      "404": Response.addDescription(
-        "ID not found.",
-      ).addContents({
+      "404": Response.addDescription("ID not found.").addContents({
         "application/json": MediaType.addSchema(ERROR),
       }),
       "500": Response.addDescription("Internal Server Error.").addContents({
@@ -73,4 +72,49 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         }),
       }),
     ),
+});
+
+export const ALIEN = Object.addProperties({
+  id: UUID,
+  name: String.addDescription("Name of the alien.").addExample("BillyBobJoe"),
+  type: String.addDescription("The rank of the alien.").addEnums([
+    "Regular",
+    "Elite",
+    "Boss",
+  ]),
+  stats: Object.addProperties({
+    atk: Integer.addMinimum(1).addMaximum(3),
+    hp: Integer.addMinimum(1).addMaximum(3),
+  }).addDescription("Combat description of the alien."),
+});
+
+// BEGIN ALIEN FRONTEND CHALLENGE ENDPOINT
+export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
+  get: Operation.addParameters([
+    ID_PARAMETER,
+    Parameter.schema
+      .addIn("query")
+      .addName("limit")
+      .addDescription("Limit of the pagination.")
+      .addSchema(Integer),
+    Parameter.schema
+      .addIn("query")
+      .addName("offset")
+      .addDescription("Offset of the pagination.")
+      .addSchema(Integer),
+  ]).addResponses(
+    Responses({
+      "200": Response.addDescription(
+        "Successfully retrieved alien data.",
+      ).addContents({
+        "application/json": MediaType.addSchema(Array.addItems(ALIEN)),
+      }),
+      "400": Response.addDescription("Bad Request.").addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
+      "500": Response.addDescription("Internal Server Error.").addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
+    }),
+  ),
 });

@@ -9,6 +9,10 @@ type APIV1ChallengeBackendIDAliensSubmitPostRes interface {
 	aPIV1ChallengeBackendIDAliensSubmitPostRes()
 }
 
+type APIV1ChallengeFrontendIDAliensGetRes interface {
+	aPIV1ChallengeFrontendIDAliensGetRes()
+}
+
 type APIV1MemberGetRes interface {
 	aPIV1MemberGetRes()
 }

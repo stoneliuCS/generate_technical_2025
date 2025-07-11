@@ -4,7 +4,11 @@ import { API_DOCS_ENDPOINT } from "./paths/docs";
 import { HEALTHCHECK_ENDPOINT } from "./paths/healthcheck";
 import { COMPONENT } from "./schema";
 import { MEMBER_ENDPOINT } from "./paths/member";
-import { ALIEN_CHALLENGE_ENDPOINT, SUBMIT_ENDPOINT } from "./paths/challenge";
+import {
+  ALIEN_CHALLENGE_ENDPOINT,
+  ALIEN_FRONTEND_CHALLENGE_ENDPOINT,
+  SUBMIT_ENDPOINT,
+} from "./paths/challenge";
 
 let oas = OpenApiV3.addOpenApiVersion("3.1.0")
   .addInfo(
@@ -20,6 +24,8 @@ let oas = OpenApiV3.addOpenApiVersion("3.1.0")
       "/api/v1/member": MEMBER_ENDPOINT,
       "/api/v1/challenge/backend/{id}/aliens": ALIEN_CHALLENGE_ENDPOINT,
       "/api/v1/challenge/backend/{id}/aliens/submit": SUBMIT_ENDPOINT,
+      "/api/v1/challenge/frontend/{id}/aliens":
+        ALIEN_FRONTEND_CHALLENGE_ENDPOINT,
     }),
   );
 

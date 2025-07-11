@@ -80,51 +80,110 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					break
 				}
 				switch elem[0] {
-				case 'c': // Prefix: "challenge/backend/"
+				case 'c': // Prefix: "challenge/"
 
-					if l := len("challenge/backend/"); len(elem) >= l && elem[0:l] == "challenge/backend/" {
+					if l := len("challenge/"); len(elem) >= l && elem[0:l] == "challenge/" {
 						elem = elem[l:]
 					} else {
 						break
 					}
 
-					// Param: "id"
-					// Match until "/"
-					idx := strings.IndexByte(elem, '/')
-					if idx < 0 {
-						idx = len(elem)
-					}
-					args[0] = elem[:idx]
-					elem = elem[idx:]
-
 					if len(elem) == 0 {
 						break
 					}
 					switch elem[0] {
-					case '/': // Prefix: "/aliens"
+					case 'b': // Prefix: "backend/"
 
-						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+						if l := len("backend/"); len(elem) >= l && elem[0:l] == "backend/" {
 							elem = elem[l:]
 						} else {
 							break
 						}
 
-						if len(elem) == 0 {
-							switch r.Method {
-							case "GET":
-								s.handleAPIV1ChallengeBackendIDAliensGetRequest([1]string{
-									args[0],
-								}, elemIsEscaped, w, r)
-							default:
-								s.notAllowed(w, r, "GET")
-							}
+						// Param: "id"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
 
-							return
+						if len(elem) == 0 {
+							break
 						}
 						switch elem[0] {
-						case '/': // Prefix: "/submit"
+						case '/': // Prefix: "/aliens"
 
-							if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								switch r.Method {
+								case "GET":
+									s.handleAPIV1ChallengeBackendIDAliensGetRequest([1]string{
+										args[0],
+									}, elemIsEscaped, w, r)
+								default:
+									s.notAllowed(w, r, "GET")
+								}
+
+								return
+							}
+							switch elem[0] {
+							case '/': // Prefix: "/submit"
+
+								if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch r.Method {
+									case "POST":
+										s.handleAPIV1ChallengeBackendIDAliensSubmitPostRequest([1]string{
+											args[0],
+										}, elemIsEscaped, w, r)
+									default:
+										s.notAllowed(w, r, "POST")
+									}
+
+									return
+								}
+
+							}
+
+						}
+
+					case 'f': // Prefix: "frontend/"
+
+						if l := len("frontend/"); len(elem) >= l && elem[0:l] == "frontend/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						// Param: "id"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case '/': // Prefix: "/aliens"
+
+							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
 								elem = elem[l:]
 							} else {
 								break
@@ -133,12 +192,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 							if len(elem) == 0 {
 								// Leaf node.
 								switch r.Method {
-								case "POST":
-									s.handleAPIV1ChallengeBackendIDAliensSubmitPostRequest([1]string{
+								case "GET":
+									s.handleAPIV1ChallengeFrontendIDAliensGetRequest([1]string{
 										args[0],
 									}, elemIsEscaped, w, r)
 								default:
-									s.notAllowed(w, r, "POST")
+									s.notAllowed(w, r, "GET")
 								}
 
 								return
@@ -328,53 +387,114 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					break
 				}
 				switch elem[0] {
-				case 'c': // Prefix: "challenge/backend/"
+				case 'c': // Prefix: "challenge/"
 
-					if l := len("challenge/backend/"); len(elem) >= l && elem[0:l] == "challenge/backend/" {
+					if l := len("challenge/"); len(elem) >= l && elem[0:l] == "challenge/" {
 						elem = elem[l:]
 					} else {
 						break
 					}
 
-					// Param: "id"
-					// Match until "/"
-					idx := strings.IndexByte(elem, '/')
-					if idx < 0 {
-						idx = len(elem)
-					}
-					args[0] = elem[:idx]
-					elem = elem[idx:]
-
 					if len(elem) == 0 {
 						break
 					}
 					switch elem[0] {
-					case '/': // Prefix: "/aliens"
+					case 'b': // Prefix: "backend/"
 
-						if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+						if l := len("backend/"); len(elem) >= l && elem[0:l] == "backend/" {
 							elem = elem[l:]
 						} else {
 							break
 						}
 
+						// Param: "id"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
+
 						if len(elem) == 0 {
-							switch method {
-							case "GET":
-								r.name = APIV1ChallengeBackendIDAliensGetOperation
-								r.summary = ""
-								r.operationID = ""
-								r.pathPattern = "/api/v1/challenge/backend/{id}/aliens"
-								r.args = args
-								r.count = 1
-								return r, true
-							default:
-								return
-							}
+							break
 						}
 						switch elem[0] {
-						case '/': // Prefix: "/submit"
+						case '/': // Prefix: "/aliens"
 
-							if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								switch method {
+								case "GET":
+									r.name = APIV1ChallengeBackendIDAliensGetOperation
+									r.summary = ""
+									r.operationID = ""
+									r.pathPattern = "/api/v1/challenge/backend/{id}/aliens"
+									r.args = args
+									r.count = 1
+									return r, true
+								default:
+									return
+								}
+							}
+							switch elem[0] {
+							case '/': // Prefix: "/submit"
+
+								if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch method {
+									case "POST":
+										r.name = APIV1ChallengeBackendIDAliensSubmitPostOperation
+										r.summary = ""
+										r.operationID = ""
+										r.pathPattern = "/api/v1/challenge/backend/{id}/aliens/submit"
+										r.args = args
+										r.count = 1
+										return r, true
+									default:
+										return
+									}
+								}
+
+							}
+
+						}
+
+					case 'f': // Prefix: "frontend/"
+
+						if l := len("frontend/"); len(elem) >= l && elem[0:l] == "frontend/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						// Param: "id"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case '/': // Prefix: "/aliens"
+
+							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
 								elem = elem[l:]
 							} else {
 								break
@@ -383,11 +503,11 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 							if len(elem) == 0 {
 								// Leaf node.
 								switch method {
-								case "POST":
-									r.name = APIV1ChallengeBackendIDAliensSubmitPostOperation
+								case "GET":
+									r.name = APIV1ChallengeFrontendIDAliensGetOperation
 									r.summary = ""
 									r.operationID = ""
-									r.pathPattern = "/api/v1/challenge/backend/{id}/aliens/submit"
+									r.pathPattern = "/api/v1/challenge/frontend/{id}/aliens"
 									r.args = args
 									r.count = 1
 									return r, true
