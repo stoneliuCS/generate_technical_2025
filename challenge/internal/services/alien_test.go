@@ -5,6 +5,7 @@ import (
 	"generate_technical_challenge_2025/internal/utils"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
@@ -116,8 +117,22 @@ func TestAlienInvasionFocusedVolley(t *testing.T) {
 
 // BEGIN ALGORITHM TESTING
 
-func TestAlgorithm(t *testing.T) {
+func TestAlgorithmTimes(t *testing.T) {
 	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
-	// A State with only 100 HP should end in at most 10 rounds if generating atleast 10 aliens.
-	services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 500))
+	done := make(chan bool)
+
+	go func() {
+		services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
+		done <- true
+	}()
+
+	select {
+	case <-done:
+		// Function completed in time
+		t.Log("Algorithm completed within the allotted time.")
+		assert.True(t, true, "Successfully completed the algorithm within allotted time.")
+	case <-time.After(1 * time.Second):
+		t.Fatal("Algorithm did not complete within 1 seconds")
+		assert.True(t, false)
+	}
 }

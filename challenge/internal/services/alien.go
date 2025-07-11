@@ -53,12 +53,23 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 	backtrack := func(currentState InvasionState) {}
 
 	backtrack = func(currentState InvasionState) {
-		if currentState.IsOver() {
-			endingStates = append(endingStates, currentState)
+		volleyState := currentState.AttackAllAliens().AliensAttack()
+		focusedState := currentState.AttackHighestDamageAlien().AliensAttack()
+		focusedVolleyState := currentState.AttackHighestDamagingHalf().AliensAttack()
+		if !volleyState.IsOver() {
+			backtrack(volleyState)
 		} else {
-			backtrack(currentState.AttackAllAliens().AliensAttack())
-			backtrack(currentState.AttackHighestDamageAlien().AliensAttack())
-			backtrack(currentState.AttackHighestDamagingHalf().AliensAttack())
+			endingStates = append(endingStates, volleyState)
+		}
+		if !focusedState.IsOver() {
+			backtrack(focusedState)
+		} else {
+			endingStates = append(endingStates, focusedState)
+		}
+		if !focusedVolleyState.IsOver() {
+			backtrack(focusedVolleyState)
+		} else {
+			endingStates = append(endingStates, focusedVolleyState)
 		}
 	}
 
@@ -73,6 +84,9 @@ func (i InvasionState) IsOver() bool {
 
 // Returns the state of the invasion when the aliens attack
 func (i InvasionState) AliensAttack() InvasionState {
+	if len(i.aliensLeft) == 0 {
+		return i
+	}
 	combinedAttack := lo.Reduce(i.aliensLeft, func(dmg int, alien Alien, idx int) int {
 		return dmg + alien.Atk
 	}, 0)
