@@ -81,7 +81,7 @@ func FilterToFindTheMostOptimalInvasions(states []InvasionState) []InvasionState
 	filteredByLeastNumberOfCommandsUsed := func(remainingStates []InvasionState) []InvasionState {
 		leastNumberOfCommandsUsed := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
 			return s1.GetNumberOfCommandsUsed() < s2.GetNumberOfCommandsUsed()
-		}).GetHpLeft()
+		}).GetNumberOfCommandsUsed()
 
 		filteredStatesByLeastCommands := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
 			return state.GetNumberOfCommandsUsed() == leastNumberOfCommandsUsed
@@ -93,7 +93,7 @@ func FilterToFindTheMostOptimalInvasions(states []InvasionState) []InvasionState
 
 	currentStates := states
 	for _, filter := range filters {
-		if len(currentStates) == 0 {
+		if len(currentStates) == 1 {
 			break
 		}
 		currentStates = filter(currentStates)

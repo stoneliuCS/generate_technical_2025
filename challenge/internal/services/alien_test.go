@@ -136,3 +136,11 @@ func TestAlgorithmTimes(t *testing.T) {
 		assert.True(t, false)
 	}
 }
+
+func TestAlgorithmFiltering(t *testing.T) {
+	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
+	states := services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
+	filteredStates := services.FilterToFindTheMostOptimalInvasions(states)
+	assert.True(t, len(states) >= len(filteredStates))
+	assert.True(t,  len(filteredStates) != 0)
+}
