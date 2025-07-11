@@ -2,6 +2,7 @@ package services_test
 
 import (
 	"generate_technical_challenge_2025/internal/services"
+	"generate_technical_challenge_2025/internal/utils"
 	"testing"
 
 	"github.com/google/uuid"
@@ -9,33 +10,76 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var UUID = uuid.New()
+const STARTING_HP = 1000
+
+var (
+	UUID = uuid.New()
+	RNG  = utils.CreateRNGFromHash(UUID)
+)
 
 func TestGenerateAlienInvasion(t *testing.T) {
-	invasionState := services.GenerateInvasionState(UUID)
-	invasionState2 := services.GenerateInvasionState(UUID)
-	// Assert that the same uuid will always generate the same invasion state.
-	assert.Equal(t, invasionState, invasionState2)
-	assert.True(t, len(invasionState.Waves) == 3)
-	assert.True(t, len(invasionState2.Waves) == 3)
+	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
+	actualSizeOfAlienInvasion := len(sampleAlienInvasion)
+	// Assert that the size of the alien invasion must always be within the bounds of
+	// the generated bounds
+	assert.True(t, actualSizeOfAlienInvasion >= services.LOWER_ALIEN_AMOUNT)
+	assert.True(t, actualSizeOfAlienInvasion <= services.UPPER_ALIEN_AMOUNT)
+	// Assert that for each alien generated, their HP and ATTACK are always within the bounds.
+	withinBounds := lo.Reduce(sampleAlienInvasion, func(flag bool, alien services.Alien, _ int) bool {
+		return flag &&
+			alien.Atk >= services.ALIEN_ATK_HP_LOWER &&
+			alien.Atk <= services.ALIEN_ATK_HP_UPPER &&
+			alien.Hp >= services.ALIEN_ATK_HP_LOWER &&
+			alien.Hp <= services.ALIEN_ATK_HP_UPPER
+	}, true)
+	assert.True(t, withinBounds)
 }
 
-func TestGenerateAllPossibleWeaponPurchasesFromBudget(t *testing.T) {
-	weapons := services.GenerateAllPossibleWeaponPurchasesFromBudget(100)
-	for _, ws := range weapons {
-		totalCost := lo.Reduce(ws, func(acc int, weapon services.Weapon, _ int) int {
-			return acc + int(weapon.Cost)
-		}, 0)
-		assert.LessOrEqual(t, totalCost, 100)
-	}
+func TestAlienInvasionIsOver(t *testing.T) {
+	// Case one there are aliens left but the HP is gone.
+	case1 := services.CreateInvasionState([]services.Alien{
+		// One alien is left.
+		services.CreateAlien(RNG, 3, 3),
+	}, 0)
+	assert.True(t, case1.IsOver())
+	// Case two there are no aliens left and Hp is still above 0
+	case2 := services.CreateInvasionState([]services.Alien{
+		// One alien is left.
+	}, 1)
+	assert.True(t, case2.IsOver())
+	// Case three there are aliens left and the HP is overkilled to negative
+	case3 := services.CreateInvasionState([]services.Alien{
+		// One alien is left.
+		services.CreateAlien(RNG, 3, 3),
+	}, -100)
+	assert.True(t, case3.IsOver())
+}
 
-	// Budget of 10
-	weapons = services.GenerateAllPossibleWeaponPurchasesFromBudget(10)
-	assert.Len(t, weapons, 1)
-	assert.Len(t, weapons[0], 1)
-	assert.Equal(t, weapons[0][0].Type, services.Turret)
+func TestAlienInvasionVolley(t *testing.T) {
+	exampleAlienInvasion := services.CreateInvasionState([]services.Alien{
+		services.CreateAlien(RNG, 1, 2),
+		services.CreateAlien(RNG, 2, 2),
+		services.CreateAlien(RNG, 3, 3),
+	}, 100)
 
-	// Budget of 20
-	weapons = services.GenerateAllPossibleWeaponPurchasesFromBudget(20)
-	assert.Len(t, weapons, 2)
+	assert.True(t, exampleAlienInvasion.GetAliensLeft() == 3)
+	actualAlienStateAfterVolley := exampleAlienInvasion.AttackAllAliens()
+	// The first alien must have died so it should be reflected in the final aliensLeft count
+	assert.True(t, actualAlienStateAfterVolley.GetAliensLeft() == 2)
+	assert.True(t, !actualAlienStateAfterVolley.IsOver())
+}
+
+func TestAlienInvasionFocusedShot(t *testing.T) {
+	exampleAlienInvasion := services.CreateInvasionState([]services.Alien{
+		services.CreateAlien(RNG, 1, 2),
+		services.CreateAlien(RNG, 2, 2),
+		services.CreateAlien(RNG, 3, 3),
+	}, 100)
+	// Current highest damaging alien has attack of 3
+	assert.True(t, exampleAlienInvasion.GetCurrentHighestDamagingAlien().Atk == 3)
+	actualAliensAfterFocusedShot := exampleAlienInvasion.AttackHighestDamageAlien()
+	assert.True(t, actualAliensAfterFocusedShot.GetAliensLeft() == 2)
+	// Now it should be 2
+	assert.True(t, actualAliensAfterFocusedShot.GetCurrentHighestDamagingAlien().Atk == 2)
+	assert.True(t, !actualAliensAfterFocusedShot.IsOver())
 }

@@ -19,23 +19,11 @@ type ChallengeServiceImpl struct {
 
 // GenerateUniqueAlienChallenge implements ChallengeService.
 func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) InvasionState {
-	return GenerateInvasionState(id)
+	panic("Not implemented.")
 }
 
 // SolveChallenge implements ChallengeService.
 func (c ChallengeServiceImpl) SolveAlienChallenge(state InvasionState) InvasionState {
-	// Define all the states we want to run against
-	allInvasionStates := []InvasionState{}
-	// First generate all possible combinations of weapon purchases given the current budget.
-	allPossibleGunPurchases := GenerateAllPossibleWeaponPurchasesFromBudget(state.Budget)
-	for _, weaponPurchases := range allPossibleGunPurchases {
-		// Begin with the same state across all weapon purchases
-		currentState := state
-		for _, weapon := range weaponPurchases {
-			currentState = currentState.PurchaseWeapon(weapon)
-		}
-		allInvasionStates = append(allInvasionStates, currentState)
-	}
 	panic("Not implemented.")
 }
 

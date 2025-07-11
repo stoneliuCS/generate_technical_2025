@@ -42,3 +42,7 @@ tasks:
       - go mod tidy
       - go install
       - rm -f main_server
+  format:
+    summary: Formats all files using GoFmt
+    cmds:
+      - gofmt -w .
