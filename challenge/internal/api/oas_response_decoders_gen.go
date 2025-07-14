@@ -31,7 +31,7 @@ func decodeAPIV1ChallengeBackendIDAliensGetResponse(resp *http.Response) (res AP
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response APIV1ChallengeBackendIDAliensGetOK
+			var response APIV1ChallengeBackendIDAliensGetOKApplicationJSON
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

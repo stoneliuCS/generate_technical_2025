@@ -2,13 +2,14 @@ package services
 
 import (
 	"generate_technical_challenge_2025/internal/transactions"
+	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
 
 	"github.com/google/uuid"
 )
 
 type ChallengeService interface {
-	GenerateUniqueAlienChallenge(id uuid.UUID) InvasionState
+	GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState
 	SolveAlienChallenge(state InvasionState) InvasionState
 }
 
@@ -17,9 +18,25 @@ type ChallengeServiceImpl struct {
 	transactions transactions.ChallengeTransactions
 }
 
+const (
+	LOWER_HP_BOUND        = 50
+	UPPER_HP_BOUND        = 100
+	NUM_WAVES_LOWER_BOUND = 5
+	NUM_WAVES_UPPER_BOUND = 10
+)
+
 // GenerateUniqueAlienChallenge implements ChallengeService.
-func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) InvasionState {
-	panic("Not implemented.")
+func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState {
+	rng := utils.CreateRNGFromHash(id)
+	numWaves := utils.GenerateRandomNumWithinRange(rng, NUM_WAVES_LOWER_BOUND, NUM_WAVES_UPPER_BOUND)
+	waves := []InvasionState{}
+	for range numWaves {
+		aliens := GenerateAlienInvasion(rng)
+		hp := utils.GenerateRandomNumWithinRange(rng, LOWER_HP_BOUND, UPPER_HP_BOUND)
+		invasionState := CreateInvasionState(aliens, hp)
+		waves = append(waves, invasionState)
+	}
+	return waves
 }
 
 // SolveChallenge implements ChallengeService.

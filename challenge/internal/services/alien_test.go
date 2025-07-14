@@ -12,8 +12,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const STARTING_HP = 1000
-
 var (
 	UUID = uuid.New()
 	RNG  = utils.CreateRNGFromHash(UUID)
@@ -142,5 +140,5 @@ func TestAlgorithmFiltering(t *testing.T) {
 	states := services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
 	filteredStates := services.FilterToFindTheMostOptimalInvasions(states)
 	assert.True(t, len(states) >= len(filteredStates))
-	assert.True(t,  len(filteredStates) != 0)
+	assert.True(t, len(filteredStates) != 0)
 }

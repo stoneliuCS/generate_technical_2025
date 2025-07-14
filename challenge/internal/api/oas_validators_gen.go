@@ -10,90 +10,24 @@ import (
 	"github.com/ogen-go/ogen/validate"
 )
 
-func (s *APIV1ChallengeBackendIDAliensGetOK) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
+func (s APIV1ChallengeBackendIDAliensGetOKApplicationJSON) Validate() error {
+	alias := ([]APIV1ChallengeBackendIDAliensGetOKItem)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
 	}
-
 	var failures []validate.FieldError
-	if err := func() error {
-		var failures []validate.FieldError
-		for i, elem := range s.Waves {
-			if err := func() error {
-				if err := elem.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				failures = append(failures, validate.FieldError{
-					Name:  fmt.Sprintf("[%d]", i),
-					Error: err,
-				})
-			}
-		}
-		if len(failures) > 0 {
-			return &validate.Error{Fields: failures}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "waves",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.AlienTypes.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
+	for i, elem := range alias {
+		if err := func() error {
+			if err := elem.Validate(); err != nil {
 				return err
 			}
+			return nil
+		}(); err != nil {
+			failures = append(failures, validate.FieldError{
+				Name:  fmt.Sprintf("[%d]", i),
+				Error: err,
+			})
 		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "alienTypes",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Budget.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "budget",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.WallDurability.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "wallDurability",
-			Error: err,
-		})
 	}
 	if len(failures) > 0 {
 		return &validate.Error{Fields: failures}
@@ -101,376 +35,16 @@ func (s *APIV1ChallengeBackendIDAliensGetOK) Validate() error {
 	return nil
 }
 
-func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypes) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
 
 	var failures []validate.FieldError
 	if err := func() error {
-		if value, ok := s.Regular.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
+		if s.Aliens == nil {
+			return errors.New("nil is invalid value")
 		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "regular",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Swift.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "swift",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Boss.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "boss",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
-func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesBoss) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
-	}
-
-	var failures []validate.FieldError
-	if err := func() error {
-		if value, ok := s.Hp.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "hp",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.ID.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "id",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Atk.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "atk",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossAtk) Validate() error {
-	switch s {
-	case 10:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossHp) Validate() error {
-	switch s {
-	case 10:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesBossID) Validate() error {
-	switch s {
-	case 3:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesRegular) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
-	}
-
-	var failures []validate.FieldError
-	if err := func() error {
-		if value, ok := s.Hp.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "hp",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.ID.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "id",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Atk.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "atk",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularAtk) Validate() error {
-	switch s {
-	case 3:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularHp) Validate() error {
-	switch s {
-	case 2:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesRegularID) Validate() error {
-	switch s {
-	case 1:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s *APIV1ChallengeBackendIDAliensGetOKAlienTypesSwift) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
-	}
-
-	var failures []validate.FieldError
-	if err := func() error {
-		if value, ok := s.Hp.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "hp",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.ID.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "id",
-			Error: err,
-		})
-	}
-	if err := func() error {
-		if value, ok := s.Atk.Get(); ok {
-			if err := func() error {
-				if err := value.Validate(); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return err
-			}
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "atk",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftAtk) Validate() error {
-	switch s {
-	case 5:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftHp) Validate() error {
-	switch s {
-	case 1:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKAlienTypesSwiftID) Validate() error {
-	switch s {
-	case 2:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKBudget) Validate() error {
-	switch s {
-	case 100:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKWallDurability) Validate() error {
-	switch s {
-	case 100:
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
-}
-
-func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
-	}
-
-	var failures []validate.FieldError
-	if err := func() error {
 		var failures []validate.FieldError
 		for i, elem := range s.Aliens {
 			if err := func() error {
@@ -495,46 +69,75 @@ func (s *APIV1ChallengeBackendIDAliensGetOKWavesItem) Validate() error {
 			Error: err,
 		})
 	}
+	if err := func() error {
+		if err := (validate.Int{
+			MinSet:        true,
+			Min:           50,
+			MaxSet:        true,
+			Max:           100,
+			MinExclusive:  false,
+			MaxExclusive:  false,
+			MultipleOfSet: false,
+			MultipleOf:    0,
+		}).Validate(int64(s.Hp)); err != nil {
+			return errors.Wrap(err, "int")
+		}
+		return nil
+	}(); err != nil {
+		failures = append(failures, validate.FieldError{
+			Name:  "hp",
+			Error: err,
+		})
+	}
 	if len(failures) > 0 {
 		return &validate.Error{Fields: failures}
 	}
 	return nil
 }
 
-func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) Validate() error {
+func (s *APIV1ChallengeBackendIDAliensGetOKItemAliensItem) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer
 	}
 
 	var failures []validate.FieldError
 	if err := func() error {
-		if err := s.Type.Validate(); err != nil {
-			return err
+		if err := (validate.Int{
+			MinSet:        true,
+			Min:           1,
+			MaxSet:        true,
+			Max:           3,
+			MinExclusive:  false,
+			MaxExclusive:  false,
+			MultipleOfSet: false,
+			MultipleOf:    0,
+		}).Validate(int64(s.Hp)); err != nil {
+			return errors.Wrap(err, "int")
 		}
 		return nil
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
-			Name:  "type",
+			Name:  "hp",
 			Error: err,
 		})
 	}
 	if err := func() error {
 		if err := (validate.Int{
 			MinSet:        true,
-			Min:           0,
-			MaxSet:        false,
-			Max:           0,
+			Min:           1,
+			MaxSet:        true,
+			Max:           3,
 			MinExclusive:  false,
 			MaxExclusive:  false,
 			MultipleOfSet: false,
 			MultipleOf:    0,
-		}).Validate(int64(s.Count)); err != nil {
+		}).Validate(int64(s.Atk)); err != nil {
 			return errors.Wrap(err, "int")
 		}
 		return nil
 	}(); err != nil {
 		failures = append(failures, validate.FieldError{
-			Name:  "count",
+			Name:  "atk",
 			Error: err,
 		})
 	}
@@ -542,19 +145,6 @@ func (s *APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItem) Validate() error
 		return &validate.Error{Fields: failures}
 	}
 	return nil
-}
-
-func (s APIV1ChallengeBackendIDAliensGetOKWavesItemAliensItemType) Validate() error {
-	switch s {
-	case "regular":
-		return nil
-	case "swift":
-		return nil
-	case "boss":
-		return nil
-	default:
-		return errors.Errorf("invalid value: %v", s)
-	}
 }
 
 func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Validate() error {

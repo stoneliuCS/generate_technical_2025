@@ -14,7 +14,7 @@ import (
 
 func encodeAPIV1ChallengeBackendIDAliensGetResponse(response APIV1ChallengeBackendIDAliensGetRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *APIV1ChallengeBackendIDAliensGetOK:
+	case *APIV1ChallengeBackendIDAliensGetOKApplicationJSON:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))

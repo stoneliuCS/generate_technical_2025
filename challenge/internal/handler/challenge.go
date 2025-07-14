@@ -3,6 +3,9 @@ package handler
 import (
 	"context"
 	api "generate_technical_challenge_2025/internal/api"
+	"generate_technical_challenge_2025/internal/services"
+
+	"github.com/samber/lo"
 )
 
 // APIV1ChallengeBackendIDAliensGet implements api.Handler.
@@ -14,8 +17,15 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 	if !exists {
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
-	// Not implemented yet.
-	return nil, nil
+	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
+	states := lo.Map(waves, func(state services.InvasionState, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
+		alienMap := lo.Map(state.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
+			return api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem{Hp: alien.Hp, Atk: alien.Atk}
+		})
+		return api.APIV1ChallengeBackendIDAliensGetOKItem{Aliens: alienMap, Hp: state.GetHpLeft()}
+	})
+	result := api.APIV1ChallengeBackendIDAliensGetOKApplicationJSON(states)
+	return &result, nil
 }
 
 // APIV1ChallengeBackendIDAliensSubmitPost implements api.Handler.
