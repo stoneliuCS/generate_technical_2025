@@ -16,6 +16,10 @@ type Handler interface {
 	//
 	// POST /api/v1/challenge/backend/{id}/aliens/submit
 	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
+	// APIV1ChallengeBackendIDNgrokSubmitPost implements POST /api/v1/challenge/backend/{id}/ngrok/submit operation.
+	//
+	// POST /api/v1/challenge/backend/{id}/ngrok/submit
+	APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params APIV1ChallengeBackendIDNgrokSubmitPostParams) (APIV1ChallengeBackendIDNgrokSubmitPostRes, error)
 	// APIV1ChallengeFrontendIDAliensGet implements GET /api/v1/challenge/frontend/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/frontend/{id}/aliens

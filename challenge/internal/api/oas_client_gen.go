@@ -35,6 +35,10 @@ type Invoker interface {
 	//
 	// POST /api/v1/challenge/backend/{id}/aliens/submit
 	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
+	// APIV1ChallengeBackendIDNgrokSubmitPost invokes POST /api/v1/challenge/backend/{id}/ngrok/submit operation.
+	//
+	// POST /api/v1/challenge/backend/{id}/ngrok/submit
+	APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params APIV1ChallengeBackendIDNgrokSubmitPostParams) (APIV1ChallengeBackendIDNgrokSubmitPostRes, error)
 	// APIV1ChallengeFrontendIDAliensGet invokes GET /api/v1/challenge/frontend/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/frontend/{id}/aliens
@@ -274,6 +278,97 @@ func (c *Client) sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context
 
 	stage = "DecodeResponse"
 	result, err := decodeAPIV1ChallengeBackendIDAliensSubmitPostResponse(resp)
+	if err != nil {
+		return res, errors.Wrap(err, "decode response")
+	}
+
+	return result, nil
+}
+
+// APIV1ChallengeBackendIDNgrokSubmitPost invokes POST /api/v1/challenge/backend/{id}/ngrok/submit operation.
+//
+// POST /api/v1/challenge/backend/{id}/ngrok/submit
+func (c *Client) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params APIV1ChallengeBackendIDNgrokSubmitPostParams) (APIV1ChallengeBackendIDNgrokSubmitPostRes, error) {
+	res, err := c.sendAPIV1ChallengeBackendIDNgrokSubmitPost(ctx, request, params)
+	return res, err
+}
+
+func (c *Client) sendAPIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params APIV1ChallengeBackendIDNgrokSubmitPostParams) (res APIV1ChallengeBackendIDNgrokSubmitPostRes, err error) {
+	otelAttrs := []attribute.KeyValue{
+		semconv.HTTPRequestMethodKey.String("POST"),
+		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/ngrok/submit"),
+	}
+
+	// Run stopwatch.
+	startTime := time.Now()
+	defer func() {
+		// Use floating point division here for higher precision (instead of Millisecond method).
+		elapsedDuration := time.Since(startTime)
+		c.duration.Record(ctx, float64(elapsedDuration)/float64(time.Millisecond), metric.WithAttributes(otelAttrs...))
+	}()
+
+	// Increment request counter.
+	c.requests.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+
+	// Start a span for this request.
+	ctx, span := c.cfg.Tracer.Start(ctx, APIV1ChallengeBackendIDNgrokSubmitPostOperation,
+		trace.WithAttributes(otelAttrs...),
+		clientSpanKind,
+	)
+	// Track stage for error reporting.
+	var stage string
+	defer func() {
+		if err != nil {
+			span.RecordError(err)
+			span.SetStatus(codes.Error, stage)
+			c.errors.Add(ctx, 1, metric.WithAttributes(otelAttrs...))
+		}
+		span.End()
+	}()
+
+	stage = "BuildURL"
+	u := uri.Clone(c.requestURL(ctx))
+	var pathParts [3]string
+	pathParts[0] = "/api/v1/challenge/backend/"
+	{
+		// Encode "id" parameter.
+		e := uri.NewPathEncoder(uri.PathEncoderConfig{
+			Param:   "id",
+			Style:   uri.PathStyleSimple,
+			Explode: false,
+		})
+		if err := func() error {
+			return e.EncodeValue(conv.UUIDToString(params.ID))
+		}(); err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		encoded, err := e.Result()
+		if err != nil {
+			return res, errors.Wrap(err, "encode path")
+		}
+		pathParts[1] = encoded
+	}
+	pathParts[2] = "/ngrok/submit"
+	uri.AddPathParts(u, pathParts[:]...)
+
+	stage = "EncodeRequest"
+	r, err := ht.NewRequest(ctx, "POST", u)
+	if err != nil {
+		return res, errors.Wrap(err, "create request")
+	}
+	if err := encodeAPIV1ChallengeBackendIDNgrokSubmitPostRequest(request, r); err != nil {
+		return res, errors.Wrap(err, "encode request")
+	}
+
+	stage = "SendRequest"
+	resp, err := c.cfg.Client.Do(r)
+	if err != nil {
+		return res, errors.Wrap(err, "do request")
+	}
+	defer resp.Body.Close()
+
+	stage = "DecodeResponse"
+	result, err := decodeAPIV1ChallengeBackendIDNgrokSubmitPostResponse(resp)
 	if err != nil {
 		return res, errors.Wrap(err, "decode response")
 	}

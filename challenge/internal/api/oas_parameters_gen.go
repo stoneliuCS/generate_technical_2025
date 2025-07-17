@@ -146,6 +146,71 @@ func decodeAPIV1ChallengeBackendIDAliensSubmitPostParams(args [1]string, argsEsc
 	return params, nil
 }
 
+// APIV1ChallengeBackendIDNgrokSubmitPostParams is parameters of POST /api/v1/challenge/backend/{id}/ngrok/submit operation.
+type APIV1ChallengeBackendIDNgrokSubmitPostParams struct {
+	ID uuid.UUID
+}
+
+func unpackAPIV1ChallengeBackendIDNgrokSubmitPostParams(packed middleware.Parameters) (params APIV1ChallengeBackendIDNgrokSubmitPostParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "id",
+			In:   "path",
+		}
+		params.ID = packed[key].(uuid.UUID)
+	}
+	return params
+}
+
+func decodeAPIV1ChallengeBackendIDNgrokSubmitPostParams(args [1]string, argsEscaped bool, r *http.Request) (params APIV1ChallengeBackendIDNgrokSubmitPostParams, _ error) {
+	// Decode path: id.
+	if err := func() error {
+		param := args[0]
+		if argsEscaped {
+			unescaped, err := url.PathUnescape(args[0])
+			if err != nil {
+				return errors.Wrap(err, "unescape path")
+			}
+			param = unescaped
+		}
+		if len(param) > 0 {
+			d := uri.NewPathDecoder(uri.PathDecoderConfig{
+				Param:   "id",
+				Value:   param,
+				Style:   uri.PathStyleSimple,
+				Explode: false,
+			})
+
+			if err := func() error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToUUID(val)
+				if err != nil {
+					return err
+				}
+
+				params.ID = c
+				return nil
+			}(); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "id",
+			In:   "path",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // APIV1ChallengeFrontendIDAliensGetParams is parameters of GET /api/v1/challenge/frontend/{id}/aliens operation.
 type APIV1ChallengeFrontendIDAliensGetParams struct {
 	ID uuid.UUID

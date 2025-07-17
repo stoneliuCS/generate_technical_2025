@@ -4,6 +4,7 @@ package api
 
 import (
 	"io"
+	"net/url"
 
 	"github.com/go-faster/errors"
 	"github.com/google/uuid"
@@ -397,6 +398,174 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Unmars
 	default:
 		return errors.Errorf("invalid value: %q", data)
 	}
+}
+
+type APIV1ChallengeBackendIDNgrokSubmitPostBadRequest struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostBadRequest) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostBadRequest) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDNgrokSubmitPostBadRequest) aPIV1ChallengeBackendIDNgrokSubmitPostRes() {
+}
+
+type APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError) aPIV1ChallengeBackendIDNgrokSubmitPostRes() {
+}
+
+// APIV1ChallengeBackendIDNgrokSubmitPostOK represents sum type.
+type APIV1ChallengeBackendIDNgrokSubmitPostOK struct {
+	Type                                      APIV1ChallengeBackendIDNgrokSubmitPostOKType // switch on this field
+	APIV1ChallengeBackendIDNgrokSubmitPostOK0 APIV1ChallengeBackendIDNgrokSubmitPostOK0
+	APIV1ChallengeBackendIDNgrokSubmitPostOK1 APIV1ChallengeBackendIDNgrokSubmitPostOK1
+}
+
+// APIV1ChallengeBackendIDNgrokSubmitPostOKType is oneOf type of APIV1ChallengeBackendIDNgrokSubmitPostOK.
+type APIV1ChallengeBackendIDNgrokSubmitPostOKType string
+
+// Possible values for APIV1ChallengeBackendIDNgrokSubmitPostOKType.
+const (
+	APIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK APIV1ChallengeBackendIDNgrokSubmitPostOKType = "APIV1ChallengeBackendIDNgrokSubmitPostOK0"
+	APIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK APIV1ChallengeBackendIDNgrokSubmitPostOKType = "APIV1ChallengeBackendIDNgrokSubmitPostOK1"
+)
+
+// IsAPIV1ChallengeBackendIDNgrokSubmitPostOK0 reports whether APIV1ChallengeBackendIDNgrokSubmitPostOK is APIV1ChallengeBackendIDNgrokSubmitPostOK0.
+func (s APIV1ChallengeBackendIDNgrokSubmitPostOK) IsAPIV1ChallengeBackendIDNgrokSubmitPostOK0() bool {
+	return s.Type == APIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK
+}
+
+// IsAPIV1ChallengeBackendIDNgrokSubmitPostOK1 reports whether APIV1ChallengeBackendIDNgrokSubmitPostOK is APIV1ChallengeBackendIDNgrokSubmitPostOK1.
+func (s APIV1ChallengeBackendIDNgrokSubmitPostOK) IsAPIV1ChallengeBackendIDNgrokSubmitPostOK1() bool {
+	return s.Type == APIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK
+}
+
+// SetAPIV1ChallengeBackendIDNgrokSubmitPostOK0 sets APIV1ChallengeBackendIDNgrokSubmitPostOK to APIV1ChallengeBackendIDNgrokSubmitPostOK0.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK) SetAPIV1ChallengeBackendIDNgrokSubmitPostOK0(v APIV1ChallengeBackendIDNgrokSubmitPostOK0) {
+	s.Type = APIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK
+	s.APIV1ChallengeBackendIDNgrokSubmitPostOK0 = v
+}
+
+// GetAPIV1ChallengeBackendIDNgrokSubmitPostOK0 returns APIV1ChallengeBackendIDNgrokSubmitPostOK0 and true boolean if APIV1ChallengeBackendIDNgrokSubmitPostOK is APIV1ChallengeBackendIDNgrokSubmitPostOK0.
+func (s APIV1ChallengeBackendIDNgrokSubmitPostOK) GetAPIV1ChallengeBackendIDNgrokSubmitPostOK0() (v APIV1ChallengeBackendIDNgrokSubmitPostOK0, ok bool) {
+	if !s.IsAPIV1ChallengeBackendIDNgrokSubmitPostOK0() {
+		return v, false
+	}
+	return s.APIV1ChallengeBackendIDNgrokSubmitPostOK0, true
+}
+
+// NewAPIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK returns new APIV1ChallengeBackendIDNgrokSubmitPostOK from APIV1ChallengeBackendIDNgrokSubmitPostOK0.
+func NewAPIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK(v APIV1ChallengeBackendIDNgrokSubmitPostOK0) APIV1ChallengeBackendIDNgrokSubmitPostOK {
+	var s APIV1ChallengeBackendIDNgrokSubmitPostOK
+	s.SetAPIV1ChallengeBackendIDNgrokSubmitPostOK0(v)
+	return s
+}
+
+// SetAPIV1ChallengeBackendIDNgrokSubmitPostOK1 sets APIV1ChallengeBackendIDNgrokSubmitPostOK to APIV1ChallengeBackendIDNgrokSubmitPostOK1.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK) SetAPIV1ChallengeBackendIDNgrokSubmitPostOK1(v APIV1ChallengeBackendIDNgrokSubmitPostOK1) {
+	s.Type = APIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK
+	s.APIV1ChallengeBackendIDNgrokSubmitPostOK1 = v
+}
+
+// GetAPIV1ChallengeBackendIDNgrokSubmitPostOK1 returns APIV1ChallengeBackendIDNgrokSubmitPostOK1 and true boolean if APIV1ChallengeBackendIDNgrokSubmitPostOK is APIV1ChallengeBackendIDNgrokSubmitPostOK1.
+func (s APIV1ChallengeBackendIDNgrokSubmitPostOK) GetAPIV1ChallengeBackendIDNgrokSubmitPostOK1() (v APIV1ChallengeBackendIDNgrokSubmitPostOK1, ok bool) {
+	if !s.IsAPIV1ChallengeBackendIDNgrokSubmitPostOK1() {
+		return v, false
+	}
+	return s.APIV1ChallengeBackendIDNgrokSubmitPostOK1, true
+}
+
+// NewAPIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK returns new APIV1ChallengeBackendIDNgrokSubmitPostOK from APIV1ChallengeBackendIDNgrokSubmitPostOK1.
+func NewAPIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK(v APIV1ChallengeBackendIDNgrokSubmitPostOK1) APIV1ChallengeBackendIDNgrokSubmitPostOK {
+	var s APIV1ChallengeBackendIDNgrokSubmitPostOK
+	s.SetAPIV1ChallengeBackendIDNgrokSubmitPostOK1(v)
+	return s
+}
+
+func (*APIV1ChallengeBackendIDNgrokSubmitPostOK) aPIV1ChallengeBackendIDNgrokSubmitPostRes() {}
+
+type APIV1ChallengeBackendIDNgrokSubmitPostOK0 struct {
+	Valid OptBool `json:"valid"`
+	Score OptInt  `json:"score"`
+}
+
+// GetValid returns the value of Valid.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK0) GetValid() OptBool {
+	return s.Valid
+}
+
+// GetScore returns the value of Score.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK0) GetScore() OptInt {
+	return s.Score
+}
+
+// SetValid sets the value of Valid.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK0) SetValid(val OptBool) {
+	s.Valid = val
+}
+
+// SetScore sets the value of Score.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK0) SetScore(val OptInt) {
+	s.Score = val
+}
+
+type APIV1ChallengeBackendIDNgrokSubmitPostOK1 struct {
+	Valid  OptBool   `json:"valid"`
+	Reason OptString `json:"reason"`
+}
+
+// GetValid returns the value of Valid.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK1) GetValid() OptBool {
+	return s.Valid
+}
+
+// GetReason returns the value of Reason.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK1) GetReason() OptString {
+	return s.Reason
+}
+
+// SetValid sets the value of Valid.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK1) SetValid(val OptBool) {
+	s.Valid = val
+}
+
+// SetReason sets the value of Reason.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostOK1) SetReason(val OptString) {
+	s.Reason = val
+}
+
+type APIV1ChallengeBackendIDNgrokSubmitPostReq struct {
+	URL OptURI `json:"url"`
+}
+
+// GetURL returns the value of URL.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostReq) GetURL() OptURI {
+	return s.URL
+}
+
+// SetURL sets the value of URL.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostReq) SetURL(val OptURI) {
+	s.URL = val
 }
 
 type APIV1ChallengeFrontendIDAliensGetBadRequest struct {
@@ -892,6 +1061,52 @@ func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Or(d
 	return d
 }
 
+// NewOptAPIV1ChallengeBackendIDNgrokSubmitPostReq returns new OptAPIV1ChallengeBackendIDNgrokSubmitPostReq with value set to v.
+func NewOptAPIV1ChallengeBackendIDNgrokSubmitPostReq(v APIV1ChallengeBackendIDNgrokSubmitPostReq) OptAPIV1ChallengeBackendIDNgrokSubmitPostReq {
+	return OptAPIV1ChallengeBackendIDNgrokSubmitPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIV1ChallengeBackendIDNgrokSubmitPostReq is optional APIV1ChallengeBackendIDNgrokSubmitPostReq.
+type OptAPIV1ChallengeBackendIDNgrokSubmitPostReq struct {
+	Value APIV1ChallengeBackendIDNgrokSubmitPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPIV1ChallengeBackendIDNgrokSubmitPostReq was set.
+func (o OptAPIV1ChallengeBackendIDNgrokSubmitPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIV1ChallengeBackendIDNgrokSubmitPostReq) Reset() {
+	var v APIV1ChallengeBackendIDNgrokSubmitPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIV1ChallengeBackendIDNgrokSubmitPostReq) SetTo(v APIV1ChallengeBackendIDNgrokSubmitPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIV1ChallengeBackendIDNgrokSubmitPostReq) Get() (v APIV1ChallengeBackendIDNgrokSubmitPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIV1ChallengeBackendIDNgrokSubmitPostReq) Or(d APIV1ChallengeBackendIDNgrokSubmitPostReq) APIV1ChallengeBackendIDNgrokSubmitPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptAPIV1ChallengeFrontendIDAliensGetOKItemStats returns new OptAPIV1ChallengeFrontendIDAliensGetOKItemStats with value set to v.
 func NewOptAPIV1ChallengeFrontendIDAliensGetOKItemStats(v APIV1ChallengeFrontendIDAliensGetOKItemStats) OptAPIV1ChallengeFrontendIDAliensGetOKItemStats {
 	return OptAPIV1ChallengeFrontendIDAliensGetOKItemStats{
@@ -1162,6 +1377,52 @@ func (o OptString) Get() (v string, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptString) Or(d string) string {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptURI returns new OptURI with value set to v.
+func NewOptURI(v url.URL) OptURI {
+	return OptURI{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptURI is optional url.URL.
+type OptURI struct {
+	Value url.URL
+	Set   bool
+}
+
+// IsSet returns true if OptURI was set.
+func (o OptURI) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptURI) Reset() {
+	var v url.URL
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptURI) SetTo(v url.URL) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptURI) Get() (v url.URL, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptURI) Or(d url.URL) url.URL {
 	if v, ok := o.Get(); ok {
 		return v
 	}

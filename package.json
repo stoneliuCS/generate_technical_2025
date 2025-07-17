@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "fluid-oas": "^0.4.4"
+  }
+}

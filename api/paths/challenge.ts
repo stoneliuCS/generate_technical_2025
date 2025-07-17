@@ -46,9 +46,13 @@ export const ALIEN_CHALLENGE_ENDPOINT = PathItem.addMethod({
   ),
 });
 
-export const SUBMIT_RESPONSE = OneOf(
+export const ALIEN_SUBMIT_RESPONSE = OneOf(
   Object.addProperties({ valid: Boolean, score: Integer }),
   Object.addProperties({ valid: Boolean, reason: String }),
+);
+
+export const NGROK_SUBMIT_RESPONSE = OneOf(
+    Object.addProperties({ score: Integer }),
 );
 
 export const NGROK_CHALLENGE_ENDPOINT = PathItem.addMethod({
@@ -63,7 +67,7 @@ export const NGROK_CHALLENGE_ENDPOINT = PathItem.addMethod({
         "200": Response.addDescription(
           "Grade received by our submission server querying your exposed ngrok API.",
         ).addContents({
-          "application/json": MediaType.addSchema(SUBMIT_RESPONSE),
+          "application/json": MediaType.addSchema(NGROK_SUBMIT_RESPONSE),
         }),
         "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
@@ -132,7 +136,7 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         "200": Response.addDescription(
           "Verify submission against testing server oracle.",
         ).addContents({
-          "application/json": MediaType.addSchema(SUBMIT_RESPONSE),
+          "application/json": MediaType.addSchema(ALIEN_SUBMIT_RESPONSE),
         }),
         "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
