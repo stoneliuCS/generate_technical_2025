@@ -14,6 +14,7 @@ import {
   String,
 } from "fluid-oas";
 import { ALIEN_INVASION, ALIEN_INVASION_ANSWER } from "../schema/alien";
+import { NGROK_URL_SUBMISSION } from "../schema/ngrok";
 import { ERROR, UUID } from "../schema";
 
 const ID_PARAMETER = Parameter.schema
@@ -50,17 +51,17 @@ export const SUBMIT_RESPONSE = OneOf(
   Object.addProperties({ valid: Boolean, reason: String }),
 );
 
-export const SUBMIT_ENDPOINT = PathItem.addMethod({
+export const NGROK_CHALLENGE_ENDPOINT = PathItem.addMethod({
   post: Operation.addParameters([ID_PARAMETER])
     .addRequestBody(
       RequestBody.addContents({
-        "application/json": MediaType.addSchema(ALIEN_INVASION_ANSWER),
+        "application/json": MediaType.addSchema(NGROK_URL_SUBMISSION),
       }),
     )
     .addResponses(
       Responses({
         "200": Response.addDescription(
-          "Verify submission against testing server oracle.",
+          "Grade received by our submission server querying your exposed ngrok API.",
         ).addContents({
           "application/json": MediaType.addSchema(SUBMIT_RESPONSE),
         }),
@@ -117,4 +118,28 @@ export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
       }),
     }),
   ),
+});
+
+export const SUBMIT_ENDPOINT = PathItem.addMethod({
+  post: Operation.addParameters([ID_PARAMETER])
+    .addRequestBody(
+      RequestBody.addContents({
+        "application/json": MediaType.addSchema(ALIEN_INVASION_ANSWER),
+      }),
+    )
+    .addResponses(
+      Responses({
+        "200": Response.addDescription(
+          "Verify submission against testing server oracle.",
+        ).addContents({
+          "application/json": MediaType.addSchema(SUBMIT_RESPONSE),
+        }),
+        "400": Response.addDescription("Malformed Submission").addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
+        "500": Response.addDescription("Internal Server Error").addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
+      }),
+    ),
 });
