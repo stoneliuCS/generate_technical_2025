@@ -13,18 +13,8 @@ export const ALIEN_INVASION = Array.addItems(
   }).addRequired(["aliens", "hp"]),
 );
 
-export const ALIEN_INVASION_ANSWER = Object.addProperties({
-  gunsPurchased: Array.addItems(
-    Object.addProperties({
-      type: String.addEnums(["turret", "machineGun", "rayGun"]),
-    }),
+export const ALIEN_INVASION_ANSWER = Array.addItems(
+  Array.addItems(
+    String.addEnums(["volley", "alienAttack", "focusedShot", "focusedVolley"]),
   ),
-  totalCost: Integer,
-  assignments: Array.addItems(
-    Object.addProperties({
-      wave: Integer.addMinimum(1),
-      gunQueues: Array.addItems(Array.addItems(Integer)),
-      wallDurabilityRemaining: Integer,
-    }),
-  ),
-});
+);

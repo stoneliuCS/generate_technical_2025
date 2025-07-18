@@ -779,6 +779,102 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) UnmarshalJS
 	return s.Decode(d)
 }
 
+// Encode implements json.Marshaler.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) Encode(e *jx.Encoder) {
+	e.ObjStart()
+	s.encodeFields(e)
+	e.ObjEnd()
+}
+
+// encodeFields encodes fields.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) encodeFields(e *jx.Encoder) {
+	{
+		e.FieldStart("message")
+		e.Str(s.Message)
+	}
+}
+
+var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostNotFound = [1]string{
+	0: "message",
+}
+
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostNotFound from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) Decode(d *jx.Decoder) error {
+	if s == nil {
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostNotFound to nil")
+	}
+	var requiredBitSet [1]uint8
+
+	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
+		switch string(k) {
+		case "message":
+			requiredBitSet[0] |= 1 << 0
+			if err := func() error {
+				v, err := d.Str()
+				s.Message = string(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"message\"")
+			}
+		default:
+			return d.Skip()
+		}
+		return nil
+	}); err != nil {
+		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostNotFound")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000001,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostNotFound) {
+					name = jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostNotFound[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements stdjson.Marshaler.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) MarshalJSON() ([]byte, error) {
+	e := jx.Encoder{}
+	s.Encode(&e)
+	return e.Bytes(), nil
+}
+
+// UnmarshalJSON implements stdjson.Unmarshaler.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) UnmarshalJSON(data []byte) error {
+	d := jx.DecodeBytes(data)
+	return s.Decode(d)
+}
+
 // Encode encodes APIV1ChallengeBackendIDAliensSubmitPostOK as json.
 func (s APIV1ChallengeBackendIDAliensSubmitPostOK) Encode(e *jx.Encoder) {
 	switch s.Type {
@@ -1025,348 +1121,46 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) UnmarshalJSON(data []byte) 
 	return s.Decode(d)
 }
 
-// Encode implements json.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) encodeFields(e *jx.Encoder) {
-	{
-		if s.GunsPurchased != nil {
-			e.FieldStart("gunsPurchased")
-			e.ArrStart()
-			for _, elem := range s.GunsPurchased {
-				elem.Encode(e)
-			}
-			e.ArrEnd()
-		}
-	}
-	{
-		if s.TotalCost.Set {
-			e.FieldStart("totalCost")
-			s.TotalCost.Encode(e)
-		}
-	}
-	{
-		if s.Assignments != nil {
-			e.FieldStart("assignments")
-			e.ArrStart()
-			for _, elem := range s.Assignments {
-				elem.Encode(e)
-			}
-			e.ArrEnd()
-		}
-	}
-}
-
-var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReq = [3]string{
-	0: "gunsPurchased",
-	1: "totalCost",
-	2: "assignments",
-}
-
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReq from json.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReq to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "gunsPurchased":
-			if err := func() error {
-				s.GunsPurchased = make([]APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem
-					if err := elem.Decode(d); err != nil {
-						return err
-					}
-					s.GunsPurchased = append(s.GunsPurchased, elem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"gunsPurchased\"")
-			}
-		case "totalCost":
-			if err := func() error {
-				s.TotalCost.Reset()
-				if err := s.TotalCost.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"totalCost\"")
-			}
-		case "assignments":
-			if err := func() error {
-				s.Assignments = make([]APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem
-					if err := elem.Decode(d); err != nil {
-						return err
-					}
-					s.Assignments = append(s.Assignments, elem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"assignments\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReq")
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) encodeFields(e *jx.Encoder) {
-	{
-		if s.Wave.Set {
-			e.FieldStart("wave")
-			s.Wave.Encode(e)
-		}
-	}
-	{
-		if s.GunQueues != nil {
-			e.FieldStart("gunQueues")
-			e.ArrStart()
-			for _, elem := range s.GunQueues {
-				e.ArrStart()
-				for _, elem := range elem {
-					e.Int(elem)
-				}
-				e.ArrEnd()
-			}
-			e.ArrEnd()
-		}
-	}
-	{
-		if s.WallDurabilityRemaining.Set {
-			e.FieldStart("wallDurabilityRemaining")
-			s.WallDurabilityRemaining.Encode(e)
-		}
-	}
-}
-
-var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem = [3]string{
-	0: "wave",
-	1: "gunQueues",
-	2: "wallDurabilityRemaining",
-}
-
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem from json.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "wave":
-			if err := func() error {
-				s.Wave.Reset()
-				if err := s.Wave.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"wave\"")
-			}
-		case "gunQueues":
-			if err := func() error {
-				s.GunQueues = make([][]int, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elem []int
-					elem = make([]int, 0)
-					if err := d.Arr(func(d *jx.Decoder) error {
-						var elemElem int
-						v, err := d.Int()
-						elemElem = int(v)
-						if err != nil {
-							return err
-						}
-						elem = append(elem, elemElem)
-						return nil
-					}); err != nil {
-						return err
-					}
-					s.GunQueues = append(s.GunQueues, elem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"gunQueues\"")
-			}
-		case "wallDurabilityRemaining":
-			if err := func() error {
-				s.WallDurabilityRemaining.Reset()
-				if err := s.WallDurabilityRemaining.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"wallDurabilityRemaining\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem")
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode implements json.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) Encode(e *jx.Encoder) {
-	e.ObjStart()
-	s.encodeFields(e)
-	e.ObjEnd()
-}
-
-// encodeFields encodes fields.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) encodeFields(e *jx.Encoder) {
-	{
-		if s.Type.Set {
-			e.FieldStart("type")
-			s.Type.Encode(e)
-		}
-	}
-}
-
-var jsonFieldsNameOfAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem = [1]string{
-	0: "type",
-}
-
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem from json.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) Decode(d *jx.Decoder) error {
-	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem to nil")
-	}
-
-	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
-		switch string(k) {
-		case "type":
-			if err := func() error {
-				s.Type.Reset()
-				if err := s.Type.Decode(d); err != nil {
-					return err
-				}
-				return nil
-			}(); err != nil {
-				return errors.Wrap(err, "decode field \"type\"")
-			}
-		default:
-			return d.Skip()
-		}
-		return nil
-	}); err != nil {
-		return errors.Wrap(err, "decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem")
-	}
-
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType as json.
-func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
+// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReqItemItem as json.
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) Encode(e *jx.Encoder) {
 	e.Str(string(s))
 }
 
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType from json.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
+// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqItemItem from json.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) Decode(d *jx.Decoder) error {
 	if s == nil {
-		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType to nil")
+		return errors.New("invalid: unable to decode APIV1ChallengeBackendIDAliensSubmitPostReqItemItem to nil")
 	}
 	v, err := d.StrBytes()
 	if err != nil {
 		return err
 	}
 	// Try to use constant string.
-	switch APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v) {
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun
+	switch APIV1ChallengeBackendIDAliensSubmitPostReqItemItem(v) {
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley
 	default:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v)
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItem(v)
 	}
 
 	return nil
 }
 
 // MarshalJSON implements stdjson.Marshaler.
-func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) MarshalJSON() ([]byte, error) {
 	e := jx.Encoder{}
 	s.Encode(&e)
 	return e.Bytes(), nil
 }
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }
@@ -2954,72 +2748,6 @@ func (s HealthcheckGetOKMessage) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *HealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReq as json.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	o.Value.Encode(e)
-}
-
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReq from json.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensSubmitPostReq to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeBackendIDAliensSubmitPostReq) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType as json.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	e.Str(string(o.Value))
-}
-
-// Decode decodes APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType from json.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

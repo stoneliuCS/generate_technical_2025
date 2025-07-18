@@ -145,6 +145,23 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) SetMessage(
 func (*APIV1ChallengeBackendIDAliensSubmitPostInternalServerError) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
 }
 
+type APIV1ChallengeBackendIDAliensSubmitPostNotFound struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostNotFound) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDAliensSubmitPostNotFound) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
+}
+
 // APIV1ChallengeBackendIDAliensSubmitPostOK represents sum type.
 type APIV1ChallengeBackendIDAliensSubmitPostOK struct {
 	Type                                       APIV1ChallengeBackendIDAliensSubmitPostOKType // switch on this field
@@ -265,117 +282,35 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) SetReason(val OptString) {
 	s.Reason = val
 }
 
-type APIV1ChallengeBackendIDAliensSubmitPostReq struct {
-	GunsPurchased []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem `json:"gunsPurchased"`
-	TotalCost     OptInt                                                        `json:"totalCost"`
-	Assignments   []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem   `json:"assignments"`
-}
-
-// GetGunsPurchased returns the value of GunsPurchased.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetGunsPurchased() []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem {
-	return s.GunsPurchased
-}
-
-// GetTotalCost returns the value of TotalCost.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetTotalCost() OptInt {
-	return s.TotalCost
-}
-
-// GetAssignments returns the value of Assignments.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetAssignments() []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem {
-	return s.Assignments
-}
-
-// SetGunsPurchased sets the value of GunsPurchased.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetGunsPurchased(val []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) {
-	s.GunsPurchased = val
-}
-
-// SetTotalCost sets the value of TotalCost.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetTotalCost(val OptInt) {
-	s.TotalCost = val
-}
-
-// SetAssignments sets the value of Assignments.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetAssignments(val []APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) {
-	s.Assignments = val
-}
-
-type APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem struct {
-	Wave                    OptInt  `json:"wave"`
-	GunQueues               [][]int `json:"gunQueues"`
-	WallDurabilityRemaining OptInt  `json:"wallDurabilityRemaining"`
-}
-
-// GetWave returns the value of Wave.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetWave() OptInt {
-	return s.Wave
-}
-
-// GetGunQueues returns the value of GunQueues.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetGunQueues() [][]int {
-	return s.GunQueues
-}
-
-// GetWallDurabilityRemaining returns the value of WallDurabilityRemaining.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) GetWallDurabilityRemaining() OptInt {
-	return s.WallDurabilityRemaining
-}
-
-// SetWave sets the value of Wave.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetWave(val OptInt) {
-	s.Wave = val
-}
-
-// SetGunQueues sets the value of GunQueues.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetGunQueues(val [][]int) {
-	s.GunQueues = val
-}
-
-// SetWallDurabilityRemaining sets the value of WallDurabilityRemaining.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqAssignmentsItem) SetWallDurabilityRemaining(val OptInt) {
-	s.WallDurabilityRemaining = val
-}
-
-type APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem struct {
-	Type OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType `json:"type"`
-}
-
-// GetType returns the value of Type.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) GetType() OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
-	return s.Type
-}
-
-// SetType sets the value of Type.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItem) SetType(val OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) {
-	s.Type = val
-}
-
-type APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType string
+type APIV1ChallengeBackendIDAliensSubmitPostReqItemItem string
 
 const (
-	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret     APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "turret"
-	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "machineGun"
-	APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun     APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType = "rayGun"
+	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley        APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "volley"
+	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack   APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "alienAttack"
+	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot   APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "focusedShot"
+	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "focusedVolley"
 )
 
-// AllValues returns all APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType values.
-func (APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) AllValues() []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
-	return []APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType{
-		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret,
-		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun,
-		APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun,
+// AllValues returns all APIV1ChallengeBackendIDAliensSubmitPostReqItemItem values.
+func (APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) AllValues() []APIV1ChallengeBackendIDAliensSubmitPostReqItemItem {
+	return []APIV1ChallengeBackendIDAliensSubmitPostReqItemItem{
+		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley,
+		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack,
+		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot,
+		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley,
 	}
 }
 
 // MarshalText implements encoding.TextMarshaler.
-func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) MarshalText() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) MarshalText() ([]byte, error) {
 	switch s {
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley:
 		return []byte(s), nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack:
 		return []byte(s), nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot:
+		return []byte(s), nil
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley:
 		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
@@ -383,16 +318,19 @@ func (s APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Marshal
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) UnmarshalText(data []byte) error {
-	switch APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(data) {
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeTurret
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) UnmarshalText(data []byte) error {
+	switch APIV1ChallengeBackendIDAliensSubmitPostReqItemItem(data) {
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley
 		return nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeMachineGun
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack
 		return nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemTypeRayGun
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot
+		return nil
+	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
@@ -436,7 +374,7 @@ type APIV1ChallengeFrontendIDAliensGetOKApplicationJSON []APIV1ChallengeFrontend
 func (*APIV1ChallengeFrontendIDAliensGetOKApplicationJSON) aPIV1ChallengeFrontendIDAliensGetRes() {}
 
 type APIV1ChallengeFrontendIDAliensGetOKItem struct {
-	// Unique identifer for the registered participant.
+	// UUID of the alien.
 	ID OptUUID `json:"id"`
 	// Name of the alien.
 	Name OptString `json:"name"`
@@ -796,100 +734,6 @@ func (s *HealthcheckGetOKMessage) UnmarshalText(data []byte) error {
 	default:
 		return errors.Errorf("invalid value: %q", data)
 	}
-}
-
-// NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq returns new OptAPIV1ChallengeBackendIDAliensSubmitPostReq with value set to v.
-func NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq(v APIV1ChallengeBackendIDAliensSubmitPostReq) OptAPIV1ChallengeBackendIDAliensSubmitPostReq {
-	return OptAPIV1ChallengeBackendIDAliensSubmitPostReq{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptAPIV1ChallengeBackendIDAliensSubmitPostReq is optional APIV1ChallengeBackendIDAliensSubmitPostReq.
-type OptAPIV1ChallengeBackendIDAliensSubmitPostReq struct {
-	Value APIV1ChallengeBackendIDAliensSubmitPostReq
-	Set   bool
-}
-
-// IsSet returns true if OptAPIV1ChallengeBackendIDAliensSubmitPostReq was set.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Reset() {
-	var v APIV1ChallengeBackendIDAliensSubmitPostReq
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) SetTo(v APIV1ChallengeBackendIDAliensSubmitPostReq) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Get() (v APIV1ChallengeBackendIDAliensSubmitPostReq, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Or(d APIV1ChallengeBackendIDAliensSubmitPostReq) APIV1ChallengeBackendIDAliensSubmitPostReq {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType returns new OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType with value set to v.
-func NewOptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType(v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
-	return OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType is optional APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType.
-type OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType struct {
-	Value APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType
-	Set   bool
-}
-
-// IsSet returns true if OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType was set.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) IsSet() bool {
-	return o.Set
-}
-
-// Reset unsets value.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Reset() {
-	var v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) SetTo(v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Get() (v APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) Or(d APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType) APIV1ChallengeBackendIDAliensSubmitPostReqGunsPurchasedItemType {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
 }
 
 // NewOptAPIV1ChallengeFrontendIDAliensGetOKItemStats returns new OptAPIV1ChallengeFrontendIDAliensGetOKItemStats with value set to v.

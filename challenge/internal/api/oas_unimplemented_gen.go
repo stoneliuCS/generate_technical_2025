@@ -23,7 +23,7 @@ func (UnimplementedHandler) APIV1ChallengeBackendIDAliensGet(ctx context.Context
 // APIV1ChallengeBackendIDAliensSubmitPost implements POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
 // POST /api/v1/challenge/backend/{id}/aliens/submit
-func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (r APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
+func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (r APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

@@ -29,8 +29,15 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 }
 
 // APIV1ChallengeBackendIDAliensSubmitPost implements api.Handler.
-func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req api.OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params api.APIV1ChallengeBackendIDAliensSubmitPostParams) (api.APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
-	panic("unimplemented")
+func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req [][]api.APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params api.APIV1ChallengeBackendIDAliensSubmitPostParams) (api.APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
+	exists, err := h.memberService.CheckMemberExistsById(params.ID)
+	if err != nil {
+		return &api.APIV1ChallengeBackendIDAliensSubmitPostInternalServerError{Message: "Database error finding member Id."}, nil
+	}
+	if !exists {
+		return &api.APIV1ChallengeBackendIDAliensSubmitPostNotFound{Message: "Unable to find member id."}, nil
+	}
+	panic("TO BE CREATED")
 }
 
 // APIV1ChallengeFrontendIDAliensGet implements api.Handler.

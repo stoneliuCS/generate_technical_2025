@@ -67,6 +67,9 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
+        "404": Response.addDescription("ID not found.").addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
         "500": Response.addDescription("Internal Server Error").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
@@ -75,7 +78,7 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
 });
 
 export const ALIEN = Object.addProperties({
-  id: UUID,
+  id: UUID.addDescription("UUID of the alien."),
   name: String.addDescription("Name of the alien.").addExample("BillyBobJoe"),
   type: String.addDescription("The rank of the alien.").addEnums([
     "Regular",
