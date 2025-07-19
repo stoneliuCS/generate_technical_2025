@@ -85,12 +85,15 @@ export const ALIEN = Object.addProperties({
     "Elite",
     "Boss",
   ]),
+  url: String.addDescription("Profile picture URL of the alien.")
+    .addFormat("uri")
+    .addExample("https://robohash.org/alien123.png"),
   stats: Object.addProperties({
     atk: Integer.addMinimum(1).addMaximum(3),
     hp: Integer.addMinimum(1).addMaximum(3),
     spd: Integer.addMinimum(1).addMaximum(3),
   }).addDescription("Combat description of the alien.").addRequired(["atk", "hp", "spd"]),
-}).addRequired(["id", "name", "type", "stats"]);
+}).addRequired(["id", "name", "type", "stats", "url"]);
 
 // BEGIN ALIEN FRONTEND CHALLENGE ENDPOINT
 export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
@@ -100,12 +103,12 @@ export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
       .addIn("query")
       .addName("limit")
       .addDescription("Limit of the pagination.")
-      .addSchema(Integer),
+      .addSchema(Integer).addSchema(Integer.addMinimum(0).addDefault(10)),
     Parameter.schema
       .addIn("query")
       .addName("offset")
       .addDescription("Offset of the pagination.")
-      .addSchema(Integer),
+      .addSchema(Integer).addSchema(Integer.addMinimum(0).addDefault(0)),
   ]).addResponses(
     Responses({
       "200": Response.addDescription(

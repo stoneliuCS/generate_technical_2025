@@ -15,16 +15,24 @@ const (
 )
 
 type DetailedAlien struct {
-	ID        uuid.UUID
-	BaseAlien Alien
-	Name      string
-	Type      AlienType
-	Spd       int
+	ID         uuid.UUID
+	BaseAlien  Alien
+	Name       string
+	Type       AlienType
+	Spd        int
+	ProfileURL string
 }
 
-// Creates a DetailedAlien with HP, ATK, and SPD stats, with a name and AlienType.
-func CreateDetailedAlien(id uuid.UUID, hp int, atk int, spd int, name string, alienType AlienType) DetailedAlien {
-	return DetailedAlien{ID: id, BaseAlien: Alien{Hp: hp, Atk: atk}, Name: name, Type: alienType, Spd: spd}
+// Creates a DetailedAlien with ID, HP, ATK, and SPD stats, with a name, profile URL, and AlienType.
+func CreateDetailedAlien(id uuid.UUID, hp int, atk int, spd int,
+	name string, alienType AlienType, profileURL string) DetailedAlien {
+	return DetailedAlien{
+		ID:         id,
+		BaseAlien:  Alien{Hp: hp, Atk: atk},
+		Name:       name,
+		Type:       alienType,
+		Spd:        spd,
+		ProfileURL: profileURL}
 }
 
 func (at AlienType) ToAPI() api.APIV1ChallengeFrontendIDAliensGetOKItemType {

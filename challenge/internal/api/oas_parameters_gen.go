@@ -231,6 +231,11 @@ func decodeAPIV1ChallengeFrontendIDAliensGetParams(args [1]string, argsEscaped b
 			Err:  err,
 		}
 	}
+	// Set default value for query: limit.
+	{
+		val := int(10)
+		params.Limit.SetTo(val)
+	}
 	// Decode query: limit.
 	if err := func() error {
 		cfg := uri.QueryParameterDecodingConfig{
@@ -263,6 +268,30 @@ func decodeAPIV1ChallengeFrontendIDAliensGetParams(args [1]string, argsEscaped b
 			}); err != nil {
 				return err
 			}
+			if err := func() error {
+				if value, ok := params.Limit.Get(); ok {
+					if err := func() error {
+						if err := (validate.Int{
+							MinSet:        true,
+							Min:           0,
+							MaxSet:        false,
+							Max:           0,
+							MinExclusive:  false,
+							MaxExclusive:  false,
+							MultipleOfSet: false,
+							MultipleOf:    0,
+						}).Validate(int64(value)); err != nil {
+							return errors.Wrap(err, "int")
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return err
+			}
 		}
 		return nil
 	}(); err != nil {
@@ -271,6 +300,11 @@ func decodeAPIV1ChallengeFrontendIDAliensGetParams(args [1]string, argsEscaped b
 			In:   "query",
 			Err:  err,
 		}
+	}
+	// Set default value for query: offset.
+	{
+		val := int(0)
+		params.Offset.SetTo(val)
 	}
 	// Decode query: offset.
 	if err := func() error {
@@ -302,6 +336,30 @@ func decodeAPIV1ChallengeFrontendIDAliensGetParams(args [1]string, argsEscaped b
 				params.Offset.SetTo(paramsDotOffsetVal)
 				return nil
 			}); err != nil {
+				return err
+			}
+			if err := func() error {
+				if value, ok := params.Offset.Get(); ok {
+					if err := func() error {
+						if err := (validate.Int{
+							MinSet:        true,
+							Min:           0,
+							MaxSet:        false,
+							Max:           0,
+							MinExclusive:  false,
+							MaxExclusive:  false,
+							MultipleOfSet: false,
+							MultipleOf:    0,
+						}).Validate(int64(value)); err != nil {
+							return errors.Wrap(err, "int")
+						}
+						return nil
+					}(); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
 				return err
 			}
 		}

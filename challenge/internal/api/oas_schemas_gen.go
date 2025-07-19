@@ -4,6 +4,7 @@ package api
 
 import (
 	"io"
+	"net/url"
 
 	"github.com/go-faster/errors"
 	"github.com/google/uuid"
@@ -380,6 +381,8 @@ type APIV1ChallengeFrontendIDAliensGetOKItem struct {
 	Name string `json:"name"`
 	// The rank of the alien.
 	Type APIV1ChallengeFrontendIDAliensGetOKItemType `json:"type"`
+	// Profile picture URL of the alien.
+	URL url.URL `json:"url"`
 	// Combat description of the alien.
 	Stats APIV1ChallengeFrontendIDAliensGetOKItemStats `json:"stats"`
 }
@@ -397,6 +400,11 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetName() string {
 // GetType returns the value of Type.
 func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetType() APIV1ChallengeFrontendIDAliensGetOKItemType {
 	return s.Type
+}
+
+// GetURL returns the value of URL.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetURL() url.URL {
+	return s.URL
 }
 
 // GetStats returns the value of Stats.
@@ -417,6 +425,11 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetName(val string) {
 // SetType sets the value of Type.
 func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetType(val APIV1ChallengeFrontendIDAliensGetOKItemType) {
 	s.Type = val
+}
+
+// SetURL sets the value of URL.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetURL(val url.URL) {
+	s.URL = val
 }
 
 // SetStats sets the value of Stats.
