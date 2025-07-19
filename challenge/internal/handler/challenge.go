@@ -4,6 +4,7 @@ import (
 	"context"
 	api "generate_technical_challenge_2025/internal/api"
 	"generate_technical_challenge_2025/internal/services"
+	"net/url"
 
 	"github.com/samber/lo"
 )
@@ -44,7 +45,28 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params api.APIV1ChallengeFrontendIDAliensGetParams) (api.APIV1ChallengeFrontendIDAliensGetRes, error) {
 	detailedAliens := h.challengeService.GenerateUniqueFrontendChallenge(params.ID)
 
-	colony := lo.Map(detailedAliens, func(alien services.DetailedAlien, _ int) api.APIV1ChallengeFrontendIDAliensGetOKItem {
+	start := 0
+	if params.Offset.Set {
+		start = params.Offset.Value
+	}
+
+	end := len(detailedAliens)
+	if params.Limit.Set {
+		end = min(start+params.Limit.Value, len(detailedAliens))
+	}
+
+	// Slice the aliens for this page
+	var pagedAliens []services.DetailedAlien
+	if start < len(detailedAliens) {
+		pagedAliens = detailedAliens[start:end]
+	}
+
+	colony := lo.Map(pagedAliens, func(alien services.DetailedAlien, _ int) api.APIV1ChallengeFrontendIDAliensGetOKItem {
+		profileURLParsed, err := url.Parse(alien.ProfileURL)
+		if err != nil {
+			profileURLParsed = &url.URL{}
+		}
+
 		return api.APIV1ChallengeFrontendIDAliensGetOKItem{
 			ID:   alien.ID,
 			Name: alien.Name,
@@ -54,10 +76,10 @@ func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params a
 				Hp:  alien.BaseAlien.Hp,
 				Spd: alien.Spd,
 			},
+			URL: *profileURLParsed,
 		}
 	})
 
-	// Create the response variable first, then take its address
 	response := api.APIV1ChallengeFrontendIDAliensGetOKApplicationJSON(colony)
 	return &response, nil
 }

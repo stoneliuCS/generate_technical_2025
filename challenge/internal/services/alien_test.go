@@ -27,10 +27,10 @@ func TestGenerateAlienInvasion(t *testing.T) {
 	// Assert that for each alien generated, their HP and ATTACK are always within the bounds.
 	withinBounds := lo.Reduce(sampleAlienInvasion, func(flag bool, alien services.Alien, _ int) bool {
 		return flag &&
-			alien.Atk >= services.ALIEN_ATK_HP_LOWER &&
-			alien.Atk <= services.ALIEN_ATK_HP_UPPER &&
-			alien.Hp >= services.ALIEN_ATK_HP_LOWER &&
-			alien.Hp <= services.ALIEN_ATK_HP_UPPER
+			alien.Atk >= services.ALIEN_ATK_HP_SPD_LOWER &&
+			alien.Atk <= services.ALIEN_ATK_HP_SPD_UPPER &&
+			alien.Hp >= services.ALIEN_ATK_HP_SPD_LOWER &&
+			alien.Hp <= services.ALIEN_ATK_HP_SPD_UPPER
 	}, true)
 	assert.True(t, withinBounds)
 }

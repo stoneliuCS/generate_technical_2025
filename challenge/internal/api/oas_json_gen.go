@@ -1429,16 +1429,21 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) encodeFields(e *jx.Encoder) {
 		s.Type.Encode(e)
 	}
 	{
+		e.FieldStart("url")
+		json.EncodeURI(e, s.URL)
+	}
+	{
 		e.FieldStart("stats")
 		s.Stats.Encode(e)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItem = [4]string{
+var jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItem = [5]string{
 	0: "id",
 	1: "name",
 	2: "type",
-	3: "stats",
+	3: "url",
+	4: "stats",
 }
 
 // Decode decodes APIV1ChallengeFrontendIDAliensGetOKItem from json.
@@ -1484,8 +1489,20 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"type\"")
 			}
-		case "stats":
+		case "url":
 			requiredBitSet[0] |= 1 << 3
+			if err := func() error {
+				v, err := json.DecodeURI(d)
+				s.URL = v
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"url\"")
+			}
+		case "stats":
+			requiredBitSet[0] |= 1 << 4
 			if err := func() error {
 				if err := s.Stats.Decode(d); err != nil {
 					return err
@@ -1504,7 +1521,7 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 	// Validate required fields.
 	var failures []validate.FieldError
 	for i, mask := range [1]uint8{
-		0b00001111,
+		0b00011111,
 	} {
 		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
 			// Mask only required fields and check equality to mask using XOR.

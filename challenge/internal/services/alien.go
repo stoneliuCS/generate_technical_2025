@@ -205,10 +205,10 @@ func (i InvasionState) AttackHighestDamagingHalf() InvasionState {
 // - Focus the highest 1/2 (floor) Atk Aliens, dealing 2 hp.
 
 const (
-	UPPER_ALIEN_AMOUNT = 20
-	LOWER_ALIEN_AMOUNT = 10
-	ALIEN_ATK_HP_UPPER = 4
-	ALIEN_ATK_HP_LOWER = 1
+	UPPER_ALIEN_AMOUNT     = 20
+	LOWER_ALIEN_AMOUNT     = 10
+	ALIEN_ATK_HP_SPD_UPPER = 4
+	ALIEN_ATK_HP_SPD_LOWER = 1
 )
 
 // Creates a random alien invasion, with aliens ranging from 10 to 20 aliens.
@@ -217,8 +217,8 @@ func GenerateAlienInvasion(rng *rand.Rand) []Alien {
 	aliens := []Alien{}
 
 	for range numAliens {
-		alienHPVal := rng.Intn(ALIEN_ATK_HP_UPPER-ALIEN_ATK_HP_LOWER) + ALIEN_ATK_HP_LOWER
-		alienAtkVal := rng.Intn(ALIEN_ATK_HP_UPPER-ALIEN_ATK_HP_LOWER) + ALIEN_ATK_HP_LOWER
+		alienHPVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
+		alienAtkVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
 		alien := CreateAlien(alienHPVal, alienAtkVal)
 		aliens = append(aliens, alien)
 	}
