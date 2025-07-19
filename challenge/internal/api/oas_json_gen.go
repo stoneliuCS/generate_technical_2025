@@ -1417,28 +1417,20 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *APIV1ChallengeFrontendIDAliensGetOKItem) encodeFields(e *jx.Encoder) {
 	{
-		if s.ID.Set {
-			e.FieldStart("id")
-			s.ID.Encode(e)
-		}
+		e.FieldStart("id")
+		json.EncodeUUID(e, s.ID)
 	}
 	{
-		if s.Name.Set {
-			e.FieldStart("name")
-			s.Name.Encode(e)
-		}
+		e.FieldStart("name")
+		e.Str(s.Name)
 	}
 	{
-		if s.Type.Set {
-			e.FieldStart("type")
-			s.Type.Encode(e)
-		}
+		e.FieldStart("type")
+		s.Type.Encode(e)
 	}
 	{
-		if s.Stats.Set {
-			e.FieldStart("stats")
-			s.Stats.Encode(e)
-		}
+		e.FieldStart("stats")
+		s.Stats.Encode(e)
 	}
 }
 
@@ -1454,13 +1446,16 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 	if s == nil {
 		return errors.New("invalid: unable to decode APIV1ChallengeFrontendIDAliensGetOKItem to nil")
 	}
+	var requiredBitSet [1]uint8
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
 		case "id":
+			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				s.ID.Reset()
-				if err := s.ID.Decode(d); err != nil {
+				v, err := json.DecodeUUID(d)
+				s.ID = v
+				if err != nil {
 					return err
 				}
 				return nil
@@ -1468,9 +1463,11 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"id\"")
 			}
 		case "name":
+			requiredBitSet[0] |= 1 << 1
 			if err := func() error {
-				s.Name.Reset()
-				if err := s.Name.Decode(d); err != nil {
+				v, err := d.Str()
+				s.Name = string(v)
+				if err != nil {
 					return err
 				}
 				return nil
@@ -1478,8 +1475,8 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"name\"")
 			}
 		case "type":
+			requiredBitSet[0] |= 1 << 2
 			if err := func() error {
-				s.Type.Reset()
 				if err := s.Type.Decode(d); err != nil {
 					return err
 				}
@@ -1488,8 +1485,8 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 				return errors.Wrap(err, "decode field \"type\"")
 			}
 		case "stats":
+			requiredBitSet[0] |= 1 << 3
 			if err := func() error {
-				s.Stats.Reset()
 				if err := s.Stats.Decode(d); err != nil {
 					return err
 				}
@@ -1503,6 +1500,38 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) Decode(d *jx.Decoder) error {
 		return nil
 	}); err != nil {
 		return errors.Wrap(err, "decode APIV1ChallengeFrontendIDAliensGetOKItem")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00001111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItem) {
+					name = jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItem[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
 	}
 
 	return nil
@@ -1531,22 +1560,23 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) Encode(e *jx.Encoder) {
 // encodeFields encodes fields.
 func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) encodeFields(e *jx.Encoder) {
 	{
-		if s.Atk.Set {
-			e.FieldStart("atk")
-			s.Atk.Encode(e)
-		}
+		e.FieldStart("atk")
+		e.Int(s.Atk)
 	}
 	{
-		if s.Hp.Set {
-			e.FieldStart("hp")
-			s.Hp.Encode(e)
-		}
+		e.FieldStart("hp")
+		e.Int(s.Hp)
+	}
+	{
+		e.FieldStart("spd")
+		e.Int(s.Spd)
 	}
 }
 
-var jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItemStats = [2]string{
+var jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItemStats = [3]string{
 	0: "atk",
 	1: "hp",
+	2: "spd",
 }
 
 // Decode decodes APIV1ChallengeFrontendIDAliensGetOKItemStats from json.
@@ -1554,13 +1584,16 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) Decode(d *jx.Decoder) err
 	if s == nil {
 		return errors.New("invalid: unable to decode APIV1ChallengeFrontendIDAliensGetOKItemStats to nil")
 	}
+	var requiredBitSet [1]uint8
 
 	if err := d.ObjBytes(func(d *jx.Decoder, k []byte) error {
 		switch string(k) {
 		case "atk":
+			requiredBitSet[0] |= 1 << 0
 			if err := func() error {
-				s.Atk.Reset()
-				if err := s.Atk.Decode(d); err != nil {
+				v, err := d.Int()
+				s.Atk = int(v)
+				if err != nil {
 					return err
 				}
 				return nil
@@ -1568,14 +1601,28 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) Decode(d *jx.Decoder) err
 				return errors.Wrap(err, "decode field \"atk\"")
 			}
 		case "hp":
+			requiredBitSet[0] |= 1 << 1
 			if err := func() error {
-				s.Hp.Reset()
-				if err := s.Hp.Decode(d); err != nil {
+				v, err := d.Int()
+				s.Hp = int(v)
+				if err != nil {
 					return err
 				}
 				return nil
 			}(); err != nil {
 				return errors.Wrap(err, "decode field \"hp\"")
+			}
+		case "spd":
+			requiredBitSet[0] |= 1 << 2
+			if err := func() error {
+				v, err := d.Int()
+				s.Spd = int(v)
+				if err != nil {
+					return err
+				}
+				return nil
+			}(); err != nil {
+				return errors.Wrap(err, "decode field \"spd\"")
 			}
 		default:
 			return d.Skip()
@@ -1583,6 +1630,38 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) Decode(d *jx.Decoder) err
 		return nil
 	}); err != nil {
 		return errors.Wrap(err, "decode APIV1ChallengeFrontendIDAliensGetOKItemStats")
+	}
+	// Validate required fields.
+	var failures []validate.FieldError
+	for i, mask := range [1]uint8{
+		0b00000111,
+	} {
+		if result := (requiredBitSet[i] & mask) ^ mask; result != 0 {
+			// Mask only required fields and check equality to mask using XOR.
+			//
+			// If XOR result is not zero, result is not equal to expected, so some fields are missed.
+			// Bits of fields which would be set are actually bits of missed fields.
+			missed := bits.OnesCount8(result)
+			for bitN := 0; bitN < missed; bitN++ {
+				bitIdx := bits.TrailingZeros8(result)
+				fieldIdx := i*8 + bitIdx
+				var name string
+				if fieldIdx < len(jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItemStats) {
+					name = jsonFieldsNameOfAPIV1ChallengeFrontendIDAliensGetOKItemStats[fieldIdx]
+				} else {
+					name = strconv.Itoa(fieldIdx)
+				}
+				failures = append(failures, validate.FieldError{
+					Name:  name,
+					Error: validate.ErrFieldRequired,
+				})
+				// Reset bit.
+				result &^= 1 << bitIdx
+			}
+		}
+	}
+	if len(failures) > 0 {
+		return &validate.Error{Fields: failures}
 	}
 
 	return nil
@@ -2752,72 +2831,6 @@ func (s *HealthcheckGetOKMessage) UnmarshalJSON(data []byte) error {
 	return s.Decode(d)
 }
 
-// Encode encodes APIV1ChallengeFrontendIDAliensGetOKItemStats as json.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	o.Value.Encode(e)
-}
-
-// Decode decodes APIV1ChallengeFrontendIDAliensGetOKItemStats from json.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeFrontendIDAliensGetOKItemStats to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes APIV1ChallengeFrontendIDAliensGetOKItemType as json.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemType) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	e.Str(string(o.Value))
-}
-
-// Decode decodes APIV1ChallengeFrontendIDAliensGetOKItemType from json.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemType) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptAPIV1ChallengeFrontendIDAliensGetOKItemType to nil")
-	}
-	o.Set = true
-	if err := o.Value.Decode(d); err != nil {
-		return err
-	}
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptAPIV1ChallengeFrontendIDAliensGetOKItemType) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptAPIV1ChallengeFrontendIDAliensGetOKItemType) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
 // Encode encodes APIV1MemberRegisterPostReq as json.
 func (o OptAPIV1MemberRegisterPostReq) Encode(e *jx.Encoder) {
 	if !o.Set {
@@ -2952,41 +2965,6 @@ func (s OptString) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements stdjson.Unmarshaler.
 func (s *OptString) UnmarshalJSON(data []byte) error {
-	d := jx.DecodeBytes(data)
-	return s.Decode(d)
-}
-
-// Encode encodes uuid.UUID as json.
-func (o OptUUID) Encode(e *jx.Encoder) {
-	if !o.Set {
-		return
-	}
-	json.EncodeUUID(e, o.Value)
-}
-
-// Decode decodes uuid.UUID from json.
-func (o *OptUUID) Decode(d *jx.Decoder) error {
-	if o == nil {
-		return errors.New("invalid: unable to decode OptUUID to nil")
-	}
-	o.Set = true
-	v, err := json.DecodeUUID(d)
-	if err != nil {
-		return err
-	}
-	o.Value = v
-	return nil
-}
-
-// MarshalJSON implements stdjson.Marshaler.
-func (s OptUUID) MarshalJSON() ([]byte, error) {
-	e := jx.Encoder{}
-	s.Encode(&e)
-	return e.Bytes(), nil
-}
-
-// UnmarshalJSON implements stdjson.Unmarshaler.
-func (s *OptUUID) UnmarshalJSON(data []byte) error {
 	d := jx.DecodeBytes(data)
 	return s.Decode(d)
 }

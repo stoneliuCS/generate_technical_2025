@@ -11,11 +11,17 @@ import (
 type ChallengeService interface {
 	GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState
 	SolveAlienChallenge(state InvasionState) InvasionState
+	GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien
 }
 
 type ChallengeServiceImpl struct {
 	logger       *slog.Logger
 	transactions transactions.ChallengeTransactions
+}
+
+// GenerateUniqueFrontendChallenge implements ChallengeService.
+func (c ChallengeServiceImpl) GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien {
+	panic("unimplemented")
 }
 
 const (
