@@ -42,5 +42,22 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 
 // APIV1ChallengeFrontendIDAliensGet implements api.Handler.
 func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params api.APIV1ChallengeFrontendIDAliensGetParams) (api.APIV1ChallengeFrontendIDAliensGetRes, error) {
-	panic("unimplemented")
+	detailedAliens := h.challengeService.GenerateUniqueFrontendChallenge(params.ID)
+
+	colony := lo.Map(detailedAliens, func(alien services.DetailedAlien, _ int) api.APIV1ChallengeFrontendIDAliensGetOKItem {
+		return api.APIV1ChallengeFrontendIDAliensGetOKItem{
+			ID:   alien.ID,
+			Name: alien.Name,
+			Type: alien.Type.ToAPI(),
+			Stats: api.APIV1ChallengeFrontendIDAliensGetOKItemStats{
+				Atk: alien.BaseAlien.Atk,
+				Hp:  alien.BaseAlien.Hp,
+				Spd: alien.Spd,
+			},
+		}
+	})
+
+	// Create the response variable first, then take its address
+	response := api.APIV1ChallengeFrontendIDAliensGetOKApplicationJSON(colony)
+	return &response, nil
 }

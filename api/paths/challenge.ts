@@ -88,8 +88,9 @@ export const ALIEN = Object.addProperties({
   stats: Object.addProperties({
     atk: Integer.addMinimum(1).addMaximum(3),
     hp: Integer.addMinimum(1).addMaximum(3),
-  }).addDescription("Combat description of the alien."),
-});
+    spd: Integer.addMinimum(1).addMaximum(3),
+  }).addDescription("Combat description of the alien.").addRequired(["atk", "hp", "spd"]),
+}).addRequired(["id", "name", "type", "stats"]);
 
 // BEGIN ALIEN FRONTEND CHALLENGE ENDPOINT
 export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({

@@ -375,79 +375,90 @@ func (*APIV1ChallengeFrontendIDAliensGetOKApplicationJSON) aPIV1ChallengeFronten
 
 type APIV1ChallengeFrontendIDAliensGetOKItem struct {
 	// UUID of the alien.
-	ID OptUUID `json:"id"`
+	ID uuid.UUID `json:"id"`
 	// Name of the alien.
-	Name OptString `json:"name"`
+	Name string `json:"name"`
 	// The rank of the alien.
-	Type OptAPIV1ChallengeFrontendIDAliensGetOKItemType `json:"type"`
+	Type APIV1ChallengeFrontendIDAliensGetOKItemType `json:"type"`
 	// Combat description of the alien.
-	Stats OptAPIV1ChallengeFrontendIDAliensGetOKItemStats `json:"stats"`
+	Stats APIV1ChallengeFrontendIDAliensGetOKItemStats `json:"stats"`
 }
 
 // GetID returns the value of ID.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetID() OptUUID {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetID() uuid.UUID {
 	return s.ID
 }
 
 // GetName returns the value of Name.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetName() OptString {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetName() string {
 	return s.Name
 }
 
 // GetType returns the value of Type.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetType() OptAPIV1ChallengeFrontendIDAliensGetOKItemType {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetType() APIV1ChallengeFrontendIDAliensGetOKItemType {
 	return s.Type
 }
 
 // GetStats returns the value of Stats.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetStats() OptAPIV1ChallengeFrontendIDAliensGetOKItemStats {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetStats() APIV1ChallengeFrontendIDAliensGetOKItemStats {
 	return s.Stats
 }
 
 // SetID sets the value of ID.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetID(val OptUUID) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetID(val uuid.UUID) {
 	s.ID = val
 }
 
 // SetName sets the value of Name.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetName(val OptString) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetName(val string) {
 	s.Name = val
 }
 
 // SetType sets the value of Type.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetType(val OptAPIV1ChallengeFrontendIDAliensGetOKItemType) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetType(val APIV1ChallengeFrontendIDAliensGetOKItemType) {
 	s.Type = val
 }
 
 // SetStats sets the value of Stats.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetStats(val OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetStats(val APIV1ChallengeFrontendIDAliensGetOKItemStats) {
 	s.Stats = val
 }
 
 // Combat description of the alien.
 type APIV1ChallengeFrontendIDAliensGetOKItemStats struct {
-	Atk OptInt `json:"atk"`
-	Hp  OptInt `json:"hp"`
+	Atk int `json:"atk"`
+	Hp  int `json:"hp"`
+	Spd int `json:"spd"`
 }
 
 // GetAtk returns the value of Atk.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) GetAtk() OptInt {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) GetAtk() int {
 	return s.Atk
 }
 
 // GetHp returns the value of Hp.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) GetHp() OptInt {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) GetHp() int {
 	return s.Hp
 }
 
+// GetSpd returns the value of Spd.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) GetSpd() int {
+	return s.Spd
+}
+
 // SetAtk sets the value of Atk.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetAtk(val OptInt) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetAtk(val int) {
 	s.Atk = val
 }
 
 // SetHp sets the value of Hp.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetHp(val OptInt) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetHp(val int) {
 	s.Hp = val
+}
+
+// SetSpd sets the value of Spd.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetSpd(val int) {
+	s.Spd = val
 }
 
 // The rank of the alien.
@@ -736,98 +747,6 @@ func (s *HealthcheckGetOKMessage) UnmarshalText(data []byte) error {
 	}
 }
 
-// NewOptAPIV1ChallengeFrontendIDAliensGetOKItemStats returns new OptAPIV1ChallengeFrontendIDAliensGetOKItemStats with value set to v.
-func NewOptAPIV1ChallengeFrontendIDAliensGetOKItemStats(v APIV1ChallengeFrontendIDAliensGetOKItemStats) OptAPIV1ChallengeFrontendIDAliensGetOKItemStats {
-	return OptAPIV1ChallengeFrontendIDAliensGetOKItemStats{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptAPIV1ChallengeFrontendIDAliensGetOKItemStats is optional APIV1ChallengeFrontendIDAliensGetOKItemStats.
-type OptAPIV1ChallengeFrontendIDAliensGetOKItemStats struct {
-	Value APIV1ChallengeFrontendIDAliensGetOKItemStats
-	Set   bool
-}
-
-// IsSet returns true if OptAPIV1ChallengeFrontendIDAliensGetOKItemStats was set.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) Reset() {
-	var v APIV1ChallengeFrontendIDAliensGetOKItemStats
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) SetTo(v APIV1ChallengeFrontendIDAliensGetOKItemStats) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) Get() (v APIV1ChallengeFrontendIDAliensGetOKItemStats, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemStats) Or(d APIV1ChallengeFrontendIDAliensGetOKItemStats) APIV1ChallengeFrontendIDAliensGetOKItemStats {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptAPIV1ChallengeFrontendIDAliensGetOKItemType returns new OptAPIV1ChallengeFrontendIDAliensGetOKItemType with value set to v.
-func NewOptAPIV1ChallengeFrontendIDAliensGetOKItemType(v APIV1ChallengeFrontendIDAliensGetOKItemType) OptAPIV1ChallengeFrontendIDAliensGetOKItemType {
-	return OptAPIV1ChallengeFrontendIDAliensGetOKItemType{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptAPIV1ChallengeFrontendIDAliensGetOKItemType is optional APIV1ChallengeFrontendIDAliensGetOKItemType.
-type OptAPIV1ChallengeFrontendIDAliensGetOKItemType struct {
-	Value APIV1ChallengeFrontendIDAliensGetOKItemType
-	Set   bool
-}
-
-// IsSet returns true if OptAPIV1ChallengeFrontendIDAliensGetOKItemType was set.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemType) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemType) Reset() {
-	var v APIV1ChallengeFrontendIDAliensGetOKItemType
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptAPIV1ChallengeFrontendIDAliensGetOKItemType) SetTo(v APIV1ChallengeFrontendIDAliensGetOKItemType) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemType) Get() (v APIV1ChallengeFrontendIDAliensGetOKItemType, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptAPIV1ChallengeFrontendIDAliensGetOKItemType) Or(d APIV1ChallengeFrontendIDAliensGetOKItemType) APIV1ChallengeFrontendIDAliensGetOKItemType {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // NewOptAPIV1MemberRegisterPostReq returns new OptAPIV1MemberRegisterPostReq with value set to v.
 func NewOptAPIV1MemberRegisterPostReq(v APIV1MemberRegisterPostReq) OptAPIV1MemberRegisterPostReq {
 	return OptAPIV1MemberRegisterPostReq{
@@ -1006,52 +925,6 @@ func (o OptString) Get() (v string, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptString) Or(d string) string {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
-// NewOptUUID returns new OptUUID with value set to v.
-func NewOptUUID(v uuid.UUID) OptUUID {
-	return OptUUID{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptUUID is optional uuid.UUID.
-type OptUUID struct {
-	Value uuid.UUID
-	Set   bool
-}
-
-// IsSet returns true if OptUUID was set.
-func (o OptUUID) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptUUID) Reset() {
-	var v uuid.UUID
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptUUID) SetTo(v uuid.UUID) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptUUID) Get() (v uuid.UUID, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptUUID) Or(d uuid.UUID) uuid.UUID {
 	if v, ok := o.Get(); ok {
 		return v
 	}
