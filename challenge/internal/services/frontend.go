@@ -26,6 +26,12 @@ type DetailedAlien struct {
 	ProfileURL string
 }
 
+var alienProfileURLs = map[AlienType]string{
+	AlienTypeRegular: "https://robohash.org/regular-alien?set=set2&size=200x200",
+	AlienTypeElite:   "https://robohash.org/elite-alien?set=set3&size=200x200",
+	AlienTypeBoss:    "https://robohash.org/boss-alien?set=set4&size=200x200",
+}
+
 // Creates a DetailedAlien with ID, HP, ATK, and SPD stats, with a name, profile URL, and AlienType.
 func CreateDetailedAlien(id uuid.UUID, hp int, atk int, spd int,
 	name string, alienType AlienType, profileURL string) DetailedAlien {
@@ -59,11 +65,10 @@ func GenerateDetailedAlien(rng *rand.Rand, memberID uuid.UUID, alienIdx int) Det
 	nameIndex := rng.Intn(len(data.AlienNames))
 	name := data.AlienNames[nameIndex]
 
-	profileIndex := rng.Intn(len(data.AlienProfileURLs))
-	profileURL := data.AlienProfileURLs[profileIndex]
-
 	typeIndex := rng.Intn(len(alienTypes))
 	alienType := alienTypes[typeIndex]
+
+	profileURL := alienProfileURLs[alienType]
 
 	alienID := generateSimpleUUID(rng, alienIdx)
 
