@@ -54,7 +54,7 @@ func registerForChallenge(t *testing.T) {
 	}
 	client := CLIENT.AddBody(map[string]any{
 		"email": "somefrontendperson@northeastern.edu",
-		"nuid":  "123456789", // NUID is 9 characters long
+		"nuid":  "123456789",
 	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
@@ -72,7 +72,7 @@ func registerForChallenge(t *testing.T) {
 		return err == nil
 	}
 
-	// Make sure that the member is successfully registere before preceding in test suite.
+	// Make sure that the member is successfully registered before preceding in test suite.
 	testVerify.AssertStatusCode(201, t).AssertProperty("id", pred, t)
 	testMemberAlreadyRegistered = true
 }
@@ -145,11 +145,9 @@ func TestCustomLimitCustomOffsetFrontend(t *testing.T) {
 func TestOffsetShiftsAliens(t *testing.T) {
 	registerForChallenge(t)
 
-	// Get first batch.
 	firstBatch := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens", memberUUID.String()))
 	firstAliens := firstBatch.GetBodyAsArray(t)
 
-	// Get offset batch.
 	offsetBatch := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?offset=2", memberUUID.String()))
 	offsetAliens := offsetBatch.GetBodyAsArray(t)
 

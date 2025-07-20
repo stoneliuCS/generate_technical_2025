@@ -145,3 +145,23 @@ func (v TestVerify) AssertArrayLength(expectedLength int, t *testing.T) TestVeri
 	assert.Len(t, actual, expectedLength, "Expected array to have %d elements", expectedLength)
 	return v
 }
+
+func (v TestVerify) AssertArrayLengthBetween(minLength, maxLength int, t *testing.T) TestVerify {
+	defer v.res.Body.Close()
+
+	var actual []any
+	err := json.NewDecoder(v.res.Body).Decode(&actual)
+	require.NoError(t, err)
+	actualLength := len(actual)
+	assert.GreaterOrEqual(t, actualLength, minLength, "Expected array length >= %d", minLength)
+	assert.LessOrEqual(t, actualLength, maxLength, "Expected array length <= %d", maxLength)
+	return v
+}
+
+func (v TestVerify) GetBodyAsArray(t *testing.T) []interface{} {
+	defer v.res.Body.Close()
+	var actual []interface{}
+	err := json.NewDecoder(v.res.Body).Decode(&actual)
+	require.NoError(t, err)
+	return actual
+}
