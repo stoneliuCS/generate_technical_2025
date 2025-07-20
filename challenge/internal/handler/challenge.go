@@ -43,6 +43,14 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 
 // APIV1ChallengeFrontendIDAliensGet implements api.Handler.
 func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params api.APIV1ChallengeFrontendIDAliensGetParams) (api.APIV1ChallengeFrontendIDAliensGetRes, error) {
+	exists, err := h.memberService.CheckMemberExistsById(params.ID)
+	if err != nil {
+		return &api.APIV1ChallengeFrontendIDAliensGetInternalServerError{Message: "Database error finding member Id."}, nil
+	}
+	if !exists {
+		return &api.APIV1ChallengeFrontendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
+	}
+
 	detailedAliens := h.challengeService.GenerateUniqueFrontendChallenge(params.ID)
 
 	start := 0
