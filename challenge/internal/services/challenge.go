@@ -1,7 +1,6 @@
 package services
 
 import (
-	"generate_technical_challenge_2025/internal/data"
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
@@ -39,21 +38,8 @@ func (c ChallengeServiceImpl) GenerateUniqueFrontendChallenge(id uuid.UUID) []De
 	numAliens := utils.GenerateRandomNumWithinRange(rng, LOWER_ALIEN_AMOUNT, UPPER_ALIEN_AMOUNT)
 
 	aliens := []DetailedAlien{}
-	for range numAliens {
-		hp := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
-		atk := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
-		spd := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
-
-		nameIndex := rng.Intn(len(data.AlienNames))
-		name := data.AlienNames[nameIndex]
-
-		profileIndex := rng.Intn(len(data.AlienProfileURLs))
-		profileURL := data.AlienProfileURLs[profileIndex]
-
-		typeIndex := rng.Intn(len(alienTypes))
-		alienType := alienTypes[typeIndex]
-
-		alien := CreateDetailedAlien(id, hp, atk, spd, name, alienType, profileURL)
+	for idx := range numAliens {
+		alien := GenerateDetailedAlien(rng, id, idx)
 		aliens = append(aliens, alien)
 	}
 
