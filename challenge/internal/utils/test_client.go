@@ -135,3 +135,13 @@ func (v TestVerify) AssertProperty(propertyName string, pred func(s any) bool, t
 	val := actual[propertyName]
 	assert.True(t, pred(val))
 }
+
+func (v TestVerify) AssertArrayLength(expectedLength int, t *testing.T) TestVerify {
+	defer v.res.Body.Close()
+
+	var actual []any
+	err := json.NewDecoder(v.res.Body).Decode(&actual)
+	require.NoError(t, err)
+	assert.Len(t, actual, expectedLength, "Expected array to have %d elements", expectedLength)
+	return v
+}
