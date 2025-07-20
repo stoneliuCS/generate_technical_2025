@@ -2,9 +2,11 @@ package integrationtests
 
 import (
 	"fmt"
+	"generate_technical_challenge_2025/internal/services"
 	"testing"
 
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -44,12 +46,14 @@ func TestMemberUUIDNotFoundReceives404(t *testing.T) {
 	}, t)
 }
 
+// Idempotent function to register--call it at the beginning of any testing function in this file
+// that intends to use a protected endpoint.
 func registerForChallenge(t *testing.T) {
 	if testMemberAlreadyRegistered {
 		return
 	}
 	client := CLIENT.AddBody(map[string]any{
-		"email": "somebody@northeastern.edu",
+		"email": "somefrontendperson@northeastern.edu",
 		"nuid":  "123456789", // NUID is 9 characters long
 	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
@@ -73,9 +77,86 @@ func registerForChallenge(t *testing.T) {
 	testMemberAlreadyRegistered = true
 }
 
+func TestLimitInvalidReceives400(t *testing.T) {
+	registerForChallenge(t)
+
+	invalidLimit := -3
+	testVerify := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?limit=%d", memberUUID.String(), invalidLimit))
+	testVerify.AssertStatusCode(400, t)
+}
+
+func TestOffsetInvalidReceives400(t *testing.T) {
+	registerForChallenge(t)
+
+	invalidOffset := -3
+	testVerify := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?offset=%d", memberUUID.String(), invalidOffset))
+	testVerify.AssertStatusCode(400, t)
+}
+
 func TestDefaultLimitAndOffsetFrontend(t *testing.T) {
 	registerForChallenge(t)
 
 	testVerify := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens", memberUUID.String()))
 	testVerify.AssertStatusCode(200, t).AssertArrayLength(DEFAULT_FRONTEND_ALIEN_COUNT, t)
+}
+
+func TestCustomLimitDefaultOffsetFrontend(t *testing.T) {
+	registerForChallenge(t)
+
+	validLimit := 25
+	testVerify := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?limit=%d", memberUUID.String(), validLimit))
+	testVerify.AssertStatusCode(200, t).AssertArrayLengthBetween(0, validLimit, t)
+}
+
+func TestDefaultLimitCustomOffsetFrontend(t *testing.T) {
+	registerForChallenge(t)
+
+	offset := 3
+
+	noOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens", memberUUID.String()))
+	noOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
+		0, services.UPPER_ALIEN_AMOUNT, t)
+
+	withOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?offset=%d", memberUUID.String(), offset))
+	withOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
+		0, services.UPPER_ALIEN_AMOUNT-offset, t)
+}
+
+func TestCustomLimitCustomOffsetFrontend(t *testing.T) {
+	registerForChallenge(t)
+
+	offset := 3
+	limit := 8
+
+	noOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?limit=%d", memberUUID.String(), limit))
+	noOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
+		0, limit, t)
+
+	withOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?limit=%d&offset=%d", memberUUID.String(), limit, offset))
+	withOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
+		0, limit, t)
+
+	limit = 2
+
+	offsetBiggerThanLimit := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?limit=%d&offset=%d", memberUUID.String(), limit, offset))
+	offsetBiggerThanLimit.AssertStatusCode(200, t).AssertArrayLength(limit, t)
+}
+
+func TestOffsetShiftsAliens(t *testing.T) {
+	registerForChallenge(t)
+
+	// Get first batch.
+	firstBatch := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens", memberUUID.String()))
+	firstAliens := firstBatch.GetBodyAsArray(t)
+
+	// Get offset batch.
+	offsetBatch := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?offset=2", memberUUID.String()))
+	offsetAliens := offsetBatch.GetBodyAsArray(t)
+
+	// Alien #3 from first batch should be alien #1 in offset batch.
+	if len(firstAliens) > 2 && len(offsetAliens) > 0 {
+		alien3 := firstAliens[2].(map[string]any)["id"]
+		alien1Offset := offsetAliens[0].(map[string]any)["id"]
+		assert.Equal(t, alien3, alien1Offset)
+	}
 }
