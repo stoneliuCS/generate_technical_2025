@@ -370,6 +370,22 @@ func (s *APIV1ChallengeFrontendIDAliensGetInternalServerError) SetMessage(val st
 
 func (*APIV1ChallengeFrontendIDAliensGetInternalServerError) aPIV1ChallengeFrontendIDAliensGetRes() {}
 
+type APIV1ChallengeFrontendIDAliensGetNotFound struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeFrontendIDAliensGetNotFound) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeFrontendIDAliensGetNotFound) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeFrontendIDAliensGetNotFound) aPIV1ChallengeFrontendIDAliensGetRes() {}
+
 type APIV1ChallengeFrontendIDAliensGetOKApplicationJSON []APIV1ChallengeFrontendIDAliensGetOKItem
 
 func (*APIV1ChallengeFrontendIDAliensGetOKApplicationJSON) aPIV1ChallengeFrontendIDAliensGetRes() {}
