@@ -102,7 +102,7 @@ export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
     Parameter.schema
       .addIn("query")
       .addName("limit")
-      .addDescription("Limit of the pagination.")
+      .addDescription("Maximum number of aliens to return (you may receive fewer if fewer exist).")
       .addSchema(Integer).addSchema(Integer.addMinimum(0).addDefault(10)),
     Parameter.schema
       .addIn("query")

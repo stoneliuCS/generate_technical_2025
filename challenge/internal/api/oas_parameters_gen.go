@@ -149,7 +149,7 @@ func decodeAPIV1ChallengeBackendIDAliensSubmitPostParams(args [1]string, argsEsc
 // APIV1ChallengeFrontendIDAliensGetParams is parameters of GET /api/v1/challenge/frontend/{id}/aliens operation.
 type APIV1ChallengeFrontendIDAliensGetParams struct {
 	ID uuid.UUID
-	// Limit of the pagination.
+	// Maximum number of aliens to return (you may receive fewer if fewer exist).
 	Limit OptInt
 	// Offset of the pagination.
 	Offset OptInt
