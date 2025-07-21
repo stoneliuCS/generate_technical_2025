@@ -338,6 +338,23 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) UnmarshalText(data 
 	}
 }
 
+type APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
+}
+
 type APIV1ChallengeFrontendIDAliensGetBadRequest struct {
 	Message string `json:"message"`
 }
