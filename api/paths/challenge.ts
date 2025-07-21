@@ -70,6 +70,10 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         "404": Response.addDescription("ID not found.").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
+        "429": Response.addDescription("Too Many Requests - Rate limit exceeded")
+        .addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
         "500": Response.addDescription("Internal Server Error").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),

@@ -4,10 +4,13 @@ import (
 	"context"
 	api "generate_technical_challenge_2025/internal/api"
 	"generate_technical_challenge_2025/internal/services"
+	"generate_technical_challenge_2025/internal/utils"
 	"net/url"
 
 	"github.com/samber/lo"
 )
+
+var globalRateLimiter = utils.NewRateLimiter()
 
 // APIV1ChallengeBackendIDAliensGet implements api.Handler.
 func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params api.APIV1ChallengeBackendIDAliensGetParams) (api.APIV1ChallengeBackendIDAliensGetRes, error) {
@@ -38,6 +41,14 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 	if !exists {
 		return &api.APIV1ChallengeBackendIDAliensSubmitPostNotFound{Message: "Unable to find member id."}, nil
 	}
+
+	uuidStr := params.ID.String()
+	if !globalRateLimiter.Allow(uuidStr) {
+		return &api.APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests{
+			Message: "Rate limit exceeded: 10 requests per minute per challenge ID",
+		}, nil
+	}
+
 	panic("TO BE CREATED")
 }
 
