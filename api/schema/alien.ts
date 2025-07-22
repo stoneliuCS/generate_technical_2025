@@ -13,8 +13,19 @@ export const ALIEN_INVASION = Array.addItems(
   }).addRequired(["aliens", "hp"]),
 );
 
-export const ALIEN_INVASION_ANSWER = Array.addItems(
-  Array.addItems(
-    String.addEnums(["volley", "alienAttack", "focusedShot", "focusedVolley"]),
-  ),
-);
+export const ALIEN_INVASION_ANSWER = Object.addProperties({
+  state: Object.addProperties({
+    remainingHP: Integer,
+    remainingAliens: Integer,
+    commands: Array.addItems(
+      Array.addItems(
+        String.addEnums([
+          "volley",
+          "alienAttack",
+          "focusedShot",
+          "focusedVolley",
+        ]),
+      ),
+    ),
+  }).addRequired(["remainingHP", "remainingAliens", "commands"]),
+}).addRequired(["state"]);

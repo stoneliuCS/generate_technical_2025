@@ -14,6 +14,19 @@ type InvasionState struct {
 	commands   []string
 }
 
+func (i InvasionState) sortAliens() InvasionState {
+	sortedAliens := slices.SortedFunc(slices.Values(i.aliensLeft), func(a1 Alien, a2 Alien) int {
+		power1 := a1.Atk + a1.Hp
+		power2 := a2.Atk + a2.Hp
+		return power2 - power1 // Highest total power first
+	})
+	return InvasionState{
+		aliensLeft: sortedAliens,
+		hpLeft:     i.hpLeft,
+		commands:   i.commands,
+	}
+}
+
 func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	// Sort all the aliens by attack power.
 	sortedAliens := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int {
@@ -51,65 +64,15 @@ func (i InvasionState) GetCurrentHighestDamagingAlien() Alien {
 	return i.aliensLeft[0]
 }
 
-// From all possible states, filter out the invasion states by these criteria
-// The states with the least amount of aliens.
-// The states with the highest hp left over.
-// The states with the least number of commands left over.
-func FilterToFindTheMostOptimalInvasions(states []InvasionState) []InvasionState {
-	filterByMostAliensKilled := func(remainingStates []InvasionState) []InvasionState {
-		leastNumAliensLeft := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
-			return s1.GetAliensLeft() < s2.GetAliensLeft()
-		}).GetAliensLeft()
-
-		filteredStatesByMostAliensKilled := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
-			return state.GetAliensLeft() == leastNumAliensLeft
-		})
-		return filteredStatesByMostAliensKilled
-	}
-
-	filteredByHighestHpLeftOver := func(remainingStates []InvasionState) []InvasionState {
-		highestHpLeft := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
-			return s1.hpLeft > s2.hpLeft
-		}).GetHpLeft()
-
-		filteredStatesByHighestHp := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
-			return state.hpLeft == highestHpLeft
-		})
-		return filteredStatesByHighestHp
-	}
-
-	filteredByLeastNumberOfCommandsUsed := func(remainingStates []InvasionState) []InvasionState {
-		leastNumberOfCommandsUsed := lo.MaxBy(remainingStates, func(s1 InvasionState, s2 InvasionState) bool {
-			return s1.GetNumberOfCommandsUsed() < s2.GetNumberOfCommandsUsed()
-		}).GetNumberOfCommandsUsed()
-
-		filteredStatesByLeastCommands := lo.Filter(remainingStates, func(state InvasionState, _ int) bool {
-			return state.GetNumberOfCommandsUsed() == leastNumberOfCommandsUsed
-		})
-		return filteredStatesByLeastCommands
-	}
-
-	filters := []func(remainingStates []InvasionState) []InvasionState{filterByMostAliensKilled, filteredByHighestHpLeftOver, filteredByLeastNumberOfCommandsUsed}
-
-	currentStates := states
-	for _, filter := range filters {
-		if len(currentStates) == 1 {
-			break
-		}
-		currentStates = filter(currentStates)
-	}
-	return currentStates
-}
-
 func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []InvasionState {
 	endingStates := []InvasionState{}
 
 	backtrack := func(currentState InvasionState) {}
 
 	backtrack = func(currentState InvasionState) {
-		volleyState := currentState.AttackAllAliens().AliensAttack()
-		focusedState := currentState.AttackHighestDamageAlien().AliensAttack()
-		focusedVolleyState := currentState.AttackHighestDamagingHalf().AliensAttack()
+		volleyState := currentState.AttackAliensModulo().sortAliens().AliensAttack()
+		focusedState := currentState.AttackHighestDamageAlien().sortAliens().AliensAttack()
+		focusedVolleyState := currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack()
 		if !volleyState.IsOver() {
 			backtrack(volleyState)
 		} else {
@@ -152,9 +115,13 @@ func (i InvasionState) AliensAttack() InvasionState {
 }
 
 // Returns the state of the invasion when attacking all aliens.
-func (i InvasionState) AttackAllAliens() InvasionState {
+func (i InvasionState) AttackAliensModulo() InvasionState {
 	// Attack all aliens to deal one damage
-	newAliens := lo.Map(i.aliensLeft, func(alien Alien, _ int) Alien {
+	portionOfAliensModulo := i.hpLeft % i.GetAliensLeft()
+	aliensToHit := i.aliensLeft[:portionOfAliensModulo]
+	restOfAliens := i.aliensLeft[portionOfAliensModulo:]
+
+	newAliens := lo.Map(aliensToHit, func(alien Alien, _ int) Alien {
 		return alien.TakeDamage(1)
 	})
 	// Filter out all the aliens that are dead.
@@ -162,7 +129,7 @@ func (i InvasionState) AttackAllAliens() InvasionState {
 		return alien.Hp > 0
 	})
 	return InvasionState{
-		aliensLeft: filteredAliens,
+		aliensLeft: append(filteredAliens, restOfAliens...),
 		hpLeft:     i.hpLeft,
 		commands:   append(slices.Clone(i.commands), "volley"),
 	}
@@ -179,8 +146,8 @@ func (i InvasionState) AttackHighestDamageAlien() InvasionState {
 }
 
 func (i InvasionState) AttackHighestDamagingHalf() InvasionState {
-	// Pick the highest 1/2 of the aliens
-	mid := len(i.aliensLeft) / 2
+	// Pick the highest (Ceiling) 1/2 of the aliens
+	mid := (len(i.aliensLeft) + 1) / 2
 	// The first half will be all the aliens sorted by attack power.
 	firstHalf := i.aliensLeft[:mid]
 	// The second half will be spared.

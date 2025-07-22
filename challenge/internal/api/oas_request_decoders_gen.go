@@ -3,7 +3,6 @@
 package api
 
 import (
-	"fmt"
 	"io"
 	"mime"
 	"net/http"
@@ -16,7 +15,7 @@ import (
 )
 
 func (s *Server) decodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(r *http.Request) (
-	req [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem,
+	req OptAPIV1ChallengeBackendIDAliensSubmitPostReq,
 	close func() error,
 	rerr error,
 ) {
@@ -58,25 +57,10 @@ func (s *Server) decodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(r *http.Re
 
 		d := jx.DecodeBytes(buf)
 
-		var request [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem
+		var request OptAPIV1ChallengeBackendIDAliensSubmitPostReq
 		if err := func() error {
-			request = make([][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, 0)
-			if err := d.Arr(func(d *jx.Decoder) error {
-				var elem []APIV1ChallengeBackendIDAliensSubmitPostReqItemItem
-				elem = make([]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, 0)
-				if err := d.Arr(func(d *jx.Decoder) error {
-					var elemElem APIV1ChallengeBackendIDAliensSubmitPostReqItemItem
-					if err := elemElem.Decode(d); err != nil {
-						return err
-					}
-					elem = append(elem, elemElem)
-					return nil
-				}); err != nil {
-					return err
-				}
-				request = append(request, elem)
-				return nil
-			}); err != nil {
+			request.Reset()
+			if err := request.Decode(d); err != nil {
 				return err
 			}
 			if err := d.Skip(); err != io.EOF {
@@ -92,39 +76,15 @@ func (s *Server) decodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(r *http.Re
 			return req, close, err
 		}
 		if err := func() error {
-			var failures []validate.FieldError
-			for i, elem := range request {
+			if value, ok := request.Get(); ok {
 				if err := func() error {
-					if elem == nil {
-						return errors.New("nil is invalid value")
-					}
-					var failures []validate.FieldError
-					for i, elem := range elem {
-						if err := func() error {
-							if err := elem.Validate(); err != nil {
-								return err
-							}
-							return nil
-						}(); err != nil {
-							failures = append(failures, validate.FieldError{
-								Name:  fmt.Sprintf("[%d]", i),
-								Error: err,
-							})
-						}
-					}
-					if len(failures) > 0 {
-						return &validate.Error{Fields: failures}
+					if err := value.Validate(); err != nil {
+						return err
 					}
 					return nil
 				}(); err != nil {
-					failures = append(failures, validate.FieldError{
-						Name:  fmt.Sprintf("[%d]", i),
-						Error: err,
-					})
+					return err
 				}
-			}
-			if len(failures) > 0 {
-				return &validate.Error{Fields: failures}
 			}
 			return nil
 		}(); err != nil {

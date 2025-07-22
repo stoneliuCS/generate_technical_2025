@@ -34,7 +34,7 @@ type Invoker interface {
 	// APIV1ChallengeBackendIDAliensSubmitPost invokes POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 	//
 	// POST /api/v1/challenge/backend/{id}/aliens/submit
-	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
+	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
 	// APIV1ChallengeFrontendIDAliensGet invokes GET /api/v1/challenge/frontend/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/frontend/{id}/aliens
@@ -193,12 +193,12 @@ func (c *Client) sendAPIV1ChallengeBackendIDAliensGet(ctx context.Context, param
 // APIV1ChallengeBackendIDAliensSubmitPost invokes POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
 // POST /api/v1/challenge/backend/{id}/aliens/submit
-func (c *Client) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
+func (c *Client) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
 	res, err := c.sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx, request, params)
 	return res, err
 }
 
-func (c *Client) sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (res APIV1ChallengeBackendIDAliensSubmitPostRes, err error) {
+func (c *Client) sendAPIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, request OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (res APIV1ChallengeBackendIDAliensSubmitPostRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		semconv.HTTPRequestMethodKey.String("POST"),
 		semconv.HTTPRouteKey.String("/api/v1/challenge/backend/{id}/aliens/submit"),

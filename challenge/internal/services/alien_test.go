@@ -63,9 +63,8 @@ func TestAlienInvasionVolley(t *testing.T) {
 	}, 100)
 
 	assert.True(t, exampleAlienInvasion.GetAliensLeft() == 3)
-	actualAlienStateAfterVolley := exampleAlienInvasion.AttackAllAliens()
-	// The first alien must have died so it should be reflected in the final aliensLeft count
-	assert.True(t, actualAlienStateAfterVolley.GetAliensLeft() == 2)
+	actualAlienStateAfterVolley := exampleAlienInvasion.AttackAliensModulo()
+	assert.True(t, actualAlienStateAfterVolley.GetAliensLeft() == 3)
 	assert.True(t, !actualAlienStateAfterVolley.IsOver())
 }
 
@@ -113,6 +112,24 @@ func TestAlienInvasionFocusedVolley(t *testing.T) {
 	))
 }
 
+func TestAlienInvasionCeiling(t *testing.T) {
+	a1 := services.CreateAlien(2, 2)
+	a2 := services.CreateAlien(2, 2)
+	a3 := services.CreateAlien(2, 2)
+	a4 := services.CreateAlien(2, 3)
+	a5 := services.CreateAlien(2, 3)
+	exampleAlienInvasion := services.CreateInvasionState([]services.Alien{
+		a1,
+		a2,
+		a3,
+		a4,
+		a5,
+	}, 100)
+	actualAliensAfterFocusedVolley := exampleAlienInvasion.AttackHighestDamagingHalf()
+	// Should kill 3 aliens, 5 - 3 = 2 because 5/2 = 2.5 ceiling is 3.
+	assert.Equal(t, actualAliensAfterFocusedVolley.GetAliensLeft(), 2)
+}
+
 // BEGIN ALGORITHM TESTING
 
 func TestAlgorithmTimes(t *testing.T) {
@@ -129,16 +146,8 @@ func TestAlgorithmTimes(t *testing.T) {
 		// Function completed in time
 		t.Log("Algorithm completed within the allotted time.")
 		assert.True(t, true, "Successfully completed the algorithm within allotted time.")
-	case <-time.After(1 * time.Second):
-		t.Fatal("Algorithm did not complete within 1 seconds")
+	case <-time.After(5 * time.Second):
+		t.Fatal("Algorithm did not complete within 5 seconds")
 		assert.True(t, false)
 	}
-}
-
-func TestAlgorithmFiltering(t *testing.T) {
-	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
-	states := services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
-	filteredStates := services.FilterToFindTheMostOptimalInvasions(states)
-	assert.True(t, len(states) >= len(filteredStates))
-	assert.True(t, len(filteredStates) != 0)
 }

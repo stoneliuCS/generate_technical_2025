@@ -279,7 +279,7 @@ func (s *Server) handleAPIV1ChallengeBackendIDAliensSubmitPostRequest(args [1]st
 		}
 
 		type (
-			Request  = [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem
+			Request  = OptAPIV1ChallengeBackendIDAliensSubmitPostReq
 			Params   = APIV1ChallengeBackendIDAliensSubmitPostParams
 			Response = APIV1ChallengeBackendIDAliensSubmitPostRes
 		)
