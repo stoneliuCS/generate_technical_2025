@@ -20,10 +20,12 @@ type ChallengeServiceImpl struct {
 }
 
 const (
-	LOWER_HP_BOUND        = 50
-	UPPER_HP_BOUND        = 100
-	NUM_WAVES_LOWER_BOUND = 5
-	NUM_WAVES_UPPER_BOUND = 10
+	LOWER_HP_BOUND              = 50
+	UPPER_HP_BOUND              = 100
+	NUM_WAVES_LOWER_BOUND       = 5
+	NUM_WAVES_UPPER_BOUND       = 10
+	LOWER_DETAILED_ALIEN_AMOUNT = 10
+	UPPER_DETAILED_ALIEN_AMOUNT = 100
 )
 
 var alienTypes = []AlienType{
@@ -35,7 +37,7 @@ var alienTypes = []AlienType{
 // GenerateUniqueFrontendChallenge implements ChallengeService.
 func (c ChallengeServiceImpl) GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien {
 	rng := utils.CreateRNGFromHash(id)
-	numAliens := utils.GenerateRandomNumWithinRange(rng, LOWER_ALIEN_AMOUNT, UPPER_ALIEN_AMOUNT)
+	numAliens := utils.GenerateRandomNumWithinRange(rng, LOWER_DETAILED_ALIEN_AMOUNT, UPPER_DETAILED_ALIEN_AMOUNT)
 
 	aliens := []DetailedAlien{}
 	for idx := range numAliens {

@@ -115,11 +115,11 @@ func TestDefaultLimitCustomOffsetFrontend(t *testing.T) {
 
 	noOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens", memberUUID.String()))
 	noOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
-		0, services.UPPER_ALIEN_AMOUNT, t)
+		0, services.UPPER_DETAILED_ALIEN_AMOUNT, t)
 
 	withOffset := CLIENT.GET(fmt.Sprintf("/api/v1/challenge/frontend/%s/aliens?offset=%d", memberUUID.String(), offset))
 	withOffset.AssertStatusCode(200, t).AssertArrayLengthBetween(
-		0, services.UPPER_ALIEN_AMOUNT-offset, t)
+		0, services.UPPER_DETAILED_ALIEN_AMOUNT-offset, t)
 }
 
 func TestCustomLimitCustomOffsetFrontend(t *testing.T) {

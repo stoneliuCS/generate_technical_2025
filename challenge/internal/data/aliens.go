@@ -1,75 +1,56 @@
 package data
 
-// AlienNames contains a large collection of alien names for procedural generation
-var AlienNames = []string{
-	// Classic Sci-Fi Inspired
-	"Zorbak the Destroyer", "Commander Vex", "Captain Blorgoth", "Dr. Xylophone",
-	"Princess Nebula", "General Krix", "Pilot Zyph", "Admiral Thrax",
-	"Scout Glip", "Warrior Morg", "Engineer Flux", "Medic Quell",
-	"Sergeant Drex", "Colonel Bzzt", "Major Grok", "Lieutenant Plex",
-
-	// Single Names
+var AlienFirstNames = []string{
+	// Single syllable power names
 	"Xerx", "Vrak", "Zeph", "Qix", "Trex", "Splix", "Grix", "Vox",
 	"Zap", "Flex", "Hex", "Rex", "Max", "Nix", "Klix", "Brix",
 	"Trix", "Styx", "Lynx", "Jinx", "Minx", "Onyx", "Ajax", "Crux",
-
-	// Funny/Quirky Names
-	"BillyBobJoe", "Sir Tentacles", "Professor Slime", "Cosmic Bob",
-	"Space Karen", "Alien Steve", "Galactic Gary", "Universal Dave",
-	"Interdimensional Dan", "Quantum Quinn", "Nebula Nancy", "Stellar Sam",
-	"Meteor Mike", "Comet Chris", "Asteroid Andy", "Planet Pete",
-
-	// Mysterious/Dark
-	"Shadow Walker", "Void Whisper", "Dark Matter", "Soul Reaper",
-	"Mind Bender", "Reality Shifter", "Time Weaver", "Space Wraith",
-	"Phantom Force", "Echo Prime", "Ghost Protocol", "Silent Storm",
-	"Night Terror", "Doom Bringer", "Fear Monger", "Pain Dealer",
-
-	// Elemental/Nature
-	"Crystal Shard", "Iron Forge", "Lightning Strike", "Thunder Roar",
-	"Fire Blast", "Ice Shard", "Wind Dancer", "Earth Shaker",
-	"Water Flow", "Steam Cloud", "Lava Burst", "Frost Bite",
-	"Storm Caller", "Rain Maker", "Snow Drift", "Sun Flare",
-
-	// Tech/Cyber
-	"Cyber Punk", "Data Stream", "Code Breaker", "System Crash",
-	"Virus Scanner", "Firewall Guardian", "Network Node", "Protocol Zero",
-	"Binary Beast", "Digital Demon", "Pixel Pusher", "Byte Biter",
-	"RAM Runner", "CPU Crusher", "GPU Grinder", "SSD Slicer",
-
-	// Royal/Noble Titles
-	"Emperor Galaxius", "Empress Stardust", "Duke Nebular", "Duchess Cosmic",
-	"Baron Voidspace", "Baroness Darkstar", "Count Meteor", "Countess Comet",
-	"Lord Blackhole", "Lady Supernova", "King Quasar", "Queen Pulsar",
-	"Prince Photon", "Princess Proton", "Overlord Omega", "Sovereign Sigma",
-
-	// Science Fiction References
-	"Quantum Entangler", "Particle Accelerator", "Warp Drive", "Hyperdrive",
-	"Teleporter", "Phase Shifter", "Dimension Hopper", "Time Traveler",
-	"Space Ranger", "Galaxy Guardian", "Universe Defender", "Cosmos Protector",
-	"Solar Flare", "Lunar Eclipse", "Stellar Wind", "Galactic Storm",
-
-	// Action/Combat
-	"Blade Runner", "Plasma Cannon", "Ion Blaster", "Laser Sword",
-	"Energy Shield", "Force Field", "Power Core", "Fusion Reactor",
-	"Missile Lock", "Target Acquired", "Direct Hit", "Critical Strike",
-	"Final Boss", "Elite Guard", "Special Ops", "Black Ops",
-
-	// Cosmic/Space
-	"Andromeda", "Orion", "Cassiopeia", "Centauri", "Vega", "Sirius",
-	"Polaris", "Rigel", "Betelgeuse", "Aldebaran", "Capella", "Arcturus",
-	"Spica", "Antares", "Procyon", "Altair", "Deneb", "Regulus",
-	"Canopus", "Achernar", "Hadar", "Acrux", "Gacrux", "Alioth",
-
-	// Alien Species Inspired
-	"Zeltron Prime", "Rodian Hunter", "Twi'lek Dancer", "Wookiee Warrior",
-	"Hutt Overlord", "Jawa Scavenger", "Tusken Raider", "Ewok Scout",
-	"Gungan General", "Naboo Royal", "Corellian Pilot", "Mandalorian Warrior",
-	"Sith Lord", "Jedi Master", "Clone Trooper", "Storm Trooper",
-
-	// More Single Syllable Power Names
 	"Zyx", "Qyx", "Ryx", "Syx", "Tyx", "Vyx", "Wyx", "Xyx",
 	"Blek", "Clek", "Dlek", "Flek", "Glek", "Hlek", "Jlek", "Klek",
 	"Blom", "Clom", "Drom", "Fkom", "Gnom", "Hrom", "Jrom", "Krom",
 	"Zorg", "Gorg", "Borg", "Morg", "Torg", "Vorg", "Worg", "Xorg",
+
+	// Extracted from titles and compound names
+	"Zorbak", "Vex", "Blorgoth", "Xylophone", "Nebula", "Krix", "Zyph", "Thrax",
+	"Glip", "Flux", "Quell", "Drex", "Bzzt", "Grok", "Plex",
+	"Billy", "Bob", "Karen", "Steve", "Gary", "Dave", "Dan", "Quinn",
+	"Nancy", "Sam", "Mike", "Chris", "Andy", "Pete",
+
+	// Cosmic names
+	"Andromeda", "Orion", "Vega", "Sirius", "Polaris", "Rigel", "Betelgeuse",
+	"Aldebaran", "Capella", "Arcturus", "Spica", "Antares", "Procyon", "Altair",
+	"Deneb", "Regulus", "Canopus", "Achernar", "Hadar", "Acrux", "Gacrux", "Alioth",
+
+	// Tech/Cyber inspired
+	"Cyber", "Data", "Code", "System", "Virus", "Network", "Protocol", "Binary",
+	"Digital", "Pixel", "Byte", "RAM", "CPU", "GPU", "SSD",
+}
+
+var AlienLastNames = []string{
+	// Titles and descriptors
+	"the Destroyer", "the Magnificent", "the Terrible", "the Wise", "the Bold",
+	"the Swift", "the Silent", "the Mighty", "the Ancient", "the Eternal",
+	"the Feared", "the Revered", "the Cunning", "the Brutal", "the Noble",
+
+	// Action/Power suffixes
+	"Walker", "Whisper", "Bender", "Shifter", "Weaver", "Wraith", "Force",
+	"Prime", "Protocol", "Storm", "Terror", "Bringer", "Monger", "Dealer",
+	"Shard", "Forge", "Strike", "Roar", "Blast", "Dancer", "Shaker",
+	"Flow", "Cloud", "Burst", "Bite", "Caller", "Maker", "Drift", "Flare",
+
+	// Tech/Space suffixes
+	"Punk", "Stream", "Breaker", "Crash", "Scanner", "Guardian", "Node",
+	"Beast", "Demon", "Pusher", "Biter", "Runner", "Crusher", "Grinder", "Slicer",
+
+	// Cosmic/Science terms
+	"Galaxius", "Stardust", "Nebular", "Cosmic", "Voidspace", "Darkstar",
+	"Meteor", "Comet", "Blackhole", "Supernova", "Quasar", "Pulsar",
+	"Photon", "Proton", "Omega", "Sigma", "Entangler", "Accelerator",
+
+	// Alien world suffixes
+	"Prime", "Hunter", "Dancer", "Warrior", "Overlord", "Scavenger",
+	"Raider", "Scout", "General", "Royal", "Pilot", "Trooper",
+	"Master", "Lord", "Eclipse", "Wind", "Ranger", "Guardian",
+	"Defender", "Protector", "Cannon", "Blaster", "Sword", "Shield",
+	"Field", "Core", "Reactor", "Lock", "Hit", "Strike", "Boss", "Guard", "Ops",
 }
