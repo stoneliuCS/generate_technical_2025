@@ -6,6 +6,8 @@ import (
 	"generate_technical_challenge_2025/internal/utils"
 	"math/rand"
 
+	"fmt"
+
 	"github.com/google/uuid"
 )
 
@@ -18,9 +20,10 @@ const (
 )
 
 type DetailedAlien struct {
-	ID         uuid.UUID
+	ID         string
 	BaseAlien  Alien
-	Name       string
+	FirstName  string
+	LastName   string
 	Type       AlienType
 	Spd        int
 	ProfileURL string
@@ -32,13 +35,14 @@ var alienProfileURLs = map[AlienType]string{
 	AlienTypeBoss:    "https://robohash.org/boss-alien?set=set4&size=200x200",
 }
 
-// Creates a DetailedAlien with ID, HP, ATK, and SPD stats, with a name, profile URL, and AlienType.
-func CreateDetailedAlien(id uuid.UUID, hp int, atk int, spd int,
-	name string, alienType AlienType, profileURL string) DetailedAlien {
+// Creates a DetailedAlien with ID, HP, ATK, and SPD stats, with a first/last name, profile URL, and AlienType.
+func CreateDetailedAlien(id string, hp int, atk int, spd int,
+	firstName string, lastName string, alienType AlienType, profileURL string) DetailedAlien {
 	return DetailedAlien{
 		ID:         id,
 		BaseAlien:  Alien{Hp: hp, Atk: atk},
-		Name:       name,
+		FirstName:  firstName,
+		LastName:   lastName,
 		Type:       alienType,
 		Spd:        spd,
 		ProfileURL: profileURL}
@@ -62,26 +66,31 @@ func GenerateDetailedAlien(rng *rand.Rand, memberID uuid.UUID, alienIdx int) Det
 	atk := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
 	spd := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
 
-	nameIndex := rng.Intn(len(data.AlienNames))
-	name := data.AlienNames[nameIndex]
+	firstNameIndex := rng.Intn(len(data.AlienFirstNames))
+	firstName := data.AlienFirstNames[firstNameIndex]
+
+	lastNameIndex := rng.Intn(len(data.AlienLastNames))
+	lastName := data.AlienLastNames[lastNameIndex]
 
 	typeIndex := rng.Intn(len(alienTypes))
 	alienType := alienTypes[typeIndex]
 
 	profileURL := alienProfileURLs[alienType]
 
-	alienID := generateSimpleUUID(rng, alienIdx)
+	alienID := generateAlienID(rng, alienIdx)
 
-	alien := CreateDetailedAlien(alienID, hp, atk, spd, name, alienType, profileURL)
+	alien := CreateDetailedAlien(alienID, hp, atk, spd, firstName, lastName, alienType, profileURL)
 	return alien
 }
 
-func generateSimpleUUID(rng *rand.Rand, alienIdx int) uuid.UUID {
+func generateAlienID(rng *rand.Rand, alienIdx int) string {
 	alienSeed := rng.Int63() + int64(alienIdx*1000)
 	alienRNG := rand.New(rand.NewSource(alienSeed))
-	var alienID uuid.UUID
-	for i := range alienID {
-		alienID[i] = byte(alienRNG.Intn(256))
+	alienID := ""
+	alienIDLength := 6
+	for range alienIDLength {
+		alienID += fmt.Sprint(alienRNG.Intn(10)) // [0, n)
 	}
+
 	return alienID
 }

@@ -408,11 +408,13 @@ type APIV1ChallengeFrontendIDAliensGetOKApplicationJSON []APIV1ChallengeFrontend
 func (*APIV1ChallengeFrontendIDAliensGetOKApplicationJSON) aPIV1ChallengeFrontendIDAliensGetRes() {}
 
 type APIV1ChallengeFrontendIDAliensGetOKItem struct {
-	// UUID of the alien.
-	ID uuid.UUID `json:"id"`
-	// Name of the alien.
-	Name string `json:"name"`
-	// The rank of the alien.
+	// ID of the alien.
+	ID string `json:"id"`
+	// First name of the alien.
+	FirstName string `json:"firstName"`
+	// Last name of the alien.
+	LastName string `json:"lastName"`
+	// Rank of the alien.
 	Type APIV1ChallengeFrontendIDAliensGetOKItemType `json:"type"`
 	// Profile picture URL of the alien.
 	URL url.URL `json:"url"`
@@ -421,13 +423,18 @@ type APIV1ChallengeFrontendIDAliensGetOKItem struct {
 }
 
 // GetID returns the value of ID.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetID() uuid.UUID {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetID() string {
 	return s.ID
 }
 
-// GetName returns the value of Name.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetName() string {
-	return s.Name
+// GetFirstName returns the value of FirstName.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetFirstName() string {
+	return s.FirstName
+}
+
+// GetLastName returns the value of LastName.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetLastName() string {
+	return s.LastName
 }
 
 // GetType returns the value of Type.
@@ -446,13 +453,18 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItem) GetStats() APIV1ChallengeFront
 }
 
 // SetID sets the value of ID.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetID(val uuid.UUID) {
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetID(val string) {
 	s.ID = val
 }
 
-// SetName sets the value of Name.
-func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetName(val string) {
-	s.Name = val
+// SetFirstName sets the value of FirstName.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetFirstName(val string) {
+	s.FirstName = val
+}
+
+// SetLastName sets the value of LastName.
+func (s *APIV1ChallengeFrontendIDAliensGetOKItem) SetLastName(val string) {
+	s.LastName = val
 }
 
 // SetType sets the value of Type.
@@ -507,7 +519,7 @@ func (s *APIV1ChallengeFrontendIDAliensGetOKItemStats) SetSpd(val int) {
 	s.Spd = val
 }
 
-// The rank of the alien.
+// Rank of the alien.
 type APIV1ChallengeFrontendIDAliensGetOKItemType string
 
 const (

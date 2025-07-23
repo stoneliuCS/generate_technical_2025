@@ -54,7 +54,7 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 
 // APIV1ChallengeFrontendIDAliensGet implements api.Handler.
 // Note:
-// generates a random number of aliens between LOWER_ALIEN_AMOUNT and UPPER_ALIEN_AMOUNT, and then
+// generates a random number of aliens between LOWER_DETAILED_ALIEN_AMOUNT and UPPER_DETAILED_ALIEN_AMOUNT, and then
 // limits/offsets it.
 func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params api.APIV1ChallengeFrontendIDAliensGetParams) (api.APIV1ChallengeFrontendIDAliensGetRes, error) {
 	exists, err := h.memberService.CheckMemberExistsById(params.ID)
@@ -89,9 +89,10 @@ func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params a
 		}
 
 		return api.APIV1ChallengeFrontendIDAliensGetOKItem{
-			ID:   alien.ID,
-			Name: alien.Name,
-			Type: alien.Type.ToAPI(),
+			ID:        alien.ID,
+			FirstName: alien.FirstName,
+			LastName:  alien.LastName,
+			Type:      alien.Type.ToAPI(),
 			Stats: api.APIV1ChallengeFrontendIDAliensGetOKItemStats{
 				Atk: alien.BaseAlien.Atk,
 				Hp:  alien.BaseAlien.Hp,

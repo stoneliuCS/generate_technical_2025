@@ -82,9 +82,10 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
 });
 
 export const ALIEN = Object.addProperties({
-  id: UUID.addDescription("UUID of the alien."),
-  name: String.addDescription("Name of the alien.").addExample("BillyBobJoe"),
-  type: String.addDescription("The rank of the alien.").addEnums([
+  id: String.addDescription("ID of the alien.").addMaxLength(6).addMinLength(6),
+  firstName: String.addDescription("First name of the alien.").addExample("John"),
+  lastName: String.addDescription("Last name of the alien.").addExample("Doe"),
+  type: String.addDescription("Rank of the alien.").addEnums([
     "Regular",
     "Elite",
     "Boss",
@@ -97,8 +98,8 @@ export const ALIEN = Object.addProperties({
     hp: Integer.addMinimum(1).addMaximum(3),
     spd: Integer.addMinimum(1).addMaximum(3),
   }).addDescription("Combat description of the alien.").addRequired(["atk", "hp", "spd"]),
-}).addRequired(["id", "name", "type", "stats", "url"]);
-
+}).addRequired(["id", "firstName", "lastName", "type", "stats", "url"]);
+``
 // BEGIN ALIEN FRONTEND CHALLENGE ENDPOINT
 export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
   get: Operation.addParameters([

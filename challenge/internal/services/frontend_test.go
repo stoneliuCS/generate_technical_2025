@@ -10,7 +10,6 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -38,10 +37,25 @@ func assertValidAlien(t *testing.T, sampleAlien services.DetailedAlien) {
 	_, err := url.Parse(sampleAlien.ProfileURL)
 	assert.True(t, err == nil)
 
-	// Valid, non-nil uuid ID.
-	assert.True(t, sampleAlien.ID != uuid.Nil)
+	// Six-digit ID as a string.
+	assert.True(t, len(sampleAlien.ID) == 6)
+	assert.True(t, IsNumericASCII(sampleAlien.ID))
 
-	assert.True(t, slices.Contains(data.AlienNames, sampleAlien.Name))
+	assert.True(t, slices.Contains(data.AlienFirstNames, sampleAlien.FirstName))
+	assert.True(t, slices.Contains(data.AlienLastNames, sampleAlien.LastName))
+}
+
+// Tests if a string is a number. The strings 0-9 have ASCII values of 0-9, respectively.
+func IsNumericASCII(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		if s[i] < '0' || s[i] > '9' {
+			return false
+		}
+	}
+	return true
 }
 
 func TestGenerateDetailedAlien(t *testing.T) {
