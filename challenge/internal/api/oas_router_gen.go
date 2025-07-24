@@ -113,30 +113,66 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 							break
 						}
 						switch elem[0] {
-						case '/': // Prefix: "/aliens"
+						case '/': // Prefix: "/"
 
-							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+							if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
 								elem = elem[l:]
 							} else {
 								break
 							}
 
 							if len(elem) == 0 {
-								switch r.Method {
-								case "GET":
-									s.handleAPIV1ChallengeBackendIDAliensGetRequest([1]string{
-										args[0],
-									}, elemIsEscaped, w, r)
-								default:
-									s.notAllowed(w, r, "GET")
-								}
-
-								return
+								break
 							}
 							switch elem[0] {
-							case '/': // Prefix: "/submit"
+							case 'a': // Prefix: "aliens"
 
-								if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+								if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									switch r.Method {
+									case "GET":
+										s.handleAPIV1ChallengeBackendIDAliensGetRequest([1]string{
+											args[0],
+										}, elemIsEscaped, w, r)
+									default:
+										s.notAllowed(w, r, "GET")
+									}
+
+									return
+								}
+								switch elem[0] {
+								case '/': // Prefix: "/submit"
+
+									if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+										elem = elem[l:]
+									} else {
+										break
+									}
+
+									if len(elem) == 0 {
+										// Leaf node.
+										switch r.Method {
+										case "POST":
+											s.handleAPIV1ChallengeBackendIDAliensSubmitPostRequest([1]string{
+												args[0],
+											}, elemIsEscaped, w, r)
+										default:
+											s.notAllowed(w, r, "POST")
+										}
+
+										return
+									}
+
+								}
+
+							case 'n': // Prefix: "ngrok/submit"
+
+								if l := len("ngrok/submit"); len(elem) >= l && elem[0:l] == "ngrok/submit" {
 									elem = elem[l:]
 								} else {
 									break
@@ -146,7 +182,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 									// Leaf node.
 									switch r.Method {
 									case "POST":
-										s.handleAPIV1ChallengeBackendIDAliensSubmitPostRequest([1]string{
+										s.handleAPIV1ChallengeBackendIDNgrokSubmitPostRequest([1]string{
 											args[0],
 										}, elemIsEscaped, w, r)
 									default:
@@ -420,32 +456,70 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 							break
 						}
 						switch elem[0] {
-						case '/': // Prefix: "/aliens"
+						case '/': // Prefix: "/"
 
-							if l := len("/aliens"); len(elem) >= l && elem[0:l] == "/aliens" {
+							if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
 								elem = elem[l:]
 							} else {
 								break
 							}
 
 							if len(elem) == 0 {
-								switch method {
-								case "GET":
-									r.name = APIV1ChallengeBackendIDAliensGetOperation
-									r.summary = ""
-									r.operationID = ""
-									r.pathPattern = "/api/v1/challenge/backend/{id}/aliens"
-									r.args = args
-									r.count = 1
-									return r, true
-								default:
-									return
-								}
+								break
 							}
 							switch elem[0] {
-							case '/': // Prefix: "/submit"
+							case 'a': // Prefix: "aliens"
 
-								if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+								if l := len("aliens"); len(elem) >= l && elem[0:l] == "aliens" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									switch method {
+									case "GET":
+										r.name = APIV1ChallengeBackendIDAliensGetOperation
+										r.summary = ""
+										r.operationID = ""
+										r.pathPattern = "/api/v1/challenge/backend/{id}/aliens"
+										r.args = args
+										r.count = 1
+										return r, true
+									default:
+										return
+									}
+								}
+								switch elem[0] {
+								case '/': // Prefix: "/submit"
+
+									if l := len("/submit"); len(elem) >= l && elem[0:l] == "/submit" {
+										elem = elem[l:]
+									} else {
+										break
+									}
+
+									if len(elem) == 0 {
+										// Leaf node.
+										switch method {
+										case "POST":
+											r.name = APIV1ChallengeBackendIDAliensSubmitPostOperation
+											r.summary = ""
+											r.operationID = ""
+											r.pathPattern = "/api/v1/challenge/backend/{id}/aliens/submit"
+											r.args = args
+											r.count = 1
+											return r, true
+										default:
+											return
+										}
+									}
+
+								}
+
+							case 'n': // Prefix: "ngrok/submit"
+
+								if l := len("ngrok/submit"); len(elem) >= l && elem[0:l] == "ngrok/submit" {
 									elem = elem[l:]
 								} else {
 									break
@@ -455,10 +529,10 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 									// Leaf node.
 									switch method {
 									case "POST":
-										r.name = APIV1ChallengeBackendIDAliensSubmitPostOperation
+										r.name = APIV1ChallengeBackendIDNgrokSubmitPostOperation
 										r.summary = ""
 										r.operationID = ""
-										r.pathPattern = "/api/v1/challenge/backend/{id}/aliens/submit"
+										r.pathPattern = "/api/v1/challenge/backend/{id}/ngrok/submit"
 										r.args = args
 										r.count = 1
 										return r, true

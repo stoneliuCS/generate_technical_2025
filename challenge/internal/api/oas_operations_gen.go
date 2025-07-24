@@ -8,6 +8,7 @@ type OperationName = string
 const (
 	APIV1ChallengeBackendIDAliensGetOperation        OperationName = "APIV1ChallengeBackendIDAliensGet"
 	APIV1ChallengeBackendIDAliensSubmitPostOperation OperationName = "APIV1ChallengeBackendIDAliensSubmitPost"
+	APIV1ChallengeBackendIDNgrokSubmitPostOperation  OperationName = "APIV1ChallengeBackendIDNgrokSubmitPost"
 	APIV1ChallengeFrontendIDAliensGetOperation       OperationName = "APIV1ChallengeFrontendIDAliensGet"
 	APIV1MemberGetOperation                          OperationName = "APIV1MemberGet"
 	APIV1MemberRegisterPostOperation                 OperationName = "APIV1MemberRegisterPost"

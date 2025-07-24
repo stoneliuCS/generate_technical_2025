@@ -8,6 +8,7 @@ import {
   ALIEN_CHALLENGE_ENDPOINT,
   ALIEN_FRONTEND_CHALLENGE_ENDPOINT,
   SUBMIT_ENDPOINT,
+  NGROK_ENDPOINT,
 } from "./paths/challenge";
 
 let oas = OpenApiV3.addOpenApiVersion("3.1.0")
@@ -26,6 +27,7 @@ let oas = OpenApiV3.addOpenApiVersion("3.1.0")
       "/api/v1/challenge/backend/{id}/aliens/submit": SUBMIT_ENDPOINT,
       "/api/v1/challenge/frontend/{id}/aliens":
         ALIEN_FRONTEND_CHALLENGE_ENDPOINT,
+      "/api/v1/challenge/backend/{id}/ngrok/submit": NGROK_ENDPOINT,
     }),
   );
 

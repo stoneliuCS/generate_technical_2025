@@ -27,6 +27,13 @@ func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.
 	return r, ht.ErrNotImplemented
 }
 
+// APIV1ChallengeBackendIDNgrokSubmitPost implements POST /api/v1/challenge/backend/{id}/ngrok/submit operation.
+//
+// POST /api/v1/challenge/backend/{id}/ngrok/submit
+func (UnimplementedHandler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params APIV1ChallengeBackendIDNgrokSubmitPostParams) (r APIV1ChallengeBackendIDNgrokSubmitPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // APIV1ChallengeFrontendIDAliensGet implements GET /api/v1/challenge/frontend/{id}/aliens operation.
 //
 // GET /api/v1/challenge/frontend/{id}/aliens

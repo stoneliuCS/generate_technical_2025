@@ -4,14 +4,17 @@ import (
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
+	"net/url"
 
 	"github.com/google/uuid"
 )
 
 type ChallengeService interface {
-	GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState
+	GenerateUniqueAlienChallenge(memberID uuid.UUID) []InvasionState
 	SolveAlienChallenge(state InvasionState) InvasionState
-	GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien
+	GenerateUniqueFrontendChallenge(memberID uuid.UUID) []DetailedAlien
+	GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge
+	GradeNgrokServer(url url.URL, requests NgrokChallenge) NgrokChallengeScore
 }
 
 type ChallengeServiceImpl struct {
@@ -20,12 +23,17 @@ type ChallengeServiceImpl struct {
 }
 
 const (
-	LOWER_HP_BOUND              = 50
-	UPPER_HP_BOUND              = 100
-	NUM_WAVES_LOWER_BOUND       = 5
-	NUM_WAVES_UPPER_BOUND       = 10
-	LOWER_DETAILED_ALIEN_AMOUNT = 10
-	UPPER_DETAILED_ALIEN_AMOUNT = 100
+	LOWER_HP_BOUND               = 50
+	UPPER_HP_BOUND               = 100
+	NUM_WAVES_LOWER_BOUND        = 5
+	NUM_WAVES_UPPER_BOUND        = 10
+	LOWER_DETAILED_ALIEN_AMOUNT  = 10
+	UPPER_DETAILED_ALIEN_AMOUNT  = 100
+	NGROK_GET_REQUEST_COUNT      = 4
+	NUM_NGROK_ALIENS_LOWER_BOUND = 10
+	NUM_NGROK_ALIENS_UPPER_BOUND = NUM_NGROK_ALIENS_LOWER_BOUND + 5
+	NGROK_POST_POINTS            = 20
+	NGROK_GET_ALL_POINTS         = 15
 )
 
 var alienTypes = []AlienType{
@@ -71,4 +79,40 @@ func CreateChallengeService(logger *slog.Logger, transactions transactions.Chall
 	return ChallengeServiceImpl{
 		logger: logger, transactions: transactions,
 	}
+}
+
+func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChallenge) NgrokChallengeScore {
+	panic("Not implemented.")
+}
+
+func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge {
+	// Use challenge ID as seed for deterministic but unique data.
+	rng := utils.CreateRNGFromHash(memberID)
+
+	count := utils.GenerateRandomNumWithinRange(rng, NUM_NGROK_ALIENS_LOWER_BOUND, NUM_NGROK_ALIENS_UPPER_BOUND)
+	aliens := []DetailedAlien{}
+	for alienIdx := range count {
+		alien := GenerateDetailedAlien(rng, memberID, alienIdx)
+		aliens = append(aliens, alien)
+	}
+
+	requests := []NgrokRequest{
+		NgrokPostRequest{
+			Name:   "POST all alien",
+			Points: NGROK_POST_POINTS,
+			Path:   "/api/aliens",
+			Body:   aliens,
+		},
+
+		NgrokGetRequest{
+			Name:          "GET all aliens",
+			Points:        NGROK_GET_ALL_POINTS,
+			Path:          "/api/aliens",
+			ExpectedCount: len(aliens),
+		},
+	}
+
+	requests = append(requests, generateRandomFilterTests(rng, aliens)...)
+
+	return NgrokChallenge{Requests: requests}
 }

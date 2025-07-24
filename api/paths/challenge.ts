@@ -15,6 +15,7 @@ import {
 } from "fluid-oas";
 import { ALIEN_INVASION, ALIEN_INVASION_ANSWER } from "../schema/alien";
 import { ERROR, UUID } from "../schema";
+import { NGROK_URL_SUBMISSION } from "./ngrok.ts";
 
 const ID_PARAMETER = Parameter.schema
   .addIn("path")
@@ -72,6 +73,30 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         }),
         "429": Response.addDescription("Too Many Requests - Rate limit exceeded")
         .addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
+        "500": Response.addDescription("Internal Server Error").addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
+      }),
+    ),
+});
+
+export const NGROK_ENDPOINT = PathItem.addMethod({
+  post: Operation.addParameters([ID_PARAMETER])
+    .addRequestBody(
+      RequestBody.addContents({
+        "application/json": MediaType.addSchema(NGROK_URL_SUBMISSION),
+      }),
+    )
+    .addResponses(
+      Responses({
+        "200": Response.addDescription(
+          "Grade calculated by our server querying your exposed API.",
+        ).addContents({
+          "application/json": MediaType.addSchema(SUBMIT_RESPONSE),
+        }),
+        "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
         "500": Response.addDescription("Internal Server Error").addContents({
