@@ -30,6 +30,24 @@ func (h Handler) ChallengeGet(ctx context.Context) (api.ChallengeGetRes, error) 
 	return &api.ChallengeGetOK{Data: strings.NewReader(buf.String())}, nil
 }
 
+// APIV1ChallengeBackendIDNgrokSubmitPost implements api.Handler.
+func (h Handler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req api.OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params api.APIV1ChallengeBackendIDNgrokSubmitPostParams) (api.APIV1ChallengeBackendIDNgrokSubmitPostRes, error) {
+	exists, err := h.memberService.CheckMemberExistsById(params.ID)
+	if err != nil {
+		return &api.APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError{Message: "Database error finding member Id."}, nil
+	}
+	if !exists {
+		return &api.APIV1ChallengeBackendIDNgrokSubmitPostBadRequest{Message: "Unable to find member id."}, nil
+	}
+
+	_ = h.challengeService.GenerateUniqueNgrokChallenge(params.ID)
+	_ = h.challengeService.GradeNgrokServer(req.Value.URL.Value, services.NgrokChallenge{})
+
+	result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{}
+
+	return &result, nil
+}
+
 // Get implements api.Handler.
 func (h Handler) Get(ctx context.Context) (api.GetRes, error) {
 	html, err := scalar.ApiReferenceHTML(&scalar.Options{
