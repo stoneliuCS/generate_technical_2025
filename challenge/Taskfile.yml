@@ -9,13 +9,14 @@ tasks:
     cmds:
       - ./main_server
   generate:
-    summary: generate server code from openapi spec
+    summary: generate server code from openapi spec and templ code
     sources:
       - ../openapi.json
     generates:
       - ./internal/api/
     cmds:
       - go generate ./...
+      - go run github.com/a-h/templ/cmd/templ generate
   build:
     deps:
       - generate

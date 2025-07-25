@@ -775,6 +775,38 @@ func (s *APIV1MemberRegisterPostReq) SetNuid(val string) {
 	s.Nuid = val
 }
 
+type ChallengeGetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *ChallengeGetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *ChallengeGetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*ChallengeGetInternalServerError) challengeGetRes() {}
+
+type ChallengeGetOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s ChallengeGetOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*ChallengeGetOK) challengeGetRes() {}
+
 type GetInternalServerError struct {
 	Message string `json:"message"`
 }

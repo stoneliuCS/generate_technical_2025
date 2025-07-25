@@ -48,6 +48,15 @@ func (UnimplementedHandler) APIV1MemberRegisterPost(ctx context.Context, req Opt
 	return r, ht.ErrNotImplemented
 }
 
+// ChallengeGet implements GET /challenge operation.
+//
+// Challenge Specification.
+//
+// GET /challenge
+func (UnimplementedHandler) ChallengeGet(ctx context.Context) (r ChallengeGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // Get implements GET / operation.
 //
 // API documentation.

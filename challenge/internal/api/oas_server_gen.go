@@ -28,6 +28,12 @@ type Handler interface {
 	//
 	// POST /api/v1/member/register
 	APIV1MemberRegisterPost(ctx context.Context, req OptAPIV1MemberRegisterPostReq) (APIV1MemberRegisterPostRes, error)
+	// ChallengeGet implements GET /challenge operation.
+	//
+	// Challenge Specification.
+	//
+	// GET /challenge
+	ChallengeGet(ctx context.Context) (ChallengeGetRes, error)
 	// Get implements GET / operation.
 	//
 	// API documentation.
