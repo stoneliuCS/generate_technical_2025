@@ -405,6 +405,23 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) SetMessage(val 
 func (*APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
 }
 
+type APIV1ChallengeBackendIDAliensSubmitPostUnauthorized struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
+}
+
 type APIV1ChallengeFrontendIDAliensGetBadRequest struct {
 	Message string `json:"message"`
 }

@@ -137,7 +137,7 @@ func TestAlgorithmTimes(t *testing.T) {
 	done := make(chan bool)
 
 	go func() {
-		services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
+		services.RunAllPossibleInvasionStatesToCompletionGreedy(services.CreateInvasionState(sampleAlienInvasion, 100))
 		done <- true
 	}()
 
@@ -146,8 +146,38 @@ func TestAlgorithmTimes(t *testing.T) {
 		// Function completed in time
 		t.Log("Algorithm completed within the allotted time.")
 		assert.True(t, true, "Successfully completed the algorithm within allotted time.")
-	case <-time.After(5 * time.Second):
-		t.Fatal("Algorithm did not complete within 5 seconds")
+	case <-time.After(1 * time.Second):
+		t.Fatal("Algorithm did not complete within 1 seconds")
 		assert.True(t, false)
 	}
+}
+
+func TestAlgorithmCorrectness(t *testing.T) {
+	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
+	sampleInvasionState := services.CreateInvasionState(sampleAlienInvasion, 100)
+	greedySol := services.RunAllPossibleInvasionStatesToCompletionGreedy(sampleInvasionState)
+	bruteforceSol := services.RunAllPossibleInvasionStatesToCompletion(sampleInvasionState)
+	// The greedy solution should always have the least number of aliens left over.
+	bruteForceBestSolByAliensLeft := lo.MinBy(bruteforceSol, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	greedySolByAliensLeft := lo.MinBy(greedySol, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	allSolutionsBruteForceWithMinimalAliensLeft := lo.Filter(bruteforceSol, func(state services.InvasionState, idx int) bool {
+		return state.GetAliensLeft() == bruteForceBestSolByAliensLeft.GetAliensLeft()
+	})
+	allSolutionsGreedyWithMinimalAliensLeft := lo.Filter(greedySol, func(state services.InvasionState, idx int) bool {
+		return state.GetAliensLeft() == greedySolByAliensLeft.GetAliensLeft()
+	})
+	bruteForceBestSolByHP := lo.MaxBy(allSolutionsBruteForceWithMinimalAliensLeft, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	greedyBruteForceBestSolByHP := lo.MaxBy(allSolutionsGreedyWithMinimalAliensLeft, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	// Assert that the greedySol has the same minimal aliens left as the brute force.
+	assert.LessOrEqual(t, greedyBruteForceBestSolByHP.GetAliensLeft(), bruteForceBestSolByHP.GetAliensLeft())
+	// Assert that the greedySol has the same amount of hp as the brute force.
+	assert.GreaterOrEqual(t, greedyBruteForceBestSolByHP.GetHpLeft(), bruteForceBestSolByHP.GetHpLeft())
 }

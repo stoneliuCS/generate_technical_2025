@@ -94,9 +94,43 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 	return endingStates
 }
 
+func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) []InvasionState {
+	var backtrack func(currentState InvasionState)
+	endingStates := []InvasionState{}
+
+	backtrack = func(currentState InvasionState) {
+		if currentState.IsOver() {
+			endingStates = append(endingStates, currentState)
+		} else {
+			if currentState.hpLeft%currentState.GetAliensLeft() > (currentState.GetAliensLeft()+1)/2 {
+				volleyState := currentState.AttackAliensModulo()
+				backtrack(volleyState.sortAliens().AliensAttack())
+			}
+			focusedState := currentState.AttackHighestDamageAlien()
+			focusedVolleyState := currentState.AttackHighestDamagingHalf()
+			backtrack(focusedVolleyState.sortAliens().AliensAttack())
+			backtrack(focusedState.sortAliens().AliensAttack())
+		}
+	}
+	backtrack(initialState)
+	return endingStates
+}
+
 // The invasion is over if and only if all aliens are dead or the remaining hp is empty.
 func (i InvasionState) IsOver() bool {
 	return len(i.aliensLeft) == 0 || i.hpLeft <= 0
+}
+
+func (i InvasionState) GetTotalAlienHPLeft() int {
+	return lo.Reduce(i.aliensLeft, func(acc int, alien Alien, _ int) int {
+		return acc + alien.Hp
+	}, 0)
+}
+
+func (i InvasionState) GetTotalAlienAtkPower() int {
+	return lo.Reduce(i.aliensLeft, func(acc int, alien Alien, _ int) int {
+		return acc + alien.Atk
+	}, 0)
 }
 
 // Returns the state of the invasion when the aliens attack
