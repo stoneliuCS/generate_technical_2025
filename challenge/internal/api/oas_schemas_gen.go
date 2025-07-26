@@ -523,6 +523,23 @@ func (s *APIV1ChallengeBackendIDNgrokSubmitPostReq) SetURL(val OptURI) {
 	s.URL = val
 }
 
+type APIV1ChallengeBackendIDNgrokSubmitPostTooManyRequests struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostTooManyRequests) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDNgrokSubmitPostTooManyRequests) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDNgrokSubmitPostTooManyRequests) aPIV1ChallengeBackendIDNgrokSubmitPostRes() {
+}
+
 type APIV1ChallengeFrontendIDAliensGetBadRequest struct {
 	Message string `json:"message"`
 }

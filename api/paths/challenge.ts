@@ -106,6 +106,10 @@ export const NGROK_ENDPOINT = PathItem.addMethod({
         "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
+        "429": Response.addDescription("Too Many Requests - Rate limit exceeded")
+        .addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
         "500": Response.addDescription("Internal Server Error").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),

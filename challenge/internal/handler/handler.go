@@ -19,7 +19,6 @@ type Handler struct {
 	logger           *slog.Logger // event logger
 }
 
-
 // ChallengeGet implements api.Handler.
 func (h Handler) ChallengeGet(ctx context.Context) (api.ChallengeGetRes, error) {
 	var buf strings.Builder
