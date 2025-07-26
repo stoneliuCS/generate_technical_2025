@@ -171,6 +171,19 @@ func encodeAPIV1ChallengeBackendIDNgrokSubmitPostResponse(response APIV1Challeng
 
 		return nil
 
+	case *APIV1ChallengeBackendIDNgrokSubmitPostTooManyRequests:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(429)
+		span.SetStatus(codes.Error, http.StatusText(429))
+
+		e := new(jx.Encoder)
+		response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
+
+		return nil
+
 	case *APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(500)
