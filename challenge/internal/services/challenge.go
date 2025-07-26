@@ -85,6 +85,8 @@ const (
 	NUM_NGROK_ALIENS_UPPER_BOUND = NUM_NGROK_ALIENS_LOWER_BOUND + 5
 	NGROK_POST_POINTS            = 20
 	NGROK_GET_ALL_POINTS         = 15
+	NGROK_FILTER_TYPE_POINTS     = 15
+	NGROK_FILTER_SPD_POINTS      = 15
 )
 
 var alienTypes = []AlienType{
@@ -155,6 +157,10 @@ func CreateChallengeService(logger *slog.Logger, transactions transactions.Chall
 }
 
 func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChallenge) NgrokChallengeScore {
+	// 1) Get their total aliens.
+	// 2) POST the aliens.
+	// 3) GET all aliens.
+	// 4) GET with filters.
 	panic("Not implemented.")
 }
 
@@ -178,10 +184,10 @@ func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) N
 		},
 
 		NgrokGetRequest{
-			Name:          "GET all aliens",
-			Points:        NGROK_GET_ALL_POINTS,
-			Path:          "/api/aliens",
-			ExpectedCount: len(aliens),
+			Name:           "GET all aliens",
+			Points:         NGROK_GET_ALL_POINTS,
+			Path:           "/api/aliens",
+			ExpectedAliens: aliens,
 		},
 	}
 
