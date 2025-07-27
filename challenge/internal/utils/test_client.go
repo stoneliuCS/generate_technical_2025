@@ -116,6 +116,13 @@ func (v TestVerify) AssertStatusCode(statusCode int, t *testing.T) TestVerify {
 	return v
 }
 
+func (v TestVerify) GetBody(target any, t *testing.T) {
+	defer v.res.Body.Close()
+
+	err := json.NewDecoder(v.res.Body).Decode(target)
+	require.NoError(t, err)
+}
+
 func (v TestVerify) AssertBody(expected any, t *testing.T) {
 	defer v.res.Body.Close()
 

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"generate_technical_challenge_2025/internal/utils"
 	"math/rand"
 	"slices"
 
@@ -209,12 +210,11 @@ const (
 
 // Creates a random alien invasion, with aliens ranging from 10 to 20 aliens.
 func GenerateAlienInvasion(rng *rand.Rand) []Alien {
-	numAliens := rng.Intn(UPPER_ALIEN_AMOUNT-LOWER_ALIEN_AMOUNT) + LOWER_ALIEN_AMOUNT
+	numAliens := utils.GenerateRandomNumWithinRange(rng, LOWER_ALIEN_AMOUNT, UPPER_ALIEN_AMOUNT)
 	aliens := []Alien{}
-
 	for range numAliens {
-		alienHPVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
-		alienAtkVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
+		alienHPVal := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
+		alienAtkVal := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
 		alien := CreateAlien(alienHPVal, alienAtkVal)
 		aliens = append(aliens, alien)
 	}

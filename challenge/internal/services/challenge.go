@@ -66,13 +66,15 @@ func (c ChallengeServiceImpl) GenerateUniqueFrontendChallenge(id uuid.UUID) []De
 func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) map[uuid.UUID]InvasionState {
 	rng := utils.CreateRNGFromHash(id)
 	maps := map[uuid.UUID]InvasionState{}
+	uuid.SetRand(rng)
 	for range NUM_WAVES {
 		aliens := GenerateAlienInvasion(rng)
 		hp := utils.GenerateRandomNumWithinRange(rng, LOWER_HP_BOUND, UPPER_HP_BOUND)
 		invasionState := CreateInvasionState(aliens, hp)
-		challengeUUID := uuid.NewSHA1(id, []byte(NAMESPACE))
+		challengeUUID := uuid.New()
 		maps[challengeUUID] = invasionState
 	}
+	uuid.SetRand(nil)
 	return maps
 }
 

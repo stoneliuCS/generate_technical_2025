@@ -7,6 +7,7 @@ import (
 	"generate_technical_challenge_2025/internal/services"
 	"generate_technical_challenge_2025/internal/utils"
 	"net/url"
+	"sort"
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
@@ -24,7 +25,12 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
 	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
-	states := lo.MapToSlice(waves, func(key uuid.UUID, val services.InvasionState) api.APIV1ChallengeBackendIDAliensGetOKItem {
+	keys := lo.Keys(waves)
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i].String() < keys[j].String()
+	})
+	states := lo.Map(keys, func(key uuid.UUID, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
+		val := waves[key]
 		alienMap := lo.Map(val.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
 			return api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem{Hp: alien.Hp, Atk: alien.Atk}
 		})
