@@ -102,14 +102,12 @@ func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) 
 		if currentState.IsOver() {
 			endingStates = append(endingStates, currentState)
 		} else {
+			// It is never ideal to recur on a node of which the modulo is strictly less than or equal to the ceiling of aliens.
 			if currentState.hpLeft%currentState.GetAliensLeft() > (currentState.GetAliensLeft()+1)/2 {
-				volleyState := currentState.AttackAliensModulo()
-				backtrack(volleyState.sortAliens().AliensAttack())
+				backtrack(currentState.AttackAliensModulo().sortAliens().AliensAttack())
 			}
-			focusedState := currentState.AttackHighestDamageAlien()
-			focusedVolleyState := currentState.AttackHighestDamagingHalf()
-			backtrack(focusedVolleyState.sortAliens().AliensAttack())
-			backtrack(focusedState.sortAliens().AliensAttack())
+			backtrack(currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack())
+			backtrack(currentState.AttackHighestDamageAlien().sortAliens().AliensAttack())
 		}
 	}
 	backtrack(initialState)
@@ -135,16 +133,13 @@ func (i InvasionState) GetTotalAlienAtkPower() int {
 
 // Returns the state of the invasion when the aliens attack
 func (i InvasionState) AliensAttack() InvasionState {
-	if len(i.aliensLeft) == 0 {
-		return i
-	}
 	combinedAttack := lo.Reduce(i.aliensLeft, func(dmg int, alien Alien, idx int) int {
 		return dmg + alien.Atk
 	}, 0)
 	return InvasionState{
 		aliensLeft: i.aliensLeft,
 		hpLeft:     i.hpLeft - combinedAttack,
-		commands:   append(slices.Clone(i.commands), "alienAttack"),
+		commands:   i.commands,
 	}
 }
 

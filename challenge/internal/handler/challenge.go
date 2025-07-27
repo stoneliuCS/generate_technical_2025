@@ -3,10 +3,12 @@ package handler
 import (
 	"context"
 	api "generate_technical_challenge_2025/internal/api"
+	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/services"
 	"generate_technical_challenge_2025/internal/utils"
 	"net/url"
 
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
 
@@ -22,6 +24,7 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
 	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
+	// Solve each wave
 	states := lo.Map(waves, func(state services.InvasionState, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
 		alienMap := lo.Map(state.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
 			return api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem{Hp: alien.Hp, Atk: alien.Atk}
@@ -30,6 +33,19 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 	})
 	result := api.APIV1ChallengeBackendIDAliensGetOKApplicationJSON(states)
 	return &result, nil
+}
+
+func (h Handler) saveAlienChallengeSolutions(memberID uuid.UUID, waves []services.InvasionState) error {
+	// Check if solution exists
+	sols := lo.Map(waves, func(s services.InvasionState, _ int) models.AlienChallengeSolution {
+		sol := h.challengeService.SolveAlienChallenge(s)
+		return *models.CreateAlienChallengeSolutionEntry(memberID, sol.GetNumberOfCommandsUsed(), sol.GetHpLeft(), sol.GetAliensLeft())
+	})
+	err := h.challengeService.SaveAlienChallengeAnswers(sols)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // APIV1ChallengeBackendIDAliensSubmitPost implements api.Handler.
