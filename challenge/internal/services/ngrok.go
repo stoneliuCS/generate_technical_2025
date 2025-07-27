@@ -217,7 +217,7 @@ func aliensEqual(a, b DetailedAlien) bool {
 		a.ProfileURL == b.ProfileURL
 }
 
-func generateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRequest {
+func GenerateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRequest {
 	requests := []NgrokRequest{}
 	// Filter by type:
 	randomType := alienTypes[rng.Intn(len(alienTypes))]
@@ -254,8 +254,8 @@ func generateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRe
 	requests = append(requests, request)
 
 	var queryParamsATK []string
-	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_gte=%s", 3))
-	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_lt=%s", 2))
+	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_gte=%d", 3))
+	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_lt=%d", 2))
 
 	// The expected aliens is an empty array--the filters contradict each other.
 	expectedAliensATK := []DetailedAlien{}
@@ -263,7 +263,7 @@ func generateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRe
 	request = NgrokGetRequest{
 		Name:           "Filter by atk contradict",
 		Points:         NGROK_FILTER_SPD_POINTS,
-		Path:           "/api/aliens?" + strings.Join(queryParamsSPD, "&"),
+		Path:           "/api/aliens?" + strings.Join(queryParamsATK, "&"),
 		ExpectedAliens: expectedAliensATK,
 	}
 

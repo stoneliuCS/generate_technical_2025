@@ -6,6 +6,7 @@ import (
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"time"
@@ -169,15 +170,8 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 }
 
 func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge {
-	// Use challenge ID as seed for deterministic but unique data.
 	rng := utils.CreateRNGFromHash(memberID)
-
-	count := utils.GenerateRandomNumWithinRange(rng, NUM_NGROK_ALIENS_LOWER_BOUND, NUM_NGROK_ALIENS_UPPER_BOUND)
-	aliens := []DetailedAlien{}
-	for alienIdx := range count {
-		alien := GenerateDetailedAlien(rng, memberID, alienIdx)
-		aliens = append(aliens, alien)
-	}
+	aliens := GenerateNgrokAliens(rng, memberID)
 
 	requests := []NgrokRequest{
 		NgrokPostRequest{
@@ -195,7 +189,19 @@ func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) N
 		},
 	}
 
-	requests = append(requests, generateRandomFilterTests(rng, aliens)...)
+	requests = append(requests, GenerateRandomFilterTests(rng, aliens)...)
 
 	return NgrokChallenge{Requests: requests}
+}
+
+func GenerateNgrokAliens(rng *rand.Rand, memberID uuid.UUID) []DetailedAlien {
+	// Use challenge ID as seed for deterministic but unique data.
+	count := utils.GenerateRandomNumWithinRange(rng, NUM_NGROK_ALIENS_LOWER_BOUND, NUM_NGROK_ALIENS_UPPER_BOUND)
+	aliens := []DetailedAlien{}
+	for alienIdx := range count {
+		alien := GenerateDetailedAlien(rng, memberID, alienIdx)
+		aliens = append(aliens, alien)
+	}
+
+	return aliens
 }
