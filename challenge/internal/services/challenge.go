@@ -10,6 +10,7 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	mapset "github.com/deckarep/golang-set/v2"
@@ -92,6 +93,7 @@ const (
 	NGROK_GET_ALL_POINTS         = 15
 	NGROK_FILTER_TYPE_POINTS     = 15
 	NGROK_FILTER_SPD_POINTS      = 15
+	VERBOSE                      = false
 )
 
 var alienTypes = []AlienType{
@@ -179,6 +181,10 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 		Timeout: 15 * time.Second,
 	}
 
+	totalPossiblePoints := lo.Reduce(requests.Requests, func(acc int, req NgrokRequest, index int) int {
+		return acc + req.GetTotalPossiblePoints()
+	}, 0)
+
 	totalScore := 0
 
 	var deleteRequest NgrokRequest
@@ -200,10 +206,14 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 	if deleteRequest != nil {
 		_, err := deleteRequest.Execute(client, baseURL)
 		if err != nil {
-			fmt.Printf("DELETE request failed: %s\n", err.Error())
+			if VERBOSE {
+				fmt.Printf("DELETE request failed: %s\n", err.Error())
+			}
 			// Don't fail grading if DELETE fails, because it might be the first run.
 		} else {
-			fmt.Println("DELETE request succeeded")
+			if VERBOSE {
+				fmt.Println("DELETE request succeeded")
+			}
 		}
 		time.Sleep(200 * time.Millisecond)
 	}
@@ -212,57 +222,87 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 	if postRequest != nil {
 		points, err := postRequest.Execute(client, baseURL)
 		if err != nil {
-			fmt.Printf("POST request failed: %s\n", err.Error())
+			if VERBOSE {
+				fmt.Printf("POST request failed: %s\n", err.Error())
+			}
 			return NgrokChallengeScore{
 				Valid:  false,
 				Reason: fmt.Sprintf("POST request failed - %s", err.Error()),
 			}
 		} else {
 			totalScore += points
-			fmt.Printf("POST request succeeded (+%d points)\n", points)
+			if VERBOSE {
+				fmt.Printf("POST request succeeded (+%d points out of %d total points)\n", points, postRequest.GetTotalPossiblePoints())
+			}
 		}
 		time.Sleep(500 * time.Millisecond)
 	}
 
 	// 3) Make GET requests.
 	for _, getRequest := range getRequests {
+		if VERBOSE {
+			fmt.Printf("Request: %s\n", getRequest.GetName())
+		}
 		points, err := getRequest.Execute(client, baseURL)
 		if err != nil {
-			fmt.Printf("GET request failed: %s\n", err.Error())
+			if VERBOSE {
+				fmt.Printf("GET request failed: %s\n", err.Error())
+			}
 		} else {
 			totalScore += points
-			fmt.Printf("GET request succeeded (+%d points)\n", points)
+			if VERBOSE {
+				fmt.Printf("GET request succeeded (+%d points out of %d total points)\n", points, getRequest.GetTotalPossiblePoints())
+			}
 		}
 		time.Sleep(100 * time.Millisecond)
 	}
 
 	return NgrokChallengeScore{
 		Valid: true,
-		Score: totalScore,
+		Score: totalPossiblePoints - totalScore,
 	}
 }
 
+// An NgrokChallenge consists of:
+//  1. a DELETE request that deletes all aliens in the candidate's DB.
+//  2. a POST request that creates a deterministic set of aliens in the candidate's DB.
+//  3. A GET request with no filters that retrieves all aliens from the candidate's DB.
+//  4. A GET request with randomized filters:
+//     A filter is one of:
+//     - type=
+//     - atk_lte=
+//     - atk_gte=
+//     - spd_lte=
+//     - spd_gte=
+//     - hp_lte=
+//     - hp_gte=
 func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge {
 	rng := utils.CreateRNGFromHash(memberID)
 	aliens := GenerateNgrokAliens(rng, memberID)
 
 	requests := []NgrokRequest{
+		NgrokDeleteRequest{
+			Name:   "POST all alien",
+			Points: 0,
+			Path:   "/api/aliens",
+		},
+
 		NgrokPostRequest{
 			Name:   "POST all alien",
 			Points: NGROK_POST_POINTS,
 			Path:   "/api/aliens",
-			Body:   aliens,
+			Body:   slices.Clone(aliens),
 		},
 
 		NgrokGetRequest{
 			Name:           "GET all aliens",
 			Points:         NGROK_GET_ALL_POINTS,
 			Path:           "/api/aliens",
-			ExpectedAliens: aliens,
+			ExpectedAliens: slices.Clone(aliens),
 		},
 	}
 
-	requests = append(requests, GenerateRandomFilterTests(rng, aliens)...)
+	requests = append(requests, GenerateRandomFilterTests(rng, slices.Clone(aliens))...)
 
 	return NgrokChallenge{Requests: requests}
 }
