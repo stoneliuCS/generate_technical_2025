@@ -11,6 +11,7 @@ const (
 	APIV1ChallengeFrontendIDAliensGetOperation       OperationName = "APIV1ChallengeFrontendIDAliensGet"
 	APIV1MemberGetOperation                          OperationName = "APIV1MemberGet"
 	APIV1MemberRegisterPostOperation                 OperationName = "APIV1MemberRegisterPost"
+	ChallengeGetOperation                            OperationName = "ChallengeGet"
 	GetOperation                                     OperationName = "Get"
 	HealthcheckGetOperation                          OperationName = "HealthcheckGet"
 )

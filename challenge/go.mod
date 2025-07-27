@@ -22,10 +22,21 @@ require (
 )
 
 require (
+	github.com/a-h/parse v0.0.0-20250122154542-74294addb73e // indirect
+	github.com/a-h/templ v0.3.920 // indirect
+	github.com/andybalholm/brotli v1.1.1 // indirect
+	github.com/cli/browser v1.3.0 // indirect
+	github.com/fsnotify/fsnotify v1.7.0 // indirect
+	github.com/natefinch/atomic v1.0.1 // indirect
+	golang.org/x/mod v0.24.0 // indirect
+	golang.org/x/tools v0.33.0 // indirect
+)
+
+require (
 	dario.cat/mergo v1.0.1 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
-	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
+	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/containerd/platforms v0.2.1 // indirect
 	github.com/cpuguy83/dockercfg v0.3.2 // indirect
@@ -92,3 +103,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+tool github.com/a-h/templ/cmd/templ

@@ -63,9 +63,8 @@ func TestAlienInvasionVolley(t *testing.T) {
 	}, 100)
 
 	assert.True(t, exampleAlienInvasion.GetAliensLeft() == 3)
-	actualAlienStateAfterVolley := exampleAlienInvasion.AttackAllAliens()
-	// The first alien must have died so it should be reflected in the final aliensLeft count
-	assert.True(t, actualAlienStateAfterVolley.GetAliensLeft() == 2)
+	actualAlienStateAfterVolley := exampleAlienInvasion.AttackAliensModulo()
+	assert.True(t, actualAlienStateAfterVolley.GetAliensLeft() == 3)
 	assert.True(t, !actualAlienStateAfterVolley.IsOver())
 }
 
@@ -113,6 +112,24 @@ func TestAlienInvasionFocusedVolley(t *testing.T) {
 	))
 }
 
+func TestAlienInvasionCeiling(t *testing.T) {
+	a1 := services.CreateAlien(2, 2)
+	a2 := services.CreateAlien(2, 2)
+	a3 := services.CreateAlien(2, 2)
+	a4 := services.CreateAlien(2, 3)
+	a5 := services.CreateAlien(2, 3)
+	exampleAlienInvasion := services.CreateInvasionState([]services.Alien{
+		a1,
+		a2,
+		a3,
+		a4,
+		a5,
+	}, 100)
+	actualAliensAfterFocusedVolley := exampleAlienInvasion.AttackHighestDamagingHalf()
+	// Should kill 3 aliens, 5 - 3 = 2 because 5/2 = 2.5 ceiling is 3.
+	assert.Equal(t, actualAliensAfterFocusedVolley.GetAliensLeft(), 2)
+}
+
 // BEGIN ALGORITHM TESTING
 
 func TestAlgorithmTimes(t *testing.T) {
@@ -120,7 +137,7 @@ func TestAlgorithmTimes(t *testing.T) {
 	done := make(chan bool)
 
 	go func() {
-		services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
+		services.RunAllPossibleInvasionStatesToCompletionGreedy(services.CreateInvasionState(sampleAlienInvasion, 100))
 		done <- true
 	}()
 
@@ -135,10 +152,32 @@ func TestAlgorithmTimes(t *testing.T) {
 	}
 }
 
-func TestAlgorithmFiltering(t *testing.T) {
+func TestAlgorithmCorrectness(t *testing.T) {
 	sampleAlienInvasion := services.GenerateAlienInvasion(RNG)
-	states := services.RunAllPossibleInvasionStatesToCompletion(services.CreateInvasionState(sampleAlienInvasion, 100))
-	filteredStates := services.FilterToFindTheMostOptimalInvasions(states)
-	assert.True(t, len(states) >= len(filteredStates))
-	assert.True(t, len(filteredStates) != 0)
+	sampleInvasionState := services.CreateInvasionState(sampleAlienInvasion, 100)
+	greedySol := services.RunAllPossibleInvasionStatesToCompletionGreedy(sampleInvasionState)
+	bruteforceSol := services.RunAllPossibleInvasionStatesToCompletion(sampleInvasionState)
+	// The greedy solution should always have the least number of aliens left over.
+	bruteForceBestSolByAliensLeft := lo.MinBy(bruteforceSol, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	greedySolByAliensLeft := lo.MinBy(greedySol, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	allSolutionsBruteForceWithMinimalAliensLeft := lo.Filter(bruteforceSol, func(state services.InvasionState, idx int) bool {
+		return state.GetAliensLeft() == bruteForceBestSolByAliensLeft.GetAliensLeft()
+	})
+	allSolutionsGreedyWithMinimalAliensLeft := lo.Filter(greedySol, func(state services.InvasionState, idx int) bool {
+		return state.GetAliensLeft() == greedySolByAliensLeft.GetAliensLeft()
+	})
+	bruteForceBestSolByHP := lo.MaxBy(allSolutionsBruteForceWithMinimalAliensLeft, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	greedyBruteForceBestSolByHP := lo.MaxBy(allSolutionsGreedyWithMinimalAliensLeft, func(s1 services.InvasionState, s2 services.InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	// Assert that the greedySol has the same minimal aliens left as the brute force.
+	assert.LessOrEqual(t, greedyBruteForceBestSolByHP.GetAliensLeft(), bruteForceBestSolByHP.GetAliensLeft())
+	// Assert that the greedySol has the same amount of hp as the brute force.
+	assert.GreaterOrEqual(t, greedyBruteForceBestSolByHP.GetHpLeft(), bruteForceBestSolByHP.GetHpLeft())
 }

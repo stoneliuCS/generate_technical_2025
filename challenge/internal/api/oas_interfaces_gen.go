@@ -21,6 +21,10 @@ type APIV1MemberRegisterPostRes interface {
 	aPIV1MemberRegisterPostRes()
 }
 
+type ChallengeGetRes interface {
+	challengeGetRes()
+}
+
 type GetRes interface {
 	getRes()
 }

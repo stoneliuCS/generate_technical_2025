@@ -12,22 +12,18 @@ import (
 )
 
 func encodeAPIV1ChallengeBackendIDAliensSubmitPostRequest(
-	req [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem,
+	req OptAPIV1ChallengeBackendIDAliensSubmitPostReq,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
+	if !req.Set {
+		// Keep request with empty body if value is not set.
+		return nil
+	}
 	e := new(jx.Encoder)
 	{
-		if req != nil {
-			e.ArrStart()
-			for _, elem := range req {
-				e.ArrStart()
-				for _, elem := range elem {
-					elem.Encode(e)
-				}
-				e.ArrEnd()
-			}
-			e.ArrEnd()
+		if req.Set {
+			req.Encode(e)
 		}
 	}
 	encoded := e.Bytes()

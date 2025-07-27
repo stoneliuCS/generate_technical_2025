@@ -5,6 +5,7 @@ import (
 	challenge "generate_technical_challenge_2025"
 	api "generate_technical_challenge_2025/internal/api"
 	"generate_technical_challenge_2025/internal/services"
+	"generate_technical_challenge_2025/internal/static"
 	"log/slog"
 	"strings"
 
@@ -16,6 +17,16 @@ type Handler struct {
 	memberService    services.MemberService
 	challengeService services.ChallengeService
 	logger           *slog.Logger // event logger
+}
+
+// ChallengeGet implements api.Handler.
+func (h Handler) ChallengeGet(ctx context.Context) (api.ChallengeGetRes, error) {
+	var buf strings.Builder
+	err := static.ChallengePage().Render(ctx, &buf)
+	if err != nil {
+		return &api.ChallengeGetInternalServerError{Message: "Internal Server Error"}, nil
+	}
+	return &api.ChallengeGetOK{Data: strings.NewReader(buf.String())}, nil
 }
 
 // Get implements api.Handler.

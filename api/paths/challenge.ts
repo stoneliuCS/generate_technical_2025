@@ -67,11 +67,17 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
         "400": Response.addDescription("Malformed Submission").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
+        "401": Response.addDescription(
+          "Invalid ID. Are you sure you are using the id that you got upon registration?",
+        ).addContents({
+          "application/json": MediaType.addSchema(ERROR),
+        }),
         "404": Response.addDescription("ID not found.").addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
-        "429": Response.addDescription("Too Many Requests - Rate limit exceeded")
-        .addContents({
+        "429": Response.addDescription(
+          "Too Many Requests - Rate limit exceeded",
+        ).addContents({
           "application/json": MediaType.addSchema(ERROR),
         }),
         "500": Response.addDescription("Internal Server Error").addContents({
@@ -83,7 +89,9 @@ export const SUBMIT_ENDPOINT = PathItem.addMethod({
 
 export const ALIEN = Object.addProperties({
   id: String.addDescription("ID of the alien.").addMaxLength(6).addMinLength(6),
-  firstName: String.addDescription("First name of the alien.").addExample("John"),
+  firstName: String.addDescription("First name of the alien.").addExample(
+    "John",
+  ),
   lastName: String.addDescription("Last name of the alien.").addExample("Doe"),
   type: String.addDescription("Rank of the alien.").addEnums([
     "Regular",
@@ -97,9 +105,11 @@ export const ALIEN = Object.addProperties({
     atk: Integer.addMinimum(1).addMaximum(3),
     hp: Integer.addMinimum(1).addMaximum(3),
     spd: Integer.addMinimum(1).addMaximum(3),
-  }).addDescription("Combat description of the alien.").addRequired(["atk", "hp", "spd"]),
+  })
+    .addDescription("Combat description of the alien.")
+    .addRequired(["atk", "hp", "spd"]),
 }).addRequired(["id", "firstName", "lastName", "type", "stats", "url"]);
-``
+``;
 // BEGIN ALIEN FRONTEND CHALLENGE ENDPOINT
 export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
   get: Operation.addParameters([
@@ -107,13 +117,17 @@ export const ALIEN_FRONTEND_CHALLENGE_ENDPOINT = PathItem.addMethod({
     Parameter.schema
       .addIn("query")
       .addName("limit")
-      .addDescription("Maximum number of aliens to return (you may receive fewer if fewer exist).")
-      .addSchema(Integer).addSchema(Integer.addMinimum(0).addDefault(10)),
+      .addDescription(
+        "Maximum number of aliens to return (you may receive fewer if fewer exist).",
+      )
+      .addSchema(Integer)
+      .addSchema(Integer.addMinimum(0).addDefault(10)),
     Parameter.schema
       .addIn("query")
       .addName("offset")
       .addDescription("Offset of the pagination.")
-      .addSchema(Integer).addSchema(Integer.addMinimum(0).addDefault(0)),
+      .addSchema(Integer)
+      .addSchema(Integer.addMinimum(0).addDefault(0)),
   ]).addResponses(
     Responses({
       "200": Response.addDescription(

@@ -22,3 +22,20 @@ export const API_DOCS_ENDPOINT = PathItem.addMethod({
     }),
   ),
 });
+
+export const SPEC_ENDPOINT = PathItem.addMethod({
+  get: Operation.addSummary("Challenge Specification").addResponses(
+    Responses({
+      "200": Response.addDescription(
+        "Challenge Specification Page.",
+      ).addContents({
+        "text/html": MediaType.addSchema(String),
+      }),
+      "500": Response.addDescription(
+        "Error cannot serve specification.",
+      ).addContents({
+        "application/json": MediaType.addSchema(ERROR),
+      }),
+    }),
+  ),
+});

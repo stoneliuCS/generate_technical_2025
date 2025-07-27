@@ -23,7 +23,7 @@ func (UnimplementedHandler) APIV1ChallengeBackendIDAliensGet(ctx context.Context
 // APIV1ChallengeBackendIDAliensSubmitPost implements POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 //
 // POST /api/v1/challenge/backend/{id}/aliens/submit
-func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (r APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
+func (UnimplementedHandler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (r APIV1ChallengeBackendIDAliensSubmitPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 
@@ -45,6 +45,15 @@ func (UnimplementedHandler) APIV1MemberGet(ctx context.Context, params APIV1Memb
 //
 // POST /api/v1/member/register
 func (UnimplementedHandler) APIV1MemberRegisterPost(ctx context.Context, req OptAPIV1MemberRegisterPostReq) (r APIV1MemberRegisterPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ChallengeGet implements GET /challenge operation.
+//
+// Challenge Specification.
+//
+// GET /challenge
+func (UnimplementedHandler) ChallengeGet(ctx context.Context) (r ChallengeGetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

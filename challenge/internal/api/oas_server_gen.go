@@ -15,7 +15,7 @@ type Handler interface {
 	// APIV1ChallengeBackendIDAliensSubmitPost implements POST /api/v1/challenge/backend/{id}/aliens/submit operation.
 	//
 	// POST /api/v1/challenge/backend/{id}/aliens/submit
-	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req [][]APIV1ChallengeBackendIDAliensSubmitPostReqItemItem, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
+	APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params APIV1ChallengeBackendIDAliensSubmitPostParams) (APIV1ChallengeBackendIDAliensSubmitPostRes, error)
 	// APIV1ChallengeFrontendIDAliensGet implements GET /api/v1/challenge/frontend/{id}/aliens operation.
 	//
 	// GET /api/v1/challenge/frontend/{id}/aliens
@@ -28,6 +28,12 @@ type Handler interface {
 	//
 	// POST /api/v1/member/register
 	APIV1MemberRegisterPost(ctx context.Context, req OptAPIV1MemberRegisterPostReq) (APIV1MemberRegisterPostRes, error)
+	// ChallengeGet implements GET /challenge operation.
+	//
+	// Challenge Specification.
+	//
+	// GET /challenge
+	ChallengeGet(ctx context.Context) (ChallengeGetRes, error)
 	// Get implements GET / operation.
 	//
 	// API documentation.

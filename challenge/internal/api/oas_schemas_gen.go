@@ -283,35 +283,85 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) SetReason(val OptString) {
 	s.Reason = val
 }
 
-type APIV1ChallengeBackendIDAliensSubmitPostReqItemItem string
+type APIV1ChallengeBackendIDAliensSubmitPostReq struct {
+	State APIV1ChallengeBackendIDAliensSubmitPostReqState `json:"state"`
+}
+
+// GetState returns the value of State.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetState() APIV1ChallengeBackendIDAliensSubmitPostReqState {
+	return s.State
+}
+
+// SetState sets the value of State.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetState(val APIV1ChallengeBackendIDAliensSubmitPostReqState) {
+	s.State = val
+}
+
+type APIV1ChallengeBackendIDAliensSubmitPostReqState struct {
+	RemainingHP     int                                                                 `json:"remainingHP"`
+	RemainingAliens int                                                                 `json:"remainingAliens"`
+	Commands        [][]APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem `json:"commands"`
+}
+
+// GetRemainingHP returns the value of RemainingHP.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) GetRemainingHP() int {
+	return s.RemainingHP
+}
+
+// GetRemainingAliens returns the value of RemainingAliens.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) GetRemainingAliens() int {
+	return s.RemainingAliens
+}
+
+// GetCommands returns the value of Commands.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) GetCommands() [][]APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem {
+	return s.Commands
+}
+
+// SetRemainingHP sets the value of RemainingHP.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) SetRemainingHP(val int) {
+	s.RemainingHP = val
+}
+
+// SetRemainingAliens sets the value of RemainingAliens.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) SetRemainingAliens(val int) {
+	s.RemainingAliens = val
+}
+
+// SetCommands sets the value of Commands.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqState) SetCommands(val [][]APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem) {
+	s.Commands = val
+}
+
+type APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem string
 
 const (
-	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley        APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "volley"
-	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack   APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "alienAttack"
-	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot   APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "focusedShot"
-	APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley APIV1ChallengeBackendIDAliensSubmitPostReqItemItem = "focusedVolley"
+	APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemVolley        APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem = "volley"
+	APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemAlienAttack   APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem = "alienAttack"
+	APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedShot   APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem = "focusedShot"
+	APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedVolley APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem = "focusedVolley"
 )
 
-// AllValues returns all APIV1ChallengeBackendIDAliensSubmitPostReqItemItem values.
-func (APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) AllValues() []APIV1ChallengeBackendIDAliensSubmitPostReqItemItem {
-	return []APIV1ChallengeBackendIDAliensSubmitPostReqItemItem{
-		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley,
-		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack,
-		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot,
-		APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley,
+// AllValues returns all APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem values.
+func (APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem) AllValues() []APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem {
+	return []APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem{
+		APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemVolley,
+		APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemAlienAttack,
+		APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedShot,
+		APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedVolley,
 	}
 }
 
 // MarshalText implements encoding.TextMarshaler.
-func (s APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) MarshalText() ([]byte, error) {
+func (s APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem) MarshalText() ([]byte, error) {
 	switch s {
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemVolley:
 		return []byte(s), nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemAlienAttack:
 		return []byte(s), nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedShot:
 		return []byte(s), nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley:
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedVolley:
 		return []byte(s), nil
 	default:
 		return nil, errors.Errorf("invalid value: %q", s)
@@ -319,19 +369,19 @@ func (s APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) MarshalText() ([]byt
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler.
-func (s *APIV1ChallengeBackendIDAliensSubmitPostReqItemItem) UnmarshalText(data []byte) error {
-	switch APIV1ChallengeBackendIDAliensSubmitPostReqItemItem(data) {
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemVolley
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem) UnmarshalText(data []byte) error {
+	switch APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItem(data) {
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemVolley
 		return nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemAlienAttack
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemAlienAttack:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemAlienAttack
 		return nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedShot
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedShot:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedShot
 		return nil
-	case APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley:
-		*s = APIV1ChallengeBackendIDAliensSubmitPostReqItemItemFocusedVolley
+	case APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedVolley:
+		*s = APIV1ChallengeBackendIDAliensSubmitPostReqStateCommandsItemItemFocusedVolley
 		return nil
 	default:
 		return errors.Errorf("invalid value: %q", data)
@@ -353,6 +403,23 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) SetMessage(val 
 }
 
 func (*APIV1ChallengeBackendIDAliensSubmitPostTooManyRequests) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
+}
+
+type APIV1ChallengeBackendIDAliensSubmitPostUnauthorized struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*APIV1ChallengeBackendIDAliensSubmitPostUnauthorized) aPIV1ChallengeBackendIDAliensSubmitPostRes() {
 }
 
 type APIV1ChallengeFrontendIDAliensGetBadRequest struct {
@@ -725,6 +792,38 @@ func (s *APIV1MemberRegisterPostReq) SetNuid(val string) {
 	s.Nuid = val
 }
 
+type ChallengeGetInternalServerError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns the value of Message.
+func (s *ChallengeGetInternalServerError) GetMessage() string {
+	return s.Message
+}
+
+// SetMessage sets the value of Message.
+func (s *ChallengeGetInternalServerError) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*ChallengeGetInternalServerError) challengeGetRes() {}
+
+type ChallengeGetOK struct {
+	Data io.Reader
+}
+
+// Read reads data from the Data reader.
+//
+// Kept to satisfy the io.Reader interface.
+func (s ChallengeGetOK) Read(p []byte) (n int, err error) {
+	if s.Data == nil {
+		return 0, io.EOF
+	}
+	return s.Data.Read(p)
+}
+
+func (*ChallengeGetOK) challengeGetRes() {}
+
 type GetInternalServerError struct {
 	Message string `json:"message"`
 }
@@ -803,6 +902,52 @@ func (s *HealthcheckGetOKMessage) UnmarshalText(data []byte) error {
 	default:
 		return errors.Errorf("invalid value: %q", data)
 	}
+}
+
+// NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq returns new OptAPIV1ChallengeBackendIDAliensSubmitPostReq with value set to v.
+func NewOptAPIV1ChallengeBackendIDAliensSubmitPostReq(v APIV1ChallengeBackendIDAliensSubmitPostReq) OptAPIV1ChallengeBackendIDAliensSubmitPostReq {
+	return OptAPIV1ChallengeBackendIDAliensSubmitPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptAPIV1ChallengeBackendIDAliensSubmitPostReq is optional APIV1ChallengeBackendIDAliensSubmitPostReq.
+type OptAPIV1ChallengeBackendIDAliensSubmitPostReq struct {
+	Value APIV1ChallengeBackendIDAliensSubmitPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptAPIV1ChallengeBackendIDAliensSubmitPostReq was set.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Reset() {
+	var v APIV1ChallengeBackendIDAliensSubmitPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptAPIV1ChallengeBackendIDAliensSubmitPostReq) SetTo(v APIV1ChallengeBackendIDAliensSubmitPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Get() (v APIV1ChallengeBackendIDAliensSubmitPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptAPIV1ChallengeBackendIDAliensSubmitPostReq) Or(d APIV1ChallengeBackendIDAliensSubmitPostReq) APIV1ChallengeBackendIDAliensSubmitPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
 }
 
 // NewOptAPIV1MemberRegisterPostReq returns new OptAPIV1MemberRegisterPostReq with value set to v.
