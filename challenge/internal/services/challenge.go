@@ -11,7 +11,7 @@ import (
 )
 
 type ChallengeService interface {
-	GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState
+	GenerateUniqueAlienChallenge(id uuid.UUID) map[uuid.UUID]InvasionState
 	SolveAlienChallenge(state InvasionState) InvasionState
 	GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien
 	SaveAlienChallengeAnswers(sols []models.AlienChallengeSolution) error
@@ -36,10 +36,10 @@ func (c ChallengeServiceImpl) SaveAlienChallengeAnswers(sols []models.AlienChall
 const (
 	LOWER_HP_BOUND              = 50
 	UPPER_HP_BOUND              = 100
-	NUM_WAVES_LOWER_BOUND       = 5
-	NUM_WAVES_UPPER_BOUND       = 10
+	NUM_WAVES                   = 10
 	LOWER_DETAILED_ALIEN_AMOUNT = 10
 	UPPER_DETAILED_ALIEN_AMOUNT = 100
+	NAMESPACE                   = "ALIEN"
 )
 
 var alienTypes = []AlienType{
@@ -63,17 +63,17 @@ func (c ChallengeServiceImpl) GenerateUniqueFrontendChallenge(id uuid.UUID) []De
 }
 
 // GenerateUniqueAlienChallenge implements ChallengeService.
-func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) []InvasionState {
+func (c ChallengeServiceImpl) GenerateUniqueAlienChallenge(id uuid.UUID) map[uuid.UUID]InvasionState {
 	rng := utils.CreateRNGFromHash(id)
-	numWaves := utils.GenerateRandomNumWithinRange(rng, NUM_WAVES_LOWER_BOUND, NUM_WAVES_UPPER_BOUND)
-	waves := []InvasionState{}
-	for range numWaves {
+	maps := map[uuid.UUID]InvasionState{}
+	for range NUM_WAVES {
 		aliens := GenerateAlienInvasion(rng)
 		hp := utils.GenerateRandomNumWithinRange(rng, LOWER_HP_BOUND, UPPER_HP_BOUND)
 		invasionState := CreateInvasionState(aliens, hp)
-		waves = append(waves, invasionState)
+		challengeUUID := uuid.NewSHA1(id, []byte(NAMESPACE))
+		maps[challengeUUID] = invasionState
 	}
-	return waves
+	return maps
 }
 
 // SolveChallenge implements ChallengeService.

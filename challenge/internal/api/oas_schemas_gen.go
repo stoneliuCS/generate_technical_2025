@@ -47,8 +47,15 @@ type APIV1ChallengeBackendIDAliensGetOKApplicationJSON []APIV1ChallengeBackendID
 func (*APIV1ChallengeBackendIDAliensGetOKApplicationJSON) aPIV1ChallengeBackendIDAliensGetRes() {}
 
 type APIV1ChallengeBackendIDAliensGetOKItem struct {
-	Aliens []APIV1ChallengeBackendIDAliensGetOKItemAliensItem `json:"aliens"`
-	Hp     int                                                `json:"hp"`
+	// Unique identifier for the challenge.
+	ChallengeID uuid.UUID                                          `json:"challengeID"`
+	Aliens      []APIV1ChallengeBackendIDAliensGetOKItemAliensItem `json:"aliens"`
+	Hp          int                                                `json:"hp"`
+}
+
+// GetChallengeID returns the value of ChallengeID.
+func (s *APIV1ChallengeBackendIDAliensGetOKItem) GetChallengeID() uuid.UUID {
+	return s.ChallengeID
 }
 
 // GetAliens returns the value of Aliens.
@@ -59,6 +66,11 @@ func (s *APIV1ChallengeBackendIDAliensGetOKItem) GetAliens() []APIV1ChallengeBac
 // GetHp returns the value of Hp.
 func (s *APIV1ChallengeBackendIDAliensGetOKItem) GetHp() int {
 	return s.Hp
+}
+
+// SetChallengeID sets the value of ChallengeID.
+func (s *APIV1ChallengeBackendIDAliensGetOKItem) SetChallengeID(val uuid.UUID) {
+	s.ChallengeID = val
 }
 
 // SetAliens sets the value of Aliens.
@@ -284,12 +296,24 @@ func (s *APIV1ChallengeBackendIDAliensSubmitPostOK1) SetReason(val OptString) {
 }
 
 type APIV1ChallengeBackendIDAliensSubmitPostReq struct {
-	State APIV1ChallengeBackendIDAliensSubmitPostReqState `json:"state"`
+	// Unique Identifier for the challenge.
+	ChallengeID OptUUID                                         `json:"challengeID"`
+	State       APIV1ChallengeBackendIDAliensSubmitPostReqState `json:"state"`
+}
+
+// GetChallengeID returns the value of ChallengeID.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetChallengeID() OptUUID {
+	return s.ChallengeID
 }
 
 // GetState returns the value of State.
 func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) GetState() APIV1ChallengeBackendIDAliensSubmitPostReqState {
 	return s.State
+}
+
+// SetChallengeID sets the value of ChallengeID.
+func (s *APIV1ChallengeBackendIDAliensSubmitPostReq) SetChallengeID(val OptUUID) {
+	s.ChallengeID = val
 }
 
 // SetState sets the value of State.
@@ -1128,6 +1152,52 @@ func (o OptString) Get() (v string, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptString) Or(d string) string {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptUUID returns new OptUUID with value set to v.
+func NewOptUUID(v uuid.UUID) OptUUID {
+	return OptUUID{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptUUID is optional uuid.UUID.
+type OptUUID struct {
+	Value uuid.UUID
+	Set   bool
+}
+
+// IsSet returns true if OptUUID was set.
+func (o OptUUID) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptUUID) Reset() {
+	var v uuid.UUID
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptUUID) SetTo(v uuid.UUID) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptUUID) Get() (v uuid.UUID, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptUUID) Or(d uuid.UUID) uuid.UUID {
 	if v, ok := o.Get(); ok {
 		return v
 	}

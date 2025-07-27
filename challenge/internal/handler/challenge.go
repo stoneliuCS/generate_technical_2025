@@ -24,12 +24,11 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
 	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
-	// Solve each wave
-	states := lo.Map(waves, func(state services.InvasionState, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
-		alienMap := lo.Map(state.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
+	states := lo.MapToSlice(waves, func(key uuid.UUID, val services.InvasionState) api.APIV1ChallengeBackendIDAliensGetOKItem {
+		alienMap := lo.Map(val.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
 			return api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem{Hp: alien.Hp, Atk: alien.Atk}
 		})
-		return api.APIV1ChallengeBackendIDAliensGetOKItem{Aliens: alienMap, Hp: state.GetHpLeft()}
+		return api.APIV1ChallengeBackendIDAliensGetOKItem{ChallengeID: key, Aliens: alienMap, Hp: val.GetHpLeft()}
 	})
 	result := api.APIV1ChallengeBackendIDAliensGetOKApplicationJSON(states)
 	return &result, nil
