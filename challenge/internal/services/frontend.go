@@ -20,13 +20,13 @@ const (
 )
 
 type DetailedAlien struct {
-	ID         string
-	BaseAlien  Alien
-	FirstName  string
-	LastName   string
-	Type       AlienType
-	Spd        int
-	ProfileURL string
+	ID         string    `json:"id"`
+	BaseAlien  Alien     `json:"base_alien"`
+	FirstName  string    `json:"first_name"`
+	LastName   string    `json:"last_name"`
+	Type       AlienType `json:"type"`
+	Spd        int       `json:"spd"`
+	ProfileURL string    `json:"profile_url"`
 }
 
 var alienProfileURLs = map[AlienType]string{

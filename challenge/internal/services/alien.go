@@ -207,7 +207,7 @@ func (i InvasionState) AttackHighestDamagingHalf() InvasionState {
 const (
 	UPPER_ALIEN_AMOUNT     = 20
 	LOWER_ALIEN_AMOUNT     = 10
-	ALIEN_ATK_HP_SPD_UPPER = 4
+	ALIEN_ATK_HP_SPD_UPPER = 4 // [1, 4)
 	ALIEN_ATK_HP_SPD_LOWER = 1
 )
 
@@ -226,8 +226,8 @@ func GenerateAlienInvasion(rng *rand.Rand) []Alien {
 }
 
 type Alien struct {
-	Hp  int
-	Atk int
+	Hp  int `json:"hp"`
+	Atk int `json:"atk"`
 }
 
 // Creates an Alien with HP and ATK ranging from the upper and lower bounds
