@@ -25,6 +25,11 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
 	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
+	saveErr := h.saveAlienChallengeSolutions(params.ID, waves)
+	if saveErr != nil {
+		return &api.APIV1ChallengeBackendIDAliensGetInternalServerError{Message: "Problem saving alien challenge solution."}, nil
+	}
+	// Sort the keys and index through so that the users get the same order.
 	keys := lo.Keys(waves)
 	sort.Slice(keys, func(i, j int) bool {
 		return keys[i].String() < keys[j].String()
@@ -40,11 +45,10 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 	return &result, nil
 }
 
-func (h Handler) saveAlienChallengeSolutions(memberID uuid.UUID, waves []services.InvasionState) error {
-	// Check if solution exists
-	sols := lo.Map(waves, func(s services.InvasionState, _ int) models.AlienChallengeSolution {
-		sol := h.challengeService.SolveAlienChallenge(s)
-		return *models.CreateAlienChallengeSolutionEntry(memberID, sol.GetNumberOfCommandsUsed(), sol.GetHpLeft(), sol.GetAliensLeft())
+func (h Handler) saveAlienChallengeSolutions(memberID uuid.UUID, waves map[uuid.UUID]services.InvasionState) error {
+	sols := lo.MapToSlice(waves, func(key uuid.UUID, val services.InvasionState) models.AlienChallengeSolution {
+		sol := h.challengeService.SolveAlienChallenge(val)
+		return *models.CreateAlienChallengeSolutionEntry(key, memberID, sol.GetNumberOfCommandsUsed(), sol.GetHpLeft(), sol.GetAliensLeft())
 	})
 	err := h.challengeService.SaveAlienChallengeAnswers(sols)
 	if err != nil {

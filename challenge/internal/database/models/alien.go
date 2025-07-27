@@ -7,7 +7,7 @@ import (
 )
 
 type AlienChallengeSolution struct {
-	ID                uuid.UUID `gorm:"primaryKey"`
+	ID                uuid.UUID `gorm:"not null;index"`
 	MemberID          uuid.UUID `gorm:"not null;index"`
 	IdealCommandsUsed int
 	IdealHpRemaining  int
@@ -17,9 +17,9 @@ type AlienChallengeSolution struct {
 	UpdatedAt time.Time
 }
 
-func CreateAlienChallengeSolutionEntry(memberID uuid.UUID, commandsUsed int, hpRemaining int, aliensLeft int) *AlienChallengeSolution {
+func CreateAlienChallengeSolutionEntry(challengeID uuid.UUID, memberID uuid.UUID, commandsUsed int, hpRemaining int, aliensLeft int) *AlienChallengeSolution {
 	sol := &AlienChallengeSolution{}
-	sol.ID = uuid.New()
+	sol.ID = challengeID
 	sol.MemberID = memberID
 	sol.IdealCommandsUsed = commandsUsed
 	sol.IdealHpRemaining = hpRemaining

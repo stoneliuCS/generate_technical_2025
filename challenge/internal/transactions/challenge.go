@@ -6,13 +6,14 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 const BATCH_SIZE = 20
 
 type ChallengeTransactions interface {
 	SaveAlienChallengeSolutionsForMember(sols []models.AlienChallengeSolution) error
-	CheckIfMemberHasSolutions(memberID uuid.UUID, challengeID uuid.UUID) (bool, error)
+	CheckIfMemberHasSolution(memberID uuid.UUID, challengeID uuid.UUID) (bool, error)
 }
 
 type ChallengeTransactionsImpl struct {
@@ -21,13 +22,13 @@ type ChallengeTransactionsImpl struct {
 }
 
 // CheckIfMemberHasSolutions implements ChallengeTransactions.
-func (c ChallengeTransactionsImpl) CheckIfMemberHasSolutions(memberID uuid.UUID, challengeID uuid.UUID) (bool, error) {
+func (c ChallengeTransactionsImpl) CheckIfMemberHasSolution(memberID uuid.UUID, challengeID uuid.UUID) (bool, error) {
 	panic("unimplemented")
 }
 
 // SaveAlienChallengeSolutionsForMember implements ChallengeTransactions.
 func (c ChallengeTransactionsImpl) SaveAlienChallengeSolutionsForMember(sols []models.AlienChallengeSolution) error {
-	res := c.db.CreateInBatches(sols, BATCH_SIZE)
+	res := c.db.Clauses(clause.OnConflict{UpdateAll: true}).CreateInBatches(sols, BATCH_SIZE)
 	if res.Error != nil {
 		return res.Error
 	} else {
