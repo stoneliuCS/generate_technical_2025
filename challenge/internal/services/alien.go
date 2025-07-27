@@ -93,23 +93,15 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 	backtrack := func(currentState InvasionState) {}
 
 	backtrack = func(currentState InvasionState) {
-		volleyState := currentState.AttackAliensModulo().sortAliens().AliensAttack()
-		focusedState := currentState.AttackHighestDamageAlien().sortAliens().AliensAttack()
-		focusedVolleyState := currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack()
-		if !volleyState.IsOver() {
+		if currentState.IsOver() {
+			endingStates = append(endingStates, currentState)
+		} else {
+			volleyState := currentState.AttackAliensModulo().sortAliens().AliensAttack()
+			focusedState := currentState.AttackHighestDamageAlien().sortAliens().AliensAttack()
+			focusedVolleyState := currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack()
 			backtrack(volleyState)
-		} else {
-			endingStates = append(endingStates, volleyState)
-		}
-		if !focusedState.IsOver() {
 			backtrack(focusedState)
-		} else {
-			endingStates = append(endingStates, focusedState)
-		}
-		if !focusedVolleyState.IsOver() {
 			backtrack(focusedVolleyState)
-		} else {
-			endingStates = append(endingStates, focusedVolleyState)
 		}
 	}
 
