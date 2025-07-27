@@ -9,7 +9,8 @@ import (
 )
 
 func TestGenerateNgrokAliens(t *testing.T) {
-	aliens := services.GenerateNgrokAliens(RNG, UUID)
+	firstRNG := utils.CreateRNGFromHash(UUID)
+	aliens := services.GenerateNgrokAliens(firstRNG, UUID)
 	assert.True(t, len(aliens) <= services.NUM_NGROK_ALIENS_UPPER_BOUND)
 	assert.True(t, len(aliens) >= services.NUM_NGROK_ALIENS_LOWER_BOUND)
 
