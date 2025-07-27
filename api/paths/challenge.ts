@@ -45,10 +45,11 @@ export const ALIEN_CHALLENGE_ENDPOINT = PathItem.addMethod({
   ),
 });
 
-export const SUBMIT_RESPONSE = OneOf(
-  Object.addProperties({ valid: Boolean, score: Integer }),
-  Object.addProperties({ valid: Boolean, reason: String }),
-);
+export const SUBMIT_RESPONSE = Object.addProperties({
+  valid: Boolean,
+  score: Integer,
+  message: String,
+}).addRequired(["valid", "message"]);
 
 export const SUBMIT_ENDPOINT = PathItem.addMethod({
   post: Operation.addParameters([ID_PARAMETER])

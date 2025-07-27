@@ -15,13 +15,13 @@ export const ALIEN_INVASION = Array.addItems(
   }).addRequired(["aliens", "hp", "challengeID"]),
 );
 
-export const ALIEN_INVASION_ANSWER = Object.addProperties({
-  challengeID: UUID.addDescription("Unique Identifier for the challenge."),
-  state: Object.addProperties({
-    remainingHP: Integer,
-    remainingAliens: Integer,
-    commands: Array.addItems(
-      Array.addItems(
+export const ALIEN_INVASION_ANSWER = Array.addItems(
+  Object.addProperties({
+    challengeID: UUID.addDescription("Unique Identifier for the challenge."),
+    state: Object.addProperties({
+      remainingHP: Integer,
+      remainingAliens: Integer,
+      commands: Array.addItems(
         String.addEnums([
           "volley",
           "alienAttack",
@@ -29,6 +29,6 @@ export const ALIEN_INVASION_ANSWER = Object.addProperties({
           "focusedVolley",
         ]),
       ),
-    ),
-  }).addRequired(["remainingHP", "remainingAliens", "commands"]),
-}).addRequired(["state"]);
+    }).addRequired(["remainingHP", "remainingAliens", "commands"]),
+  }).addRequired(["state"]),
+);

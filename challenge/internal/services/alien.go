@@ -8,6 +8,12 @@ import (
 	"github.com/samber/lo"
 )
 
+const (
+	VOLLEY         = "volley"
+	FOCUSED_VOLLEY = "focusedVolley"
+	FOCUSED_SHOT   = "focusedShot"
+)
+
 // Represents the state of the invasion
 type InvasionState struct {
 	aliensLeft []Alien
@@ -40,6 +46,22 @@ func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 		hpLeft:     startingHp,
 		commands:   []string{},
 	}
+}
+
+func RunCommandsToCompletion(startingState InvasionState, commands []string) InvasionState {
+	state := startingState
+	mapFunc := func(s InvasionState, command string) InvasionState {
+		mappings := map[string]func() InvasionState{
+			VOLLEY:         s.AttackAliensModulo,
+			FOCUSED_VOLLEY: s.AttackHighestDamagingHalf,
+			FOCUSED_SHOT:   s.AttackHighestDamageAlien,
+		}
+		return mappings[command]().sortAliens().AliensAttack()
+	}
+	for _, command := range commands {
+		state = mapFunc(state, command)
+	}
+	return state
 }
 
 func (i InvasionState) GetNumberOfCommandsUsed() int {
@@ -93,6 +115,27 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 
 	backtrack(initialState)
 	return endingStates
+}
+
+func OracleSolution(initalState InvasionState) InvasionState {
+	finalStates := RunAllPossibleInvasionStatesToCompletionGreedy(initalState)
+	// Get the states with the smallest aliens left
+	smallestAliensLeft := lo.MinBy(finalStates, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	smallestAlienStatesLeft := lo.Filter(finalStates, func(state InvasionState, idx int) bool {
+		return state.GetAliensLeft() == smallestAliensLeft.GetAliensLeft()
+	})
+	// Get the states with the largest HP left
+	largestHPLeft := lo.MaxBy(smallestAlienStatesLeft, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	largestHPStatesLeft := lo.Filter(smallestAlienStatesLeft, func(state InvasionState, idx int) bool {
+		return state.GetHpLeft() == largestHPLeft.GetHpLeft()
+	})
+	return lo.MinBy(largestHPStatesLeft, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetNumberOfCommandsUsed() < s2.GetNumberOfCommandsUsed()
+	})
 }
 
 func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) []InvasionState {
@@ -161,7 +204,7 @@ func (i InvasionState) AttackAliensModulo() InvasionState {
 	return InvasionState{
 		aliensLeft: append(filteredAliens, restOfAliens...),
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "volley"),
+		commands:   append(slices.Clone(i.commands), VOLLEY),
 	}
 }
 
@@ -171,7 +214,7 @@ func (i InvasionState) AttackHighestDamageAlien() InvasionState {
 	return InvasionState{
 		aliensLeft: i.aliensLeft[1:],
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "focusedShot"),
+		commands:   append(slices.Clone(i.commands), FOCUSED_SHOT),
 	}
 }
 
@@ -192,7 +235,7 @@ func (i InvasionState) AttackHighestDamagingHalf() InvasionState {
 	return InvasionState{
 		aliensLeft: aliensLeft,
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "focusedVolley"),
+		commands:   append(slices.Clone(i.commands), FOCUSED_VOLLEY),
 	}
 }
 

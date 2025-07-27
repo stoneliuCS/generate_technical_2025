@@ -5,17 +5,29 @@ import (
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
+	"math"
 
+	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
 
 type ChallengeService interface {
 	GenerateUniqueAlienChallenge(id uuid.UUID) map[uuid.UUID]InvasionState
-	SolveAlienChallenge(state InvasionState) InvasionState
 	GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien
-	SaveAlienChallengeAnswers(sols []models.AlienChallengeSolution) error
-	CheckIfMemberHasAlienChallengeSolved(memberID uuid.UUID, challengeID uuid.UUID) (bool, error)
+	ScoreMemberSubmission(memberID uuid.UUID, submission map[uuid.UUID]UserChallengeSubmission) OracleAnswer
+}
+
+type UserChallengeSubmission struct {
+	Hp         int
+	Commands   []string
+	AliensLeft int
+}
+
+type OracleAnswer struct {
+	Score   int
+	Message string
+	Valid   bool
 }
 
 type ChallengeServiceImpl struct {
@@ -23,9 +35,41 @@ type ChallengeServiceImpl struct {
 	transactions transactions.ChallengeTransactions
 }
 
-// CheckIfMemberHasAlienChallengeSolved implements ChallengeService.
-func (c ChallengeServiceImpl) CheckIfMemberHasAlienChallengeSolved(memberID uuid.UUID, challengeID uuid.UUID) (bool, error) {
-	panic("unimplemented")
+// ScoreMemberSubmission implements ChallengeService.
+func (c ChallengeServiceImpl) ScoreMemberSubmission(memberID uuid.UUID, submission map[uuid.UUID]UserChallengeSubmission) OracleAnswer {
+	challenges := c.GenerateUniqueAlienChallenge(memberID)
+	// First check is that keys match.
+	oracleChallengeKeys := mapset.NewSet(lo.Keys(challenges)...)
+	memberChallengeKeys := mapset.NewSet(lo.Keys(submission)...)
+	if !oracleChallengeKeys.Equal(memberChallengeKeys) {
+		return OracleAnswer{Message: "Challenge IDs do not match.", Valid: false}
+	}
+	aggregatedAnswer := 0
+	// If they do match, now run each simulation and check to see if it agrees with the oracles solution.
+	for challengeID, submission := range submission {
+		// Next check if the that each string in the commands field must match the commands in the spec.
+		invalidCommands := lo.Filter(submission.Commands, func(command string, _ int) bool {
+			return command != VOLLEY && command != FOCUSED_SHOT && command != FOCUSED_VOLLEY
+		})
+		if len(invalidCommands) > 0 {
+			return OracleAnswer{Message: "Invalid commands detected for this challenge id: " + challengeID.String(), Valid: false}
+		}
+		state := challenges[challengeID]
+		finalUserState := RunCommandsToCompletion(state, submission.Commands)
+		// Check to see if the final HP and final remaining aliens match
+		if finalUserState.GetAliensLeft() != submission.AliensLeft || finalUserState.GetHpLeft() != submission.Hp || finalUserState.GetNumberOfCommandsUsed() != len(submission.Commands) {
+			return OracleAnswer{Message: "Submission HP, aliens, or commands left do not match for this challenge id: " + challengeID.String(), Valid: false}
+		}
+		// Run oracles algorithm
+		finalOracleState := OracleSolution(state)
+		// Take the absolute difference between oracle solution user solution
+		//
+		hpScore := int(math.Abs(float64(finalOracleState.GetHpLeft()) - float64(finalUserState.GetHpLeft())))
+		alienScore := int(math.Abs(float64(finalOracleState.GetAliensLeft()) - float64(finalUserState.GetAliensLeft())))
+		commandScore := int(math.Abs(float64(finalOracleState.GetNumberOfCommandsUsed()) - float64(finalUserState.GetNumberOfCommandsUsed())))
+		aggregatedAnswer += hpScore + alienScore + commandScore
+	}
+	return OracleAnswer{Message: "Submission successfully recorded.", Score: aggregatedAnswer, Valid: true}
 }
 
 // SaveAlienChallengeAnswers implements ChallengeService.
@@ -39,7 +83,6 @@ const (
 	NUM_WAVES                   = 10
 	LOWER_DETAILED_ALIEN_AMOUNT = 10
 	UPPER_DETAILED_ALIEN_AMOUNT = 100
-	NAMESPACE                   = "ALIEN"
 )
 
 var alienTypes = []AlienType{
