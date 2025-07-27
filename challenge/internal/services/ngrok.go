@@ -23,6 +23,7 @@ type NgrokChallengeScore struct {
 type NgrokRequest interface {
 	Execute(client *http.Client, baseURL string) (pointsEarned int, err error)
 	GetName() string
+	GetTotalPossiblePoints() int
 }
 
 type NgrokDeleteRequest struct {
@@ -55,6 +56,18 @@ func (t NgrokGetRequest) GetName() string {
 
 func (t NgrokPostRequest) GetName() string {
 	return t.Name
+}
+
+func (t NgrokDeleteRequest) GetTotalPossiblePoints() int {
+	return t.Points
+}
+
+func (t NgrokGetRequest) GetTotalPossiblePoints() int {
+	return t.Points
+}
+
+func (t NgrokPostRequest) GetTotalPossiblePoints() int {
+	return t.Points
 }
 
 type Stats struct {
@@ -144,29 +157,35 @@ func (t NgrokGetRequest) Execute(client *http.Client, baseURL string) (int, erro
 	}
 
 	// Calculate distance and adjust points.
-	distance := calculateAlienDistance(t.ExpectedAliens, actualAliens)
+	distance := CalculateAlienDistance(t.ExpectedAliens, actualAliens)
 
 	if distance == 0 {
 		// Perfect match.
 		return t.Points, nil
 	} else {
 		// Partial credit.
-		adjustedPoints := t.Points - distance
-		if adjustedPoints < 0 {
-			adjustedPoints = 0
-		}
+		adjustedPoints := max(t.Points-distance, 0)
 
-		fmt.Printf("distance_error:%d:expected %d aliens, got %d aliens with %d differences\n",
-			distance, len(t.ExpectedAliens), len(actualAliens), distance)
+		if VERBOSE {
+			fmt.Printf("distance_error:%d:expected %d aliens, got %d aliens with %d differences\n",
+				distance, len(t.ExpectedAliens), len(actualAliens), distance)
+		}
 		return adjustedPoints, nil
 	}
 }
 
-func calculateAlienDistance(expected, actual []DetailedAlien) int {
+// Returns the 'distance' between the expected and actual alien sets.
+// This is a positive score that is to be subtracted from some total possible score.
+// A distance is calculated:
+// - For each alien in expected, if there exists an alien in actual with the same exact
+// same values, then those two aliens have a distance of 0.
+// - If there exists an alien with the same ID but any number of other differing values,
+// then those two aliens have a distance of 1.
+// - Any alien in actual but not in expected has a distance of 1.
+// - There is no double-counting of distance--if there is an alien in actual with the same ID as one in
+// expected but different Atk and Spd, it will still only have a distance of 1.
+func CalculateAlienDistance(expected, actual []DetailedAlien) int {
 	distance := 0
-
-	lengthDiff := abs(len(expected) - len(actual))
-	distance += lengthDiff
 
 	expectedMap := make(map[string]DetailedAlien)
 	actualMap := make(map[string]DetailedAlien)
@@ -183,11 +202,29 @@ func calculateAlienDistance(expected, actual []DetailedAlien) int {
 	// Check aliens that exist in both sets.
 	for _, expectedAlien := range expected {
 		if actualAlien, exists := actualMap[expectedAlien.ID]; exists {
+			if VERBOSE {
+				fmt.Println()
+				fmt.Printf("Expected alien: %+v\n", expectedAlien)
+				fmt.Printf("Actual alien: %+v\n", actualAlien)
+				fmt.Println()
+			}
 			if !aliensEqual(expectedAlien, actualAlien) {
 				contentDiffs++
 			}
+		} else {
+			// Key/value pair doesn't exist in the actual set.
+			// Therefore, either:
+			// - The candidate doesn't have this alien at all.
+			// - The candidate does have this alien but with a different ID.
+			contentDiffs++
+			if VERBOSE {
+				fmt.Printf("Not found: expected: %+v actual: %+v\n", expectedAlien, actualAlien)
+			}
 		}
 	}
+
+	lengthDiff := max(0, len(actual)-len(expected))
+	distance += lengthDiff
 
 	distance += contentDiffs
 
@@ -237,15 +274,15 @@ func GenerateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRe
 	requests = append(requests, request)
 
 	// Filter by SPD
-	minSPD := rng.Intn(ALIEN_ATK_HP_SPD_UPPER + 1)
+	minSPD := rng.Intn(ALIEN_ATK_HP_SPD_UPPER)
 
 	var queryParamsSPD []string
-	queryParamsSPD = append(queryParamsSPD, fmt.Sprintf("spd_gte=%s", randomType))
+	queryParamsSPD = append(queryParamsSPD, fmt.Sprintf("spd_gte=%d", minSPD))
 
 	expectedAliensSPD := filterAliensByMinSPD(aliens, minSPD)
 
 	request = NgrokGetRequest{
-		Name:           fmt.Sprintf("Filter by spd>=%s", randomType),
+		Name:           fmt.Sprintf("Filter by spd>=%d", minSPD),
 		Points:         NGROK_FILTER_SPD_POINTS,
 		Path:           "/api/aliens?" + strings.Join(queryParamsSPD, "&"),
 		ExpectedAliens: expectedAliensSPD,
@@ -255,7 +292,7 @@ func GenerateRandomFilterTests(rng *rand.Rand, aliens []DetailedAlien) []NgrokRe
 
 	var queryParamsATK []string
 	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_gte=%d", 3))
-	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_lt=%d", 2))
+	queryParamsATK = append(queryParamsATK, fmt.Sprintf("atk_lte=%d", 1))
 
 	// The expected aliens is an empty array--the filters contradict each other.
 	expectedAliensATK := []DetailedAlien{}
@@ -295,7 +332,7 @@ func filterAliensByMinSPD(aliens []DetailedAlien, minSPD int) []DetailedAlien {
 }
 
 func health(ctx context.Context, url string) (ok bool, err error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url+"/health", nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url+"/healthcheck", nil)
 	if err != nil {
 		return false, fmt.Errorf("failed to create request: %w", err)
 	}
