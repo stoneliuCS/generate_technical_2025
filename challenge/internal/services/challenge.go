@@ -1,7 +1,6 @@
 package services
 
 import (
-	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/transactions"
 	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
@@ -70,11 +69,6 @@ func (c ChallengeServiceImpl) ScoreMemberSubmission(memberID uuid.UUID, submissi
 		aggregatedAnswer += hpScore + alienScore + commandScore
 	}
 	return OracleAnswer{Message: "Submission successfully recorded.", Score: aggregatedAnswer, Valid: true}
-}
-
-// SaveAlienChallengeAnswers implements ChallengeService.
-func (c ChallengeServiceImpl) SaveAlienChallengeAnswers(sols []models.AlienChallengeSolution) error {
-	return c.transactions.SaveAlienChallengeSolutionsForMember(sols)
 }
 
 const (

@@ -22,12 +22,7 @@ export const ALIEN_INVASION_ANSWER = Array.addItems(
       remainingHP: Integer,
       remainingAliens: Integer,
       commands: Array.addItems(
-        String.addEnums([
-          "volley",
-          "alienAttack",
-          "focusedShot",
-          "focusedVolley",
-        ]),
+        String.addEnums(["volley", "focusedShot", "focusedVolley"]),
       ),
     }).addRequired(["remainingHP", "remainingAliens", "commands"]),
   }).addRequired(["state"]),

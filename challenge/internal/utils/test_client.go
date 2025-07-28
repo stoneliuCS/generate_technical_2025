@@ -102,7 +102,7 @@ func (t TestClient) AddHeaders(headers map[string]string) TestClient {
 	return TestClient{client: t.client, baseurl: t.baseurl, logger: t.logger, headers: headers, body: t.body}
 }
 
-func (t TestClient) AddBody(body map[string]any) TestClient {
+func (t TestClient) AddBody(body any) TestClient {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		panic(err)

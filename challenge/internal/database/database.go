@@ -30,5 +30,4 @@ func CreateDatabase(cfg utils.EnvConfig, logger *slog.Logger) *gorm.DB {
 func AutoMigrate(db *gorm.DB) {
 	// Add migrations here.
 	db.AutoMigrate(&models.Member{})
-	db.AutoMigrate(&models.AlienChallengeSolution{})
 }

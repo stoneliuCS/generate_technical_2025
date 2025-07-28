@@ -34,18 +34,17 @@ func (i InvasionState) sortAliens() InvasionState {
 	}
 }
 
+func (i InvasionState) GetCommandsUsed() []string {
+	return i.commands
+}
+
 func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	// Sort all the aliens by attack power.
-	sortedAliens := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int {
-		power1 := a1.Atk + a1.Hp
-		power2 := a2.Atk + a2.Hp
-		return power2 - power1 // Highest total power first
-	})
 	return InvasionState{
-		aliensLeft: sortedAliens,
+		aliensLeft: aliens,
 		hpLeft:     startingHp,
 		commands:   []string{},
-	}
+	}.sortAliens()
 }
 
 func RunCommandsToCompletion(startingState InvasionState, commands []string) InvasionState {
@@ -139,7 +138,7 @@ func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) 
 			endingStates = append(endingStates, currentState)
 		} else {
 			// It is never ideal to recur on a node of which the modulo is strictly less than or equal to the ceiling of aliens.
-			if currentState.hpLeft%currentState.GetAliensLeft() > (currentState.GetAliensLeft()+1)/2 {
+			if currentState.hpLeft%currentState.GetAliensLeft() >= (currentState.GetAliensLeft()+1)/2 {
 				backtrack(currentState.AttackAliensModulo().sortAliens().AliensAttack())
 			}
 			backtrack(currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack())
