@@ -102,7 +102,7 @@ func (t TestClient) AddHeaders(headers map[string]string) TestClient {
 	return TestClient{client: t.client, baseurl: t.baseurl, logger: t.logger, headers: headers, body: t.body}
 }
 
-func (t TestClient) AddBody(body map[string]any) TestClient {
+func (t TestClient) AddBody(body any) TestClient {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		panic(err)
@@ -114,6 +114,13 @@ func (t TestClient) AddBody(body map[string]any) TestClient {
 func (v TestVerify) AssertStatusCode(statusCode int, t *testing.T) TestVerify {
 	assert.Equal(t, statusCode, v.res.StatusCode)
 	return v
+}
+
+func (v TestVerify) GetBody(target any, t *testing.T) {
+	defer v.res.Body.Close()
+
+	err := json.NewDecoder(v.res.Body).Decode(target)
+	require.NoError(t, err)
 }
 
 func (v TestVerify) AssertBody(expected any, t *testing.T) {

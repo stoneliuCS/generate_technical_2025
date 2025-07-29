@@ -16,6 +16,5 @@ func CreateRNGFromHash(id uuid.UUID) *rand.Rand {
 }
 
 func GenerateRandomNumWithinRange(rng *rand.Rand, lowerBound int, upperBound int) int {
-	hp := rng.Intn(upperBound-lowerBound) + lowerBound
-	return hp
+	return rng.Intn(upperBound-lowerBound) + lowerBound
 }

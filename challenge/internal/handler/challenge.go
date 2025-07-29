@@ -6,7 +6,9 @@ import (
 	"generate_technical_challenge_2025/internal/services"
 	"generate_technical_challenge_2025/internal/utils"
 	"net/url"
+	"sort"
 
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
 
@@ -22,19 +24,24 @@ func (h Handler) APIV1ChallengeBackendIDAliensGet(ctx context.Context, params ap
 		return &api.APIV1ChallengeBackendIDAliensGetNotFound{Message: "Unable to find member id."}, nil
 	}
 	waves := h.challengeService.GenerateUniqueAlienChallenge(params.ID)
-	states := lo.Map(waves, func(state services.InvasionState, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
-		alienMap := lo.Map(state.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
+	// Sort the keys and index through so that the users get the same order.
+	keys := lo.Keys(waves)
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i].String() < keys[j].String()
+	})
+	states := lo.Map(keys, func(key uuid.UUID, _ int) api.APIV1ChallengeBackendIDAliensGetOKItem {
+		val := waves[key]
+		alienMap := lo.Map(val.SurveyRemainingAlienInvasion(), func(alien services.Alien, _ int) api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem {
 			return api.APIV1ChallengeBackendIDAliensGetOKItemAliensItem{Hp: alien.Hp, Atk: alien.Atk}
 		})
-		return api.APIV1ChallengeBackendIDAliensGetOKItem{Aliens: alienMap, Hp: state.GetHpLeft()}
+		return api.APIV1ChallengeBackendIDAliensGetOKItem{ChallengeID: key, Aliens: alienMap, Hp: val.GetHpLeft()}
 	})
 	result := api.APIV1ChallengeBackendIDAliensGetOKApplicationJSON(states)
 	return &result, nil
 }
 
 // APIV1ChallengeBackendIDAliensSubmitPost implements api.Handler.
-// Verification logic:
-func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req api.OptAPIV1ChallengeBackendIDAliensSubmitPostReq, params api.APIV1ChallengeBackendIDAliensSubmitPostParams) (api.APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
+func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, req []api.APIV1ChallengeBackendIDAliensSubmitPostReqItem, params api.APIV1ChallengeBackendIDAliensSubmitPostParams) (api.APIV1ChallengeBackendIDAliensSubmitPostRes, error) {
 	exists, err := h.memberService.CheckMemberExistsById(params.ID)
 	if err != nil {
 		return &api.APIV1ChallengeBackendIDAliensSubmitPostInternalServerError{Message: "Database error finding member Id."}, nil
@@ -49,8 +56,19 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 			Message: "Rate limit exceeded: 10 requests per minute per challenge ID",
 		}, nil
 	}
-
-	panic("TO BE CREATED")
+	mapVals := lo.SliceToMap(req, func(userSubmission api.APIV1ChallengeBackendIDAliensSubmitPostReqItem) (uuid.UUID, services.UserChallengeSubmission) {
+		var commands []string
+		for _, cmd := range userSubmission.State.Commands {
+			commands = append(commands, string(cmd))
+		}
+		return userSubmission.ChallengeID.Value, services.UserChallengeSubmission{Hp: userSubmission.State.RemainingHP, Commands: commands, AliensLeft: userSubmission.State.RemainingAliens}
+	})
+	ans := h.challengeService.ScoreMemberSubmission(params.ID, mapVals)
+	response := &api.APIV1ChallengeBackendIDAliensSubmitPostOK{Valid: ans.Valid, Message: ans.Message}
+	if ans.Valid {
+		response.Score = api.OptInt{Value: ans.Score, Set: true}
+	}
+	return response, nil
 }
 
 // APIV1ChallengeFrontendIDAliensGet implements api.Handler.

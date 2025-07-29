@@ -14,6 +14,8 @@ includes:
 
 tasks:
   docker-develop-run:
+    deps:
+      - sync
     summary: Run development db and server in docker.
     cmds:
       - docker rmi -f generate_technical_2025-challenge:latest

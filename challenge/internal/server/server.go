@@ -9,11 +9,11 @@ import (
 )
 
 // Runs the server api with the given handler.
-func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger, slackWebhookURI string) {
+func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 	// Create middleware for logging.
 	opts := api.WithMiddleware(
 		logging(logger),
-		slackErrorMiddleware(slackWebhookURI))
+		slackErrorMiddleware(cfg.SLACK_WEBHOOK))
 
 	// Create server
 	srvFunc := func() (*api.Server, error) { return api.NewServer(handler, opts) }

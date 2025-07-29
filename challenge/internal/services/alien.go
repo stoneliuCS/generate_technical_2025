@@ -1,10 +1,17 @@
 package services
 
 import (
+	"generate_technical_challenge_2025/internal/utils"
 	"math/rand"
 	"slices"
 
 	"github.com/samber/lo"
+)
+
+const (
+	VOLLEY         = "volley"
+	FOCUSED_VOLLEY = "focusedVolley"
+	FOCUSED_SHOT   = "focusedShot"
 )
 
 // Represents the state of the invasion
@@ -27,18 +34,33 @@ func (i InvasionState) sortAliens() InvasionState {
 	}
 }
 
+func (i InvasionState) GetCommandsUsed() []string {
+	return i.commands
+}
+
 func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	// Sort all the aliens by attack power.
-	sortedAliens := slices.SortedFunc(slices.Values(aliens), func(a1 Alien, a2 Alien) int {
-		power1 := a1.Atk + a1.Hp
-		power2 := a2.Atk + a2.Hp
-		return power2 - power1 // Highest total power first
-	})
 	return InvasionState{
-		aliensLeft: sortedAliens,
+		aliensLeft: aliens,
 		hpLeft:     startingHp,
 		commands:   []string{},
+	}.sortAliens()
+}
+
+func RunCommandsToCompletion(startingState InvasionState, commands []string) InvasionState {
+	state := startingState
+	mapFunc := func(s InvasionState, command string) InvasionState {
+		mappings := map[string]func() InvasionState{
+			VOLLEY:         s.AttackAliensModulo,
+			FOCUSED_VOLLEY: s.AttackHighestDamagingHalf,
+			FOCUSED_SHOT:   s.AttackHighestDamageAlien,
+		}
+		return mappings[command]().sortAliens().AliensAttack()
 	}
+	for _, command := range commands {
+		state = mapFunc(state, command)
+	}
+	return state
 }
 
 func (i InvasionState) GetNumberOfCommandsUsed() int {
@@ -70,28 +92,41 @@ func RunAllPossibleInvasionStatesToCompletion(initialState InvasionState) []Inva
 	backtrack := func(currentState InvasionState) {}
 
 	backtrack = func(currentState InvasionState) {
-		volleyState := currentState.AttackAliensModulo().sortAliens().AliensAttack()
-		focusedState := currentState.AttackHighestDamageAlien().sortAliens().AliensAttack()
-		focusedVolleyState := currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack()
-		if !volleyState.IsOver() {
+		if currentState.IsOver() {
+			endingStates = append(endingStates, currentState)
+		} else {
+			volleyState := currentState.AttackAliensModulo().sortAliens().AliensAttack()
+			focusedState := currentState.AttackHighestDamageAlien().sortAliens().AliensAttack()
+			focusedVolleyState := currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack()
 			backtrack(volleyState)
-		} else {
-			endingStates = append(endingStates, volleyState)
-		}
-		if !focusedState.IsOver() {
 			backtrack(focusedState)
-		} else {
-			endingStates = append(endingStates, focusedState)
-		}
-		if !focusedVolleyState.IsOver() {
 			backtrack(focusedVolleyState)
-		} else {
-			endingStates = append(endingStates, focusedVolleyState)
 		}
 	}
 
 	backtrack(initialState)
 	return endingStates
+}
+
+func OracleSolution(initalState InvasionState) InvasionState {
+	finalStates := RunAllPossibleInvasionStatesToCompletionGreedy(initalState)
+	// Get the states with the smallest aliens left
+	smallestAliensLeft := lo.MinBy(finalStates, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetAliensLeft() < s2.GetAliensLeft()
+	})
+	smallestAlienStatesLeft := lo.Filter(finalStates, func(state InvasionState, idx int) bool {
+		return state.GetAliensLeft() == smallestAliensLeft.GetAliensLeft()
+	})
+	// Get the states with the largest HP left
+	largestHPLeft := lo.MaxBy(smallestAlienStatesLeft, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetHpLeft() > s2.GetHpLeft()
+	})
+	largestHPStatesLeft := lo.Filter(smallestAlienStatesLeft, func(state InvasionState, idx int) bool {
+		return state.GetHpLeft() == largestHPLeft.GetHpLeft()
+	})
+	return lo.MinBy(largestHPStatesLeft, func(s1 InvasionState, s2 InvasionState) bool {
+		return s1.GetNumberOfCommandsUsed() < s2.GetNumberOfCommandsUsed()
+	})
 }
 
 func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) []InvasionState {
@@ -102,14 +137,12 @@ func RunAllPossibleInvasionStatesToCompletionGreedy(initialState InvasionState) 
 		if currentState.IsOver() {
 			endingStates = append(endingStates, currentState)
 		} else {
-			if currentState.hpLeft%currentState.GetAliensLeft() > (currentState.GetAliensLeft()+1)/2 {
-				volleyState := currentState.AttackAliensModulo()
-				backtrack(volleyState.sortAliens().AliensAttack())
+			// It is never ideal to recur on a node of which the modulo is strictly less than or equal to the ceiling of aliens.
+			if currentState.hpLeft%currentState.GetAliensLeft() >= (currentState.GetAliensLeft()+1)/2 {
+				backtrack(currentState.AttackAliensModulo().sortAliens().AliensAttack())
 			}
-			focusedState := currentState.AttackHighestDamageAlien()
-			focusedVolleyState := currentState.AttackHighestDamagingHalf()
-			backtrack(focusedVolleyState.sortAliens().AliensAttack())
-			backtrack(focusedState.sortAliens().AliensAttack())
+			backtrack(currentState.AttackHighestDamagingHalf().sortAliens().AliensAttack())
+			backtrack(currentState.AttackHighestDamageAlien().sortAliens().AliensAttack())
 		}
 	}
 	backtrack(initialState)
@@ -135,16 +168,13 @@ func (i InvasionState) GetTotalAlienAtkPower() int {
 
 // Returns the state of the invasion when the aliens attack
 func (i InvasionState) AliensAttack() InvasionState {
-	if len(i.aliensLeft) == 0 {
-		return i
-	}
 	combinedAttack := lo.Reduce(i.aliensLeft, func(dmg int, alien Alien, idx int) int {
 		return dmg + alien.Atk
 	}, 0)
 	return InvasionState{
 		aliensLeft: i.aliensLeft,
 		hpLeft:     i.hpLeft - combinedAttack,
-		commands:   append(slices.Clone(i.commands), "alienAttack"),
+		commands:   i.commands,
 	}
 }
 
@@ -165,7 +195,7 @@ func (i InvasionState) AttackAliensModulo() InvasionState {
 	return InvasionState{
 		aliensLeft: append(filteredAliens, restOfAliens...),
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "volley"),
+		commands:   append(slices.Clone(i.commands), VOLLEY),
 	}
 }
 
@@ -175,7 +205,7 @@ func (i InvasionState) AttackHighestDamageAlien() InvasionState {
 	return InvasionState{
 		aliensLeft: i.aliensLeft[1:],
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "focusedShot"),
+		commands:   append(slices.Clone(i.commands), FOCUSED_SHOT),
 	}
 }
 
@@ -196,7 +226,7 @@ func (i InvasionState) AttackHighestDamagingHalf() InvasionState {
 	return InvasionState{
 		aliensLeft: aliensLeft,
 		hpLeft:     i.hpLeft,
-		commands:   append(slices.Clone(i.commands), "focusedVolley"),
+		commands:   append(slices.Clone(i.commands), FOCUSED_VOLLEY),
 	}
 }
 
@@ -214,12 +244,11 @@ const (
 
 // Creates a random alien invasion, with aliens ranging from 10 to 20 aliens.
 func GenerateAlienInvasion(rng *rand.Rand) []Alien {
-	numAliens := rng.Intn(UPPER_ALIEN_AMOUNT-LOWER_ALIEN_AMOUNT) + LOWER_ALIEN_AMOUNT
+	numAliens := utils.GenerateRandomNumWithinRange(rng, LOWER_ALIEN_AMOUNT, UPPER_ALIEN_AMOUNT)
 	aliens := []Alien{}
-
 	for range numAliens {
-		alienHPVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
-		alienAtkVal := rng.Intn(ALIEN_ATK_HP_SPD_UPPER-ALIEN_ATK_HP_SPD_LOWER) + ALIEN_ATK_HP_SPD_LOWER
+		alienHPVal := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
+		alienAtkVal := utils.GenerateRandomNumWithinRange(rng, ALIEN_ATK_HP_SPD_LOWER, ALIEN_ATK_HP_SPD_UPPER)
 		alien := CreateAlien(alienHPVal, alienAtkVal)
 		aliens = append(aliens, alien)
 	}

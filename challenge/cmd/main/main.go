@@ -25,7 +25,7 @@ func main() {
 
 	logger.Info("Initializing transaction layer...")
 	memberTransactions := transactions.CreateMemberTransactions(logger, db)
-	challengeTransactions := transactions.CreateMemberTransactions(logger, db)
+	challengeTransactions := transactions.CreateChallengeTransactions(logger, db)
 
 	logger.Info("Intializing service layer...")
 	memberServices := services.CreateMemberService(logger, memberTransactions)
@@ -35,5 +35,5 @@ func main() {
 	logger.Info("Intializing handler layer...")
 	h := handler.CreateHandler(logger, memberServices, challengeServices)
 
-	server.RunServer(h, env, logger, env.SLACK_WEBHOOK)
+	server.RunServer(h, env, logger)
 }
