@@ -57,12 +57,13 @@ func runTestServer() {
 	dbPort = utils.FatalCall(dbHostPortFn).Port()
 
 	envConfig := &utils.EnvConfig{
-		DB_HOST:     dbHost,
-		DB_PORT:     dbPort,
-		DB_USER:     dbUser,
-		DB_PASSWORD: dbPassword,
-		DB_NAME:     dbName,
-		PORT:        PORT,
+		DB_HOST:       dbHost,
+		DB_PORT:       dbPort,
+		DB_USER:       dbUser,
+		DB_PASSWORD:   dbPassword,
+		DB_NAME:       dbName,
+		PORT:          PORT,
+		SLACK_WEBHOOK: "",
 	}
 	db := database.CreateDatabase(*envConfig, LOGGER)
 
@@ -75,7 +76,7 @@ func runTestServer() {
 	challengeServices := services.CreateChallengeService(LOGGER, challengeTransactions)
 
 	h := handler.CreateHandler(LOGGER, memberServices, challengeServices)
-	server.RunServer(h, *envConfig, LOGGER, "")
+	server.RunServer(h, *envConfig, LOGGER)
 }
 
 func TestMain(m *testing.M) {
