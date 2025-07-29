@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"generate_technical_challenge_2025/internal/database/models"
 	"io"
 	"log/slog"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/gorm"
 )
 
 type TestClient struct {
@@ -20,6 +22,7 @@ type TestClient struct {
 	logger  *slog.Logger
 	headers map[string]string
 	body    io.Reader
+	db      *gorm.DB
 }
 
 type TestVerify struct {
@@ -33,6 +36,21 @@ func CreateTestClient(port int, logger *slog.Logger) TestClient {
 		baseurl: "http://localhost:" + portString,
 		logger:  logger,
 	}
+}
+
+func (t *TestClient) SetDB(db *gorm.DB) {
+	t.db = db
+}
+
+// Score, isValid, isFound.
+func (t TestClient) GetLatestScore(userID string, challengeType string) (int, bool, bool) {
+	var score models.Score
+	result := t.db.Where("user_id = ? AND challenge_type = ?", userID, challengeType).
+		Order("created_at DESC").First(&score)
+	if result.Error != nil {
+		return 0, false, false
+	}
+	return score.Score, score.IsValid, true
 }
 
 // Blocks until the server is ready.

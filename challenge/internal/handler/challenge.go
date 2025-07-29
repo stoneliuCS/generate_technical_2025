@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	api "generate_technical_challenge_2025/internal/api"
+	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/services"
 	"generate_technical_challenge_2025/internal/utils"
 	"net/url"
@@ -67,6 +68,19 @@ func (h Handler) APIV1ChallengeBackendIDAliensSubmitPost(ctx context.Context, re
 	response := &api.APIV1ChallengeBackendIDAliensSubmitPostOK{Valid: ans.Valid, Message: ans.Message}
 	if ans.Valid {
 		response.Score = api.OptInt{Value: ans.Score, Set: true}
+		valid := true
+		score := models.CreateScore(params.ID, models.ALGORITHM_CHALLENGE_TYPE, ans.Score, valid)
+		_, err := h.memberService.CreateScore(score)
+		if err != nil {
+			return &api.APIV1ChallengeBackendIDAliensSubmitPostInternalServerError{Message: "Database error when saving a score."}, err
+		}
+	} else {
+		valid := false
+		score := models.CreateScore(params.ID, models.ALGORITHM_CHALLENGE_TYPE, models.INVALID_SCORE, valid)
+		_, err := h.memberService.CreateScore(score)
+		if err != nil {
+			return &api.APIV1ChallengeBackendIDAliensSubmitPostInternalServerError{Message: "Database error when saving a score."}, err
+		}
 	}
 	return response, nil
 }

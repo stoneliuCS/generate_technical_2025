@@ -69,6 +69,8 @@ func runTestServer() {
 
 	database.AutoMigrate(db)
 
+	CLIENT.SetDB(db)
+
 	memberTransactions := transactions.CreateMemberTransactions(LOGGER, db)
 	challengeTransactions := transactions.CreateChallengeTransactions(LOGGER, db)
 

@@ -1,6 +1,7 @@
 package integrationtests
 
 import (
+	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/services"
 	"testing"
 
@@ -74,6 +75,13 @@ func TestBackendAlienChallengeFullIntegration(t *testing.T) {
 	testVerify.GetBody(&response, t)
 	assert.True(t, response["valid"].(bool))
 	assert.Equal(t, 0.0, response["score"].(float64))
+
+	// The score should have been saved as a valid score,
+	score, valid, found := CLIENT.GetLatestScore(res["id"], models.ALGORITHM_CHALLENGE_TYPE)
+	assert.True(t, valid)
+	assert.True(t, found)
+	assert.Equal(t, 0, score)
+
 	// CASE 2: USER DOES NOT GIVE ANYTHING
 	serializedAnswers = []map[string]any{}
 	testVerify = CLIENT.AddBody(serializedAnswers).AddHeaders(map[string]string{
@@ -83,4 +91,10 @@ func TestBackendAlienChallengeFullIntegration(t *testing.T) {
 	testVerify.GetBody(&response, t)
 	assert.False(t, response["valid"].(bool))
 	assert.Equal(t, "Challenge IDs do not match.", response["message"].(string))
+
+	// The score should have been saved as an invalid score.
+	invalidScore, invalid, found := CLIENT.GetLatestScore(res["id"], models.ALGORITHM_CHALLENGE_TYPE)
+	assert.True(t, invalid)
+	assert.True(t, found)
+	assert.Equal(t, models.INVALID_SCORE, invalidScore)
 }

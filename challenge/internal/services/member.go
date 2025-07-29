@@ -12,6 +12,7 @@ import (
 // before dereferencing a pointer otherwise you may get a null pointer dereference.
 type MemberService interface {
 	CreateMember(*models.Member) (*uuid.UUID, error)
+	CreateScore(*models.Score) (int, error)
 	GetMember(string, string) (*uuid.UUID, error)
 	CheckMemberExistsByEmailAndNuid(string, string) (bool, error)
 	CheckMemberExistsById(uuid.UUID) (bool, error)
@@ -20,6 +21,11 @@ type MemberService interface {
 type MemberServiceImpl struct {
 	logger       *slog.Logger
 	transactions transactions.MemberTransactions
+}
+
+// CreateScore implements MemberService.
+func (u *MemberServiceImpl) CreateScore(score *models.Score) (int, error) {
+	return u.transactions.InsertScore(score)
 }
 
 // CheckMemberExistsById implements MemberService.

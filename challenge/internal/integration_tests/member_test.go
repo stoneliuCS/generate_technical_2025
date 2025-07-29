@@ -54,13 +54,21 @@ func TestUserReceives201OnGoodRequest(t *testing.T) {
 
 func TestMemberCannotRegisterTwice(t *testing.T) {
 	client := CLIENT.AddBody(map[string]any{
-		"email": "somebody@northeastern.edu",
+		"email": "hasneverregisteredbefore@northeastern.edu",
 		"nuid":  "123456789", // NUID is 9 characters long
 	}).AddHeaders(map[string]string{
 		"Content-Type": "application/json",
 	})
 
-	testVerify := client.POST("/api/v1/member/register")
+	firstRegistration := client.POST("/api/v1/member/register")
+	firstRegistration.AssertStatusCode(201, t)
+	nextClient := CLIENT.AddBody(map[string]any{
+		"email": "hasneverregisteredbefore@northeastern.edu",
+		"nuid":  "123456789", // NUID is 9 characters long
+	}).AddHeaders(map[string]string{
+		"Content-Type": "application/json",
+	})
+	testVerify := nextClient.POST("/api/v1/member/register")
 	testVerify.AssertStatusCode(409, t)
 }
 

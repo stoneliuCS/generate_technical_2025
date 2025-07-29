@@ -10,6 +10,7 @@ import (
 
 type MemberTransactions interface {
 	InsertMember(*models.Member) (*uuid.UUID, error)
+	InsertScore(*models.Score) (int, error)
 	GetMember(string, string) (*uuid.UUID, error)
 	MemberExistsByEmailAndNuid(string, string) (bool, error)
 	MemberExistsById(uuid.UUID) (bool, error)
@@ -50,6 +51,14 @@ func (u MemberTransactionsImpl) InsertMember(member *models.Member) (*uuid.UUID,
 		return nil, res.Error
 	}
 	return &member.ID, nil
+}
+
+func (u MemberTransactionsImpl) InsertScore(score *models.Score) (int, error) {
+	res := u.db.Create(&score)
+	if res.Error != nil {
+		return -1, res.Error
+	}
+	return score.Score, nil
 }
 
 // GetMember implements MemberTransactions.
