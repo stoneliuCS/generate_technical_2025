@@ -1,7 +1,12 @@
 package server
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"log/slog"
+	"net/http"
+	"runtime"
 	"time"
 
 	"github.com/ogen-go/ogen/middleware"
@@ -47,4 +52,38 @@ func logging(logger *slog.Logger) middleware.Middleware {
 
 		return resp, err
 	}
+}
+
+func slackErrorMiddleware(slackWebhookURI string) middleware.Middleware {
+	return func(req middleware.Request, next middleware.Next) (middleware.Response, error) {
+		defer func() {
+			if r := recover(); r != nil {
+				panicErr := fmt.Errorf("panic: %v", r)
+				slackAlertError(panicErr, slackWebhookURI)
+			}
+		}()
+
+		// Call the next handler.
+		resp, err := next(req)
+
+		if err != nil {
+			slackAlertError(err, slackWebhookURI)
+		}
+
+		return resp, err
+	}
+}
+
+func slackAlertError(err error, slackWebhookURI string) {
+	// Get stack trace.
+	buf := make([]byte, 4096)
+	stackSize := runtime.Stack(buf, false)
+	stack := string(buf[:stackSize])
+
+	message := fmt.Sprintf("🚨 Runtime Error\n```%v\n\nStack Trace:\n%s```", err, stack)
+
+	payload := map[string]string{"text": message}
+	jsonData, _ := json.Marshal(payload)
+
+	go http.Post(slackWebhookURI, "application/json", bytes.NewBuffer(jsonData))
 }

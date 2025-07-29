@@ -21,6 +21,7 @@ services:
       DB_USER: ${DB_USER:?database username not specified}
       DB_PASSWORD: ${DB_PASSWORD:?database password not specified}
       DB_NAME: ${DB_NAME:?database name not specified}
+      SLACK_WEBHOOK: ${SLACK_WEBHOOK:?slack webhook not specified}
     ports:
       - ${PORT:-8081}:${PORT:-8081}
     develop:

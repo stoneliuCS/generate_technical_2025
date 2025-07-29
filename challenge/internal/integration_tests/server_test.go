@@ -75,7 +75,7 @@ func runTestServer() {
 	challengeServices := services.CreateChallengeService(LOGGER, challengeTransactions)
 
 	h := handler.CreateHandler(LOGGER, memberServices, challengeServices)
-	server.RunServer(h, *envConfig, LOGGER)
+	server.RunServer(h, *envConfig, LOGGER, "")
 }
 
 func TestMain(m *testing.M) {

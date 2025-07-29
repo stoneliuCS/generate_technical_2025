@@ -8,11 +8,12 @@ import (
 
 type EnvConfig struct {
 	// Required environment variables.
-	DB_HOST     string `env:"DB_HOST, required"`
-	DB_PORT     string `env:"DB_PORT, required"`
-	DB_USER     string `env:"DB_USER, required"`
-	DB_PASSWORD string `env:"DB_PASSWORD, required"`
-	DB_NAME     string `env:"DB_NAME, required"`
+	DB_HOST       string `env:"DB_HOST, required"`
+	DB_PORT       string `env:"DB_PORT, required"`
+	DB_USER       string `env:"DB_USER, required"`
+	DB_PASSWORD   string `env:"DB_PASSWORD, required"`
+	DB_NAME       string `env:"DB_NAME, required"`
+	SLACK_WEBHOOK string `env:"SLACK_WEBHOOK, required"`
 
 	// Optional, default environment variables.
 	PORT      int    `env:"PORT, default=8081"`
