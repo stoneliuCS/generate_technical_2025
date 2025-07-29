@@ -35,5 +35,5 @@ func main() {
 	logger.Info("Intializing handler layer...")
 	h := handler.CreateHandler(logger, memberServices, challengeServices)
 
-	server.RunServer(h, env, logger, env.SLACK_WEBHOOK)
+	server.RunServer(h, env, logger)
 }
