@@ -29,42 +29,6 @@ func (h Handler) ChallengeGet(ctx context.Context) (api.ChallengeGetRes, error) 
 	return &api.ChallengeGetOK{Data: strings.NewReader(buf.String())}, nil
 }
 
-// APIV1ChallengeBackendIDNgrokSubmitPost implements api.Handler.
-func (h Handler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req api.OptAPIV1ChallengeBackendIDNgrokSubmitPostReq, params api.APIV1ChallengeBackendIDNgrokSubmitPostParams) (api.APIV1ChallengeBackendIDNgrokSubmitPostRes, error) {
-	exists, err := h.memberService.CheckMemberExistsById(params.ID)
-	if err != nil {
-		return &api.APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError{Message: "Database error finding member Id."}, nil
-	}
-	if !exists {
-		return &api.APIV1ChallengeBackendIDNgrokSubmitPostBadRequest{Message: "Unable to find member id."}, nil
-	}
-
-	generatedRequests := h.challengeService.GenerateUniqueNgrokChallenge(params.ID)
-	gradeResult := h.challengeService.GradeNgrokServer(req.Value.URL.Value, generatedRequests)
-
-	if gradeResult.Valid {
-		// Successful grading:
-		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
-			Type: api.APIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK,
-			APIV1ChallengeBackendIDNgrokSubmitPostOK0: api.APIV1ChallengeBackendIDNgrokSubmitPostOK0{
-				Valid: api.NewOptBool(true),
-				Score: api.NewOptInt(gradeResult.Score),
-			},
-		}
-		return &result, nil
-	} else {
-		// Grading failed:
-		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
-			Type: api.APIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK,
-			APIV1ChallengeBackendIDNgrokSubmitPostOK1: api.APIV1ChallengeBackendIDNgrokSubmitPostOK1{
-				Valid:  api.NewOptBool(false),
-				Reason: api.NewOptString(gradeResult.Reason),
-			},
-		}
-		return &result, nil
-	}
-}
-
 // Get implements api.Handler.
 func (h Handler) Get(ctx context.Context) (api.GetRes, error) {
 	html, err := scalar.ApiReferenceHTML(&scalar.Options{
