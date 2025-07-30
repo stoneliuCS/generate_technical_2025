@@ -13,6 +13,18 @@ includes:
     dir: ./api
 
 tasks:
+  docker-build:
+    deps:
+      - sync
+    summary: Build the docker image for the challenge server for deployment
+    cmds:
+      - docker build --platform linux/amd64 -t generate_technical_2025-challenge:latest -f challenge.Dockerfile .
+  docker-save:
+    deps:
+      - docker-build
+    summary: Saves the docker image to a file on disk (Useful for manual uploads.)
+    cmds:
+      - docker save generate_technical_2025-challenge:latest | gzip > challenge.tar.gz
   docker-develop-run:
     deps:
       - sync

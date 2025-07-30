@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Deploying to Digital Ocean, make sure you have CHALLENGE_TOKEN set as an environment variable."
+
+REGISTRY_IMAGE="registry.digitalocean.com/generate-technical-2025/generate_technical_2025-challenge:latest"
+REPO_NAME="generate_technical_2025-challenge"
+
+(
+  source .env
+  doctl auth init --access-token $CHALLENGE_TOKEN
+  doctl registry login
+  task docker-build
+  docker tag generate_technical_2025-challenge:latest $REGISTRY_IMAGE
+  doctl registry repository delete-tag $REPO_NAME latest --force
+  docker push $REGISTRY_IMAGE
+)

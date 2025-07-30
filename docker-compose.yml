@@ -3,18 +3,24 @@ services:
   database:
     image: postgres:latest
     environment:
-      POSTGRES_DB: ${DB_HOST:?database host not specified} 
+      POSTGRES_DB: ${DB_HOST:?database host not specified}
       POSTGRES_USER: ${DB_USER:?database username not specified}
       POSTGRES_PASSWORD: ${DB_PASSWORD:?database password not specified}
     ports:
       - 5432:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 2s
+      timeout: 3s
+      retries: 10
   challenge:
     build:
       dockerfile: challenge.Dockerfile
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     environment:
       DB_HOST: ${DB_HOST:?database host not specified}
       DB_PORT: ${DB_PORT:?database port not specified}
@@ -31,4 +37,3 @@ services:
           target: /go/challenge
 volumes:
   postgres-data:
-...
