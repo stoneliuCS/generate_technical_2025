@@ -25,7 +25,7 @@ func TestGenerateRandomFilterTests(t *testing.T) {
 	aliens := services.GenerateNgrokAliens(RNG, UUID)
 
 	requests := services.GenerateRandomFilterTests(RNG, aliens)
-	assert.Len(t, requests, 3)
+	assert.Len(t, requests, 5)
 }
 
 func TestCalculateAlienDistance(t *testing.T) {

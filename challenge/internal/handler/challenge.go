@@ -148,21 +148,16 @@ func (h Handler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req
 	if gradeResult.Valid {
 		// Successful grading:
 		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
-			Type: api.APIV1ChallengeBackendIDNgrokSubmitPostOK0APIV1ChallengeBackendIDNgrokSubmitPostOK,
-			APIV1ChallengeBackendIDNgrokSubmitPostOK0: api.APIV1ChallengeBackendIDNgrokSubmitPostOK0{
-				Valid: api.NewOptBool(true),
-				Score: api.NewOptInt(gradeResult.Score),
-			},
+			Valid:   true,
+			Score:   api.NewOptInt(gradeResult.Score),
+			Message: "Submission has been been successfully scored.",
 		}
 		return &result, nil
 	} else {
 		// Grading failed:
 		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
-			Type: api.APIV1ChallengeBackendIDNgrokSubmitPostOK1APIV1ChallengeBackendIDNgrokSubmitPostOK,
-			APIV1ChallengeBackendIDNgrokSubmitPostOK1: api.APIV1ChallengeBackendIDNgrokSubmitPostOK1{
-				Valid:  api.NewOptBool(false),
-				Reason: api.NewOptString(gradeResult.Reason),
-			},
+			Valid:   false,
+			Message: gradeResult.Reason,
 		}
 		return &result, nil
 	}

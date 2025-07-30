@@ -93,7 +93,11 @@ const (
 	NGROK_GET_ALL_POINTS         = 15
 	NGROK_FILTER_TYPE_POINTS     = 15
 	NGROK_FILTER_SPD_POINTS      = 15
+	NGROK_FILTER_CONTRADICT      = 10
+	NGROK_FILTER_ATK_POINTS      = 15
+	NGROK_FILTER_HP_POINTS       = 15
 	VERBOSE                      = false
+	NGROK_PATH                   = "/api/aliens"
 )
 
 var alienTypes = []AlienType{
@@ -173,7 +177,7 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 	if err != nil || !ok {
 		return NgrokChallengeScore{
 			Valid:  false,
-			Reason: "Health check failed - server unreachable",
+			Reason: "Health check failed--server unreachable",
 		}
 	}
 
@@ -204,62 +208,85 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 
 	// 1. Clean up any old data.
 	if deleteRequest != nil {
-		_, err := deleteRequest.Execute(client, baseURL)
-		if err != nil {
-			if VERBOSE {
-				fmt.Printf("DELETE request failed: %s\n", err.Error())
-			}
-			// Don't fail grading if DELETE fails, because it might be the first run.
-		} else {
-			if VERBOSE {
-				fmt.Println("DELETE request succeeded")
-			}
-		}
-		time.Sleep(200 * time.Millisecond)
+		sendDeleteRequest(deleteRequest, client, baseURL)
+		time.Sleep(10 * time.Millisecond)
 	}
 
 	// 2) Populate data.
 	if postRequest != nil {
 		points, err := postRequest.Execute(client, baseURL)
 		if err != nil {
+
 			if VERBOSE {
 				fmt.Printf("POST request failed: %s\n", err.Error())
 			}
+
 			return NgrokChallengeScore{
 				Valid:  false,
 				Reason: fmt.Sprintf("POST request failed - %s", err.Error()),
 			}
 		} else {
+			// no error executing, add their points.
 			totalScore += points
+
 			if VERBOSE {
 				fmt.Printf("POST request succeeded (+%d points out of %d total points)\n", points, postRequest.GetTotalPossiblePoints())
 			}
+
 		}
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(50 * time.Millisecond)
 	}
 
 	// 3) Make GET requests.
 	for _, getRequest := range getRequests {
+
 		if VERBOSE {
 			fmt.Printf("Request: %s\n", getRequest.GetName())
 		}
-		points, err := getRequest.Execute(client, baseURL)
+
+		possibleAdjustedPoints, err := getRequest.Execute(client, baseURL)
 		if err != nil {
+
 			if VERBOSE {
 				fmt.Printf("GET request failed: %s\n", err.Error())
 			}
+
 		} else {
-			totalScore += points
+			totalScore += possibleAdjustedPoints
+
 			if VERBOSE {
-				fmt.Printf("GET request succeeded (+%d points out of %d total points)\n", points, getRequest.GetTotalPossiblePoints())
+				fmt.Printf("GET request succeeded (+%d points out of %d total points)\n",
+					possibleAdjustedPoints,
+					getRequest.GetTotalPossiblePoints())
 			}
+
 		}
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 	}
 
+	// Finished sending all requests without returning early, so their
+	// submission must be valid.
 	return NgrokChallengeScore{
 		Valid: true,
 		Score: totalPossiblePoints - totalScore,
+	}
+}
+
+func sendDeleteRequest(deleteRequest NgrokRequest, client *http.Client, baseURL string) {
+	_, err := deleteRequest.Execute(client, baseURL)
+	if err != nil {
+
+		if VERBOSE {
+			fmt.Printf("DELETE request failed: %s\n", err.Error())
+		}
+
+		// Don't fail grading if DELETE fails, because it might be the first run.
+	} else {
+
+		if VERBOSE {
+			fmt.Println("DELETE request succeeded")
+		}
+
 	}
 }
 
@@ -280,31 +307,43 @@ func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) N
 	rng := utils.CreateRNGFromHash(memberID)
 	aliens := GenerateNgrokAliens(rng, memberID)
 
+	// Initial required requests.
 	requests := []NgrokRequest{
-		NgrokDeleteRequest{
-			Name:   "POST all alien",
-			Points: 0,
-			Path:   "/api/aliens",
-		},
-
-		NgrokPostRequest{
-			Name:   "POST all alien",
-			Points: NGROK_POST_POINTS,
-			Path:   "/api/aliens",
-			Body:   slices.Clone(aliens),
-		},
-
-		NgrokGetRequest{
-			Name:           "GET all aliens",
-			Points:         NGROK_GET_ALL_POINTS,
-			Path:           "/api/aliens",
-			ExpectedAliens: slices.Clone(aliens),
-		},
+		generateDeleteRequest(),
+		generatePostRequest(aliens),
+		generateGetAllRequest(aliens),
 	}
 
+	// Randomized filter requests.
 	requests = append(requests, GenerateRandomFilterTests(rng, slices.Clone(aliens))...)
 
 	return NgrokChallenge{Requests: requests}
+}
+
+func generateDeleteRequest() NgrokRequest {
+	return NgrokDeleteRequest{
+		Name:   "DELETE all alien",
+		Points: 0,
+		Path:   NGROK_PATH,
+	}
+}
+
+func generatePostRequest(aliens []DetailedAlien) NgrokRequest {
+	return NgrokPostRequest{
+		Name:   "POST all alien",
+		Points: NGROK_POST_POINTS,
+		Path:   NGROK_PATH,
+		Body:   slices.Clone(aliens),
+	}
+}
+
+func generateGetAllRequest(aliens []DetailedAlien) NgrokRequest {
+	return NgrokGetRequest{
+		Name:           "GET all aliens",
+		Points:         NGROK_GET_ALL_POINTS,
+		Path:           NGROK_PATH,
+		ExpectedAliens: slices.Clone(aliens),
+	}
 }
 
 func GenerateNgrokAliens(rng *rand.Rand, memberID uuid.UUID) []DetailedAlien {
