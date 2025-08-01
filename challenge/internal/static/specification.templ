@@ -25,9 +25,9 @@ templ ChallengePage() {
 				font-size: 1.1rem;
 				padding: 2rem;
 				position: relative;
-				overflow: hidden;
 			}
 			
+			/* Simplified background effect - static instead of animated */
 			body::before {
 				content: '';
 				position: absolute;
@@ -36,71 +36,45 @@ templ ChallengePage() {
 				right: 0;
 				bottom: 0;
 				background-image: 
-					radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-					radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-					radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
-				animation: pulse 4s ease-in-out infinite alternate;
+					radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+					radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.08) 0%, transparent 50%),
+					radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.08) 0%, transparent 50%);
+				opacity: 0.5;
 				pointer-events: none;
 			}
 			
-			@keyframes pulse {
-				0% { opacity: 0.3; }
-				100% { opacity: 0.7; }
-			}
-			
-			@keyframes glow {
+			/* Reduced animations - only on hover/focus for better performance */
+			@keyframes subtleGlow {
 				0%, 100% { 
-					box-shadow: 
-						0 0 20px rgba(0, 255, 136, 0.3),
-						0 0 40px rgba(0, 255, 136, 0.2),
-						0 0 60px rgba(0, 255, 136, 0.1),
-						inset 0 0 20px rgba(0, 255, 136, 0.1);
+					box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
 				}
 				50% { 
-					box-shadow: 
-						0 0 30px rgba(0, 255, 136, 0.4),
-						0 0 50px rgba(0, 255, 136, 0.3),
-						0 0 80px rgba(0, 255, 136, 0.2),
-						inset 0 0 30px rgba(0, 255, 136, 0.15);
-				}
-			}
-			
-			@keyframes textGlow {
-				0%, 100% { 
-					text-shadow: 0 0 10px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 255, 136, 0.4);
-				}
-				50% { 
-					text-shadow: 0 0 15px rgba(0, 255, 136, 1), 0 0 30px rgba(0, 255, 136, 0.6);
-				}
-			}
-			
-			@keyframes codeGlow {
-				0%, 100% { 
-					box-shadow: 
-						0 0 15px rgba(0, 191, 255, 0.3),
-						inset 0 0 15px rgba(0, 191, 255, 0.1);
-				}
-				50% { 
-					box-shadow: 
-						0 0 25px rgba(0, 191, 255, 0.4),
-						inset 0 0 25px rgba(0, 191, 255, 0.15);
+					box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
 				}
 			}
 			
 			.card {
 				text-align: start;
 				padding: 3rem;
-				background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
+				background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(26, 26, 46, 0.9) 100%);
 				border-radius: 20px;
-				border: 2px solid rgba(0, 255, 136, 0.5);
+				border: 2px solid rgba(0, 255, 136, 0.4);
 				max-width: 1000px;
 				width: 100%;
 				height: calc(100vh - 4rem);
 				line-height: 1.6;
 				position: relative;
-				animation: glow 3s ease-in-out infinite;
-				backdrop-filter: blur(10px);
+				backdrop-filter: blur(8px);
 				overflow-y: auto;
+				/* Static glow instead of animated */
+				box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+			}
+			
+			/* Hover effect for subtle interactivity */
+			.card:hover {
+				border-color: rgba(0, 255, 136, 0.6);
+				box-shadow: 0 0 25px rgba(0, 255, 136, 0.25);
+				transition: all 0.3s ease;
 			}
 			
 			h1 { 
@@ -108,17 +82,18 @@ templ ChallengePage() {
 				margin-bottom: 2rem;
 				margin-top: 1rem;
 				color: #00ff88;
-				animation: textGlow 2s ease-in-out infinite;
 				text-transform: uppercase;
 				letter-spacing: 2px;
 				font-weight: bold;
+				/* Static glow */
+				text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
 			}
 			
 			p { 
 				font-size: 1.2rem;
 				color: #a0ffcc;
 				margin-bottom: 1.5rem;
-				text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+				text-shadow: 0 0 3px rgba(0, 255, 136, 0.2);
 			}
 			
 			h2 {
@@ -126,7 +101,7 @@ templ ChallengePage() {
 				margin-top: 2rem;
 				margin-bottom: 1rem;
 				color: #00bfff;
-				text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+				text-shadow: 0 0 8px rgba(0, 191, 255, 0.5);
 				text-transform: uppercase;
 				letter-spacing: 1px;
 			}
@@ -136,7 +111,7 @@ templ ChallengePage() {
 				margin-top: 1.5rem;
 				margin-bottom: 0.75rem;
 				color: #8a2be2;
-				text-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+				text-shadow: 0 0 6px rgba(138, 43, 226, 0.5);
 				text-transform: uppercase;
 			}
 
@@ -145,58 +120,67 @@ templ ChallengePage() {
 				margin-top: 1rem;
 				margin-bottom: 0.75rem;
 				color: #2a8be1;
-				text-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+				text-shadow: 0 0 6px rgba(42, 139, 225, 0.5);
 				text-transform: uppercase;
 			}
 			
 			pre {
 				background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(13, 13, 26, 0.95) 100%);
-				border: 1px solid rgba(0, 191, 255, 0.4);
+				border: 1px solid rgba(0, 191, 255, 0.3);
 				border-radius: 12px;
 				padding: 1.5rem;
 				margin: 2rem 0;
 				text-align: left;
 				overflow-x: auto;
 				position: relative;
-				animation: codeGlow 4s ease-in-out infinite;
+				/* Static glow */
+				box-shadow: 0 0 10px rgba(0, 191, 255, 0.15);
+			}
+			
+			/* Hover effect for code blocks */
+			pre:hover {
+				border-color: rgba(0, 191, 255, 0.5);
+				box-shadow: 0 0 15px rgba(0, 191, 255, 0.25);
+				transition: all 0.3s ease;
 			}
 			
 			code {
 				font-family: "SF Mono", "Monaco", "Cascadia Code", "Roboto Mono", "Consolas", "Courier New", monospace;
 				color: #00ff88;
-				text-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
+				text-shadow: 0 0 2px rgba(0, 255, 136, 0.4);
 				line-height: 1.4;
 			}
 			
 			.keyword {
 				color: #ff6b9d;
-				text-shadow: 0 0 5px rgba(255, 107, 157, 0.6);
+				text-shadow: 0 0 3px rgba(255, 107, 157, 0.4);
 			}
 			
 			.string {
 				color: #ffd700;
-				text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+				text-shadow: 0 0 3px rgba(255, 215, 0, 0.4);
 			}
 			
 			.comment {
 				color: #8a2be2;
-				text-shadow: 0 0 5px rgba(138, 43, 226, 0.6);
+				text-shadow: 0 0 3px rgba(138, 43, 226, 0.4);
 				font-style: italic;
 			}
 			
 			.function {
 				color: #00bfff;
-				text-shadow: 0 0 5px rgba(0, 191, 255, 0.6);
+				text-shadow: 0 0 3px rgba(0, 191, 255, 0.4);
 			}
-      a {
+			
+			a {
 				color: #00ff88;
 				text-decoration: none;
 				position: relative;
 				padding: 0.5rem 1rem;
 				border: 1px solid rgba(0, 255, 136, 0.4);
 				border-radius: 8px;
-				background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 191, 255, 0.1) 100%);
-				text-shadow: 0 0 5px rgba(0, 255, 136, 0.8);
+				background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 191, 255, 0.08) 100%);
+				text-shadow: 0 0 5px rgba(0, 255, 136, 0.6);
 				letter-spacing: 1px;
 				text-transform: uppercase;
 				font-weight: bold;
@@ -207,66 +191,93 @@ templ ChallengePage() {
 			
 			a:hover {
 				color: #fff;
-				background: linear-gradient(135deg, rgba(0, 255, 136, 0.3) 0%, rgba(0, 191, 255, 0.3) 100%);
-				border-color: rgba(0, 255, 136, 0.8);
-				box-shadow: 
-					0 0 20px rgba(0, 255, 136, 0.4),
-					0 0 40px rgba(0, 255, 136, 0.2),
-					inset 0 0 10px rgba(0, 255, 136, 0.1);
-				text-shadow: 0 0 10px rgba(0, 255, 136, 1);
-				transform: translateY(-2px);
+				background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 191, 255, 0.2) 100%);
+				border-color: rgba(0, 255, 136, 0.7);
+				box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+				text-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+				transform: translateY(-1px);
 			}
 			
 			a:active {
 				transform: translateY(0px);
-				box-shadow: 
-					0 0 15px rgba(0, 255, 136, 0.6),
-					inset 0 0 5px rgba(0, 255, 136, 0.2);
 			}
 			
 			a::before {
 				content: '◊ ';
 				color: #00bfff;
-				text-shadow: 0 0 8px rgba(0, 191, 255, 0.8);
+				text-shadow: 0 0 5px rgba(0, 191, 255, 0.6);
 			}
 			
 			a::after {
 				content: ' ◊';
 				color: #00bfff;
-				text-shadow: 0 0 8px rgba(0, 191, 255, 0.8);
+				text-shadow: 0 0 5px rgba(0, 191, 255, 0.6);
+			}
+
+			/* Reduce motion for users who prefer it */
+			@media (prefers-reduced-motion: reduce) {
+				* {
+					animation-duration: 0.01ms !important;
+					animation-iteration-count: 1 !important;
+					transition-duration: 0.01ms !important;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<div class="card">
-			<h1>Generate Technical Member Challenge Fall 2025</h1>
+		<h1>Generate Technical Member Challenge Fall 2025</h1>
 
 			<p>You are tasked with completing one technical deliverable for your Generate Software Engineer interview. The deliverable consists of completing one technical challenge prior to your interview, and then conducting a walkthrough of your solution during your interview. Your walkthrough must include screensharing of your code, you may be asked to submit your solution, and you are not expected to prepare additional visuals or writings.</p>
 
+		<h1>Backend Challenges</h1>
 			<h2>Algorithmic Challenge</h2>
 
-			<p>Aliens are attacking our hometown! It is up to you as the commander to protect your home from being destroyed by the alien invasion.</p>
+				<p>Aliens are attacking our hometown! It is up to you as the commander to protect your home from being destroyed by the alien invasion.</p>
 
-			<h3>Technical Specification</h3>
+				<h3>Technical Specification</h3>
 
-			<p>Our intelligence agencies have been able to identify the key characteristics of the impending aliens and have relayed them to you.</p>
+				<p>Our intelligence agencies have been able to identify the key characteristics of the impending aliens and have relayed them to you.</p>
 
-      <p> ALIEN is a JSON Object with HP and ATK. </p>
-      <p> ALIEN_INVASION is a JSON ARRAY of ALIEN. </p>
-      <p> POWER is the sum of the ALIEN remaining HP and ATK. </p>
+				<p> ALIEN is a JSON Object with HP and ATK. </p>
+				<p> ALIEN_INVASION is a JSON ARRAY of ALIEN. </p>
+				<p> POWER is the sum of the ALIEN remaining HP and ATK. </p>
 
-      <h4> A Command is one of </h4>
-      <p>"volley" - Targets the number of aliens sorted by POWER decided by taking the remaining HP modulo the remaining number of aliens, dealing 1 HP.</p>
-      <p>"focusedVolley" - Targets the ceiling of half of the remaining aliens sorted by POWER, dealing 2 HP.</p>
-      <p>"focusedShot" - Targets the alien with the highest POWER, killing them instantly.</p>
+				<h4> A Command is one of </h4>
+				<p>"volley" - Targets the number of aliens sorted by POWER decided by taking the remaining HP modulo the remaining number of aliens, dealing 1 HP.</p>
+				<p>"focusedVolley" - Targets the ceiling of half of the remaining aliens sorted by POWER, dealing 2 HP.</p>
+				<p>"focusedShot" - Targets the alien with the highest POWER, killing them instantly.</p>
 
-      <h4> Additional Specifications </h4>
-      <p>An Invasion is over if and only if your remaining HP &le; 0 or there are no more invading aliens left.</p>
-      <p>the primary goal is to kill the most amount of invading aliens before the invasion concludes while maximizing your remaining hp left over.</p>
-      <div style="text-align: center;">
-        <a href="/">Find the API Specification Here.</a>
-      </div>
+				<h4> Additional Specifications </h4>
+				<p>An Invasion is over if and only if your remaining HP &le; 0 or there are no more invading aliens left.</p>
+				<p>the primary goal is to kill the most amount of invading aliens before the invasion concludes while maximizing your remaining hp left over.</p>
+				
+			<h2>ngrok Challenge</h2>
+				<p>You are the alien leader of the advancing invasion fleet, and your species has catalogued thousands of intelligent life forms across the galaxy for strategic assessment.</p>
+				<p>You are tasked with implementing a robust database API to store, retrieve, and filter alien species data.</p>
+			
+				<p>You need to build a server to handle storing and retrieving alien data. The server should support:</p>
+				<p>GET /healthcheck</p>
+				<p>We will query this endpoint to determine if your server is alive and ready to receive connections.</p>
+				<p>POST /api/aliens</p>
+				<p>We will query this endpoint to send alien data. The alien model is DetailedAlien, outlined in the API specification, and the aliens will be sent in an array.</p>
+				<p>GET /api/aliens</p>
+				<p>We will query this endpoint to retrieve alien data. This should support the following filters as query parameters:</p>
+				<p>"spd_lte"</p>
+				<p>"spd_gte"</p>
+				<p>"atk_lte"</p>
+				<p>"atk_gte"</p>
+				<p>"hp_gte"</p>
+				<p>"hp_lte"</p>
+				<p>"type"</p>
+				<p>DELETE /api/aliens</p>
+				<p>We will query this endpoint at the beginning of every test to clear your alien data. This is on setup, not on teardown.</p>
+			<h1>Frontend Challenge</h1>
 
+
+				<div style="text-align: center;">
+					<a href="/">Find the API Specification Here.</a>
+     			 </div>
 		</div>
 	</body>
 	</html>
