@@ -11,6 +11,5 @@ REPO_NAME="generate_technical_2025-challenge"
   doctl registry login
   task docker-build
   docker tag generate_technical_2025-challenge:latest $REGISTRY_IMAGE
-  doctl registry repository delete-tag $REPO_NAME latest --force
   docker push $REGISTRY_IMAGE
 )

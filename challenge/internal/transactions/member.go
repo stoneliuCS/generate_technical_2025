@@ -38,7 +38,10 @@ func CreateMemberTransactions(logger *slog.Logger, db *gorm.DB) MemberTransactio
 // MemberExists implements MemberTransactions.
 func (u *MemberTransactionsImpl) MemberExistsByEmailAndNuid(email string, nuid string) (bool, error) {
 	var member models.Member
-	res := u.db.Where("email = ?", email).Where("nuid = ?", nuid).Limit(1).Find(&member)
+	res := u.db.Where(&models.Member{
+		Email: email,
+		Nuid:  nuid,
+	}).Limit(1).Find(&member)
 	if res.Error != nil {
 		return false, res.Error
 	}
@@ -64,7 +67,10 @@ func (u MemberTransactionsImpl) InsertScore(score *models.Score) (int, error) {
 // GetMember implements MemberTransactions.
 func (u *MemberTransactionsImpl) GetMember(email string, nuid string) (*uuid.UUID, error) {
 	var member models.Member
-	res := u.db.Where("email = ?", email).Where("nuid = ?", nuid).First(&member)
+	res := u.db.Where(&models.Member{
+		Email: email,
+		Nuid:  nuid,
+	}).First(&member)
 	if res.Error != nil {
 		return nil, res.Error
 	}

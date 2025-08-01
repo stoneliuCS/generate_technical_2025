@@ -21,6 +21,7 @@ func CreateDatabase(cfg utils.EnvConfig, logger *slog.Logger) *gorm.DB {
 				slogGorm.WithTraceAll(),
 				slogGorm.SetLogLevel(slogGorm.DefaultLogType, slog.LevelDebug)),
 			SkipDefaultTransaction: true,
+			PrepareStmt:            false,
 		})
 	}
 	db := utils.FatalCall(db_creator)
