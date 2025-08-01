@@ -87,8 +87,8 @@ const (
 	LOWER_DETAILED_ALIEN_AMOUNT  = 10
 	UPPER_DETAILED_ALIEN_AMOUNT  = 100
 	NGROK_GET_REQUEST_COUNT      = 4
-	NUM_NGROK_ALIENS_LOWER_BOUND = 10
-	NUM_NGROK_ALIENS_UPPER_BOUND = NUM_NGROK_ALIENS_LOWER_BOUND + 5
+	NUM_NGROK_ALIENS_LOWER_BOUND = 500
+	NUM_NGROK_ALIENS_UPPER_BOUND = NUM_NGROK_ALIENS_LOWER_BOUND + 250
 	NGROK_POST_POINTS            = 20
 	NGROK_GET_ALL_POINTS         = 15
 	NGROK_FILTER_TYPE_POINTS     = 15
@@ -354,6 +354,5 @@ func GenerateNgrokAliens(rng *rand.Rand, memberID uuid.UUID) []DetailedAlien {
 		alien := GenerateDetailedAlien(rng, memberID, alienIdx)
 		aliens = append(aliens, alien)
 	}
-
 	return aliens
 }
