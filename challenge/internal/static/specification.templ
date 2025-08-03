@@ -231,28 +231,9 @@ templ ChallengePage() {
 			<p>You are tasked with completing one technical deliverable for your Generate Software Engineer interview. The deliverable consists of completing one technical challenge prior to your interview, and then conducting a walkthrough of your solution during your interview. Your walkthrough must include screensharing of your code, you may be asked to submit your solution, and you are not expected to prepare additional visuals or writings.</p>
 
 		<h1>Backend Challenges</h1>
-			<h2>Algorithmic Challenge</h2>
+    Generate will be introducing tracks for the fall challenges, with track 1 being relatively easier than track 2. Tracks are meant to provide newer and more experienced members more options to showcase their technial abilities. Please choose one challenge below to complete for your interview.
 
-				<p>Aliens are attacking our hometown! It is up to you as the commander to protect your home from being destroyed by the alien invasion.</p>
-
-				<h3>Technical Specification</h3>
-
-				<p>Our intelligence agencies have been able to identify the key characteristics of the impending aliens and have relayed them to you.</p>
-
-				<p> ALIEN is a JSON Object with HP and ATK. </p>
-				<p> ALIEN_INVASION is a JSON ARRAY of ALIEN. </p>
-				<p> POWER is the sum of the ALIEN remaining HP and ATK. </p>
-
-				<h4> A Command is one of </h4>
-				<p>"volley" - Targets the number of aliens sorted by POWER decided by taking the remaining HP modulo the remaining number of aliens, dealing 1 HP.</p>
-				<p>"focusedVolley" - Targets the ceiling of half of the remaining aliens sorted by POWER, dealing 2 HP.</p>
-				<p>"focusedShot" - Targets the alien with the highest POWER, killing them instantly.</p>
-
-				<h4> Additional Specifications </h4>
-				<p>An Invasion is over if and only if your remaining HP &le; 0 or there are no more invading aliens left.</p>
-				<p>the primary goal is to kill the most amount of invading aliens before the invasion concludes while maximizing your remaining hp left over.</p>
-				
-			<h2>ngrok Challenge</h2>
+			<h2>Track 1: ngrok Challenge</h2>
 				<p>You are the alien leader of the advancing invasion fleet, and your species has catalogued thousands of intelligent life forms across the galaxy for strategic assessment.</p>
 				<p>You are tasked with implementing a robust database API to store, retrieve, and filter alien species data.</p>
 			
@@ -276,7 +257,29 @@ templ ChallengePage() {
 				<div style="text-align: center;">
 					<a href="https://ngrok.com/">ngrok</a>
 				</div>
-			
+
+			<h2>Track 2: Alien Invasion Challenge</h2>
+
+				<p>Aliens are attacking our hometown! It is up to you as the commander to protect your home from being destroyed by the alien invasion.</p>
+
+				<h3>Technical Specification</h3>
+
+				<p>Our intelligence agencies have been able to identify the key characteristics of the impending aliens and have relayed them to you.</p>
+
+				<p> ALIEN is a JSON Object with HP and ATK. </p>
+				<p> INVASION is a JSON ARRAY of ALIEN. </p>
+				<p> POWER is the sum of the ALIEN remaining HP and ATK. </p>
+        <p> The formal api specification may be used to view these definitions in greater detail.</p>
+
+				<h4> A Command is one of </h4>
+				<p>"volley" - Targets the number of aliens sorted by descending POWER decided by taking the remaining HP modulo the remaining number of aliens, dealing 1 HP.</p>
+				<p>"focusedVolley" - Targets the ceiling of half of the remaining aliens sorted by descending POWER, dealing 2 HP.</p>
+				<p>"focusedShot" - Targets the alien with the highest POWER, killing them instantly.</p>
+
+				<h4> Additional Specifications </h4>
+				<p>An Invasion is over if and only if your remaining HP &le; 0 or there are no more invading aliens left.</p>
+				<p>The testing oracle will prioritize states in this order: 1, the least remaining aliens left, 2. the highest remaining hp left over, and 3. the least number of commands used.</p>
+				
 			<h1>Frontend Challenge</h1>
 				<p>You are an alien in a fleet, proficient in frontend development, and your alien leader has asked you to build a dashboard for the fleet.</p>
 				<p>Fortunately, a fellow alien has created a design for the dashboard, so aim to match that it closely as possible.</p>

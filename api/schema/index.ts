@@ -1,30 +1,34 @@
-import { Component, Integer, Object, String } from "fluid-oas";
+import { Integer, Object, String } from "fluid-oas";
 
 // Reusable models used throughout the api specification
-const BASE_ALIEN_SCHEMA = Object.addProperties({
+export const BASE_ALIEN_SCHEMA = Object.addProperties({
   atk: Integer.addMinimum(1).addMaximum(3),
   hp: Integer.addMinimum(1).addMaximum(3),
-}).addRequired(['atk', 'hp']);
+}).addRequired(["atk", "hp"]);
 
-const ALIEN_TYPE_SCHEMA = String.addEnums(['Regular', 'Elite', 'Boss'])
-  .addDescription('Type of alien species');
+export const ALIEN_TYPE_SCHEMA = String.addEnums([
+  "Regular",
+  "Elite",
+  "Boss",
+]).addDescription("Type of alien species");
 
-const DETAILED_ALIEN_SCHEMA = Object.addProperties({
+export const DETAILED_ALIEN_SCHEMA = Object.addProperties({
   id: String,
   base_alien: BASE_ALIEN_SCHEMA,
   first_name: String,
   last_name: String,
   type: ALIEN_TYPE_SCHEMA,
   spd: Integer,
-  profile_url: String.addFormat('uri')
-}).addRequired(['id', 'base_alien', 'first_name', 'last_name', 'type', 'spd', 'profile_url']);
-
-export const COMPONENT = Component.addSchemas({
-  BaseAlien: BASE_ALIEN_SCHEMA,
-  DetailedAlien: DETAILED_ALIEN_SCHEMA
-});
-
-export const COMPONENT_MAPPINGS = COMPONENT.createMappings();
+  profile_url: String.addFormat("uri"),
+}).addRequired([
+  "id",
+  "base_alien",
+  "first_name",
+  "last_name",
+  "type",
+  "spd",
+  "profile_url",
+]);
 
 export const UUID = String.addFormat("uuid")
   .addDescription("Unique identifer for the registered participant.")
