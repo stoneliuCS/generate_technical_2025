@@ -166,12 +166,22 @@ func (h Handler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req
 			Score:   api.NewOptInt(gradeResult.Score),
 			Message: "Submission has been been successfully scored.",
 		}
+		score := models.CreateScore(params.ID, models.NGROK_CHALLENGE_TYPE, gradeResult.Score, gradeResult.Valid)
+		_, err := h.memberService.CreateScore(score)
+		if err != nil {
+			return &api.APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError{Message: "Database error when saving a score."}, err
+		}
 		return &result, nil
 	} else {
 		// Grading failed:
 		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
 			Valid:   false,
 			Message: gradeResult.Reason,
+		}
+		score := models.CreateScore(params.ID, models.NGROK_CHALLENGE_TYPE, models.INVALID_SCORE, gradeResult.Valid)
+		_, err := h.memberService.CreateScore(score)
+		if err != nil {
+			return &api.APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError{Message: "Database error when saving a score."}, err
 		}
 		return &result, nil
 	}
