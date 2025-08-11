@@ -56,10 +56,11 @@ func logging(logger *slog.Logger) middleware.Middleware {
 
 func slackErrorMiddleware(slackWebhookURI string) middleware.Middleware {
 	return func(req middleware.Request, next middleware.Next) (middleware.Response, error) {
+		messageHeader := "Runtime Error"
 		defer func() {
 			if r := recover(); r != nil {
 				panicErr := fmt.Errorf("panic: %v", r)
-				slackAlertError(panicErr, slackWebhookURI)
+				slackAlertError(panicErr, messageHeader, slackWebhookURI)
 			}
 		}()
 
@@ -67,20 +68,37 @@ func slackErrorMiddleware(slackWebhookURI string) middleware.Middleware {
 		resp, err := next(req)
 
 		if err != nil {
-			slackAlertError(err, slackWebhookURI)
+			slackAlertError(err, messageHeader, slackWebhookURI)
 		}
 
 		return resp, err
 	}
 }
 
-func slackAlertError(err error, slackWebhookURI string) {
+func slowRequestMiddleware(threshold time.Duration, slackWebhookURI string) middleware.Middleware {
+	return func(req middleware.Request, next middleware.Next) (middleware.Response, error) {
+		start := time.Now()
+		resp, err := next(req)
+		duration := time.Since(start)
+
+		if duration > threshold {
+			slowErr := fmt.Errorf("slow request: %s took %v (threshold: %v)",
+				req.Raw.URL, duration, threshold)
+			messageHeader := "Slow Request"
+			slackAlertError(slowErr, messageHeader, slackWebhookURI)
+		}
+
+		return resp, err
+	}
+}
+
+func slackAlertError(err error, messageHeader string, slackWebhookURI string) {
 	// Get stack trace.
 	buf := make([]byte, 4096)
 	stackSize := runtime.Stack(buf, false)
 	stack := string(buf[:stackSize])
 
-	message := fmt.Sprintf("🚨 Runtime Error\n```%v\n\nStack Trace:\n%s```", err, stack)
+	message := fmt.Sprintf("%s\n```%v\n\nStack Trace:\n%s```", messageHeader, err, stack)
 
 	payload := map[string]string{"text": message}
 	jsonData, _ := json.Marshal(payload)
