@@ -19,13 +19,20 @@ func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 		// has to make many http requests to the ngrok server, averaging 6-7 seconds.
 		slowRequestMiddleware(10*time.Second, cfg.SLACK_WEBHOOK))
 
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "internal/static/favicon.ico")
+	})
+
 	// Create server
 	srvFunc := func() (*api.Server, error) { return api.NewServer(handler, opts) }
 	srv := utils.FatalCall(srvFunc)
+	mux.Handle("/", srv)
 	addr := fmt.Sprintf(":%d", cfg.PORT)
 	servFunc := func() error {
 		logger.Info("Started server on http://localhost" + addr)
-		return http.ListenAndServe(addr, srv)
+		return http.ListenAndServe(addr, mux)
 	}
 
 	// Run server indefinitely
