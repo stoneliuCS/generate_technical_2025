@@ -47,7 +47,7 @@ func CreateInvasionState(aliens []Alien, startingHp int) InvasionState {
 	}.sortAliens()
 }
 
-func RunCommandsToCompletion(startingState InvasionState, commands []string) InvasionState {
+func RunCommandsToCompletion(startingState InvasionState, commands []string) *InvasionState {
 	state := startingState
 	mapFunc := func(s InvasionState, command string) InvasionState {
 		mappings := map[string]func() InvasionState{
@@ -58,9 +58,12 @@ func RunCommandsToCompletion(startingState InvasionState, commands []string) Inv
 		return mappings[command]().sortAliens().AliensAttack()
 	}
 	for _, command := range commands {
+		if state.IsOver() {
+			return nil
+		}
 		state = mapFunc(state, command)
 	}
-	return state
+	return &state
 }
 
 func (i InvasionState) GetNumberOfCommandsUsed() int {
@@ -202,6 +205,9 @@ func (i InvasionState) AttackAliensModulo() InvasionState {
 // Returns the state of the invasion when killing the highest damage alien.
 func (i InvasionState) AttackHighestDamageAlien() InvasionState {
 	// Invariant that we need to maintain, the highest damaging alien will the at the front of the list.
+	if len(i.aliensLeft) == 0 {
+		return i
+	}
 	return InvasionState{
 		aliensLeft: i.aliensLeft[1:],
 		hpLeft:     i.hpLeft,

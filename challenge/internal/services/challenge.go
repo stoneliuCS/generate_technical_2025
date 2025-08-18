@@ -64,6 +64,9 @@ func (c ChallengeServiceImpl) ScoreMemberSubmission(memberID uuid.UUID, submissi
 		}
 		state := challenges[challengeID]
 		finalUserState := RunCommandsToCompletion(state, submission.Commands)
+		if finalUserState == nil {
+			return OracleAnswer{Message: "Commands given resulted in a state ending prematurely before all commands could be executed.", Valid: false}
+		}
 		// Check to see if the final HP and final remaining aliens match
 		if finalUserState.GetAliensLeft() != submission.AliensLeft || finalUserState.GetHpLeft() != submission.Hp || finalUserState.GetNumberOfCommandsUsed() != len(submission.Commands) {
 			return OracleAnswer{Message: "Submission HP, aliens, or commands left do not match for this challenge id: " + challengeID.String(), Valid: false}
@@ -246,11 +249,9 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 
 		possibleAdjustedPoints, err := getRequest.Execute(client, baseURL)
 		if err != nil {
-
 			if VERBOSE {
 				fmt.Printf("GET request failed: %s\n", err.Error())
 			}
-
 		} else {
 			totalScore += possibleAdjustedPoints
 
@@ -275,18 +276,15 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 func sendDeleteRequest(deleteRequest NgrokRequest, client *http.Client, baseURL string) {
 	_, err := deleteRequest.Execute(client, baseURL)
 	if err != nil {
-
 		if VERBOSE {
 			fmt.Printf("DELETE request failed: %s\n", err.Error())
 		}
 
 		// Don't fail grading if DELETE fails, because it might be the first run.
 	} else {
-
 		if VERBOSE {
 			fmt.Println("DELETE request succeeded")
 		}
-
 	}
 }
 
