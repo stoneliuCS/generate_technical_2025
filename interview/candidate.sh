@@ -20,7 +20,7 @@ SUMMARY=$(PGPASSWORD="" psql \
     -c "
     SELECT 
     m.email,
-        COALESCE(MAX(s.score), 0) as best_score,
+        COALESCE(MIN(CASE WHEN s.score != -1 THEN s.score END), 0) as best_score,
         COALESCE(COUNT(s.id), 0) as attempts,
         m.created_at::date as registered
     FROM members m 
@@ -51,7 +51,10 @@ PGPASSWORD="" psql \
     -d postgres \
     -c "
     SELECT 
-        s.score,
+        CASE 
+            WHEN s.score = -1 THEN 'FAILED (-1)'
+            ELSE s.score::text
+        END as score,
         s.created_at::timestamp as submitted_at,
         s.challenge_type
     FROM members m 
