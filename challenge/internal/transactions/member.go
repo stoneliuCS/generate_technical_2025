@@ -11,6 +11,7 @@ import (
 type MemberTransactions interface {
 	InsertMember(*models.Member) (*uuid.UUID, error)
 	InsertScore(*models.Score) (int, error)
+	BatchInsertFrontendUsage([]models.FrontendUsage) error
 	GetMember(string, string) (*uuid.UUID, error)
 	MemberExistsByEmailAndNuid(string, string) (bool, error)
 	MemberExistsById(uuid.UUID) (bool, error)
@@ -75,4 +76,11 @@ func (u *MemberTransactionsImpl) GetMember(email string, nuid string) (*uuid.UUI
 		return nil, res.Error
 	}
 	return &member.ID, nil
+}
+
+func (u *MemberTransactionsImpl) BatchInsertFrontendUsage(usages []models.FrontendUsage) error {
+	if len(usages) == 0 {
+		return nil
+	}
+	return u.db.Create(&usages).Error
 }

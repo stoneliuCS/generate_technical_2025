@@ -31,4 +31,5 @@ func AutoMigrate(db *gorm.DB) {
 	// Add migrations here.
 	db.AutoMigrate(&models.Member{})
 	db.AutoMigrate(&models.Score{})
+	db.AutoMigrate(&models.FrontendUsage{})
 }

@@ -135,6 +135,8 @@ func (h Handler) APIV1ChallengeFrontendIDAliensGet(ctx context.Context, params a
 		}
 	})
 
+	h.memberService.LogFrontendUsageAsync(params.ID)
+
 	response := api.APIV1ChallengeFrontendIDAliensGetOKApplicationJSON(colony)
 	return &response, nil
 }

@@ -3,6 +3,7 @@ package services
 import (
 	"generate_technical_challenge_2025/internal/database/models"
 	"generate_technical_challenge_2025/internal/transactions"
+	"generate_technical_challenge_2025/internal/utils"
 	"log/slog"
 
 	"github.com/google/uuid"
@@ -13,6 +14,7 @@ import (
 type MemberService interface {
 	CreateMember(*models.Member) (*uuid.UUID, error)
 	CreateScore(*models.Score) (int, error)
+	LogFrontendUsageAsync(uuid.UUID)
 	GetMember(string, string) (*uuid.UUID, error)
 	CheckMemberExistsByEmailAndNuid(string, string) (bool, error)
 	CheckMemberExistsById(uuid.UUID) (bool, error)
@@ -21,6 +23,13 @@ type MemberService interface {
 type MemberServiceImpl struct {
 	logger       *slog.Logger
 	transactions transactions.MemberTransactions
+	usageLogger  *utils.UsageLogger
+}
+
+// LogFrontendUsageAsync implements MemberService.
+// No need to call this within a goroutine, it already handles asynchronicity.
+func (u *MemberServiceImpl) LogFrontendUsageAsync(userID uuid.UUID) {
+	u.usageLogger.LogUsage(userID)
 }
 
 // CreateScore implements MemberService.
@@ -34,9 +43,11 @@ func (u *MemberServiceImpl) CheckMemberExistsById(id uuid.UUID) (bool, error) {
 }
 
 func CreateMemberService(logger *slog.Logger, transactions transactions.MemberTransactions) MemberService {
+	usageLogger := utils.NewUsageLogger(transactions)
 	return &MemberServiceImpl{
 		logger:       logger,
 		transactions: transactions,
+		usageLogger:  usageLogger,
 	}
 }
 
