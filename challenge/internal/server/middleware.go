@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ogen-go/ogen/middleware"
 )
 
@@ -57,10 +58,13 @@ func logging(logger *slog.Logger) middleware.Middleware {
 func slackErrorMiddleware(slackWebhookURI string) middleware.Middleware {
 	return func(req middleware.Request, next middleware.Next) (middleware.Response, error) {
 		messageHeader := "Runtime Error"
+		requestID := getRequestID(req)
+		requestBody := getRequestBodyJSON(req)
+
 		defer func() {
 			if r := recover(); r != nil {
 				panicErr := fmt.Errorf("panic: %v", r)
-				slackAlertError(panicErr, messageHeader, slackWebhookURI)
+				slackAlertError(panicErr, messageHeader, slackWebhookURI, requestID, requestBody, req.OperationName)
 			}
 		}()
 
@@ -68,7 +72,7 @@ func slackErrorMiddleware(slackWebhookURI string) middleware.Middleware {
 		resp, err := next(req)
 
 		if err != nil {
-			slackAlertError(err, messageHeader, slackWebhookURI)
+			slackAlertError(err, messageHeader, slackWebhookURI, requestID, requestBody, req.OperationName)
 		}
 
 		return resp, err
@@ -80,28 +84,58 @@ func slowRequestMiddleware(threshold time.Duration, slackWebhookURI string) midd
 		start := time.Now()
 		resp, err := next(req)
 		duration := time.Since(start)
+		requestID := getRequestID(req)
+		requestBody := getRequestBodyJSON(req)
 
 		if duration > threshold {
 			slowErr := fmt.Errorf("slow request: %s took %v (threshold: %v)",
 				req.Raw.URL, duration, threshold)
 			messageHeader := "Slow Request"
-			slackAlertError(slowErr, messageHeader, slackWebhookURI)
+			slackAlertError(slowErr, messageHeader, slackWebhookURI, requestID, requestBody, req.OperationName)
 		}
 
 		return resp, err
 	}
 }
 
-func slackAlertError(err error, messageHeader string, slackWebhookURI string) {
+func slackAlertError(err error, messageHeader string, slackWebhookURI string, requestID string, requestBody string, operationName string) {
 	// Get stack trace.
-	buf := make([]byte, 4096)
+	buf := make([]byte, 8192)
 	stackSize := runtime.Stack(buf, false)
 	stack := string(buf[:stackSize])
 
-	message := fmt.Sprintf("%s\n```%v\n\nStack Trace:\n%s```", messageHeader, err, stack)
+	message := fmt.Sprintf("%s\n```Operation: %s\nRequesting User ID: %s\nTimestamp: %s\n\nRequest Body:\n%s\n\nError: %v\n\nStack Trace:\n%s```",
+		messageHeader, operationName, requestID, time.Now().Format(time.RFC3339), requestBody, err, stack)
 
 	payload := map[string]string{"text": message}
 	jsonData, _ := json.Marshal(payload)
 
-	go http.Post(slackWebhookURI, "application/json", bytes.NewBuffer(jsonData))
+	http.Post(slackWebhookURI, "application/json", bytes.NewBuffer(jsonData))
+}
+
+// Extracts user ID for logging in the slack middleware.
+func getRequestID(req middleware.Request) string {
+	for paramKey, paramValue := range req.Params {
+		if paramKey.Name == "id" && paramKey.In == "path" {
+			if uuid, ok := paramValue.(uuid.UUID); ok {
+				return uuid.String()
+			}
+		}
+	}
+
+	return "couldn't find user ID"
+}
+
+// Extracts request body for logging in the slack middleware.
+func getRequestBodyJSON(req middleware.Request) string {
+	if req.Body == nil {
+		return "no body"
+	}
+
+	jsonData, err := json.MarshalIndent(req.Body, "", "  ")
+	if err != nil {
+		return fmt.Sprintf("failed to marshal body: %v", err)
+	}
+
+	return string(jsonData)
 }
