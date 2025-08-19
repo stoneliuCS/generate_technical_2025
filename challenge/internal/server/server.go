@@ -29,10 +29,24 @@ func RunServer(handler api.Handler, cfg utils.EnvConfig, logger *slog.Logger) {
 	srvFunc := func() (*api.Server, error) { return api.NewServer(handler, opts) }
 	srv := utils.FatalCall(srvFunc)
 	mux.Handle("/", srv)
+
+	corsHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		mux.ServeHTTP(w, r)
+	})
+
 	addr := fmt.Sprintf(":%d", cfg.PORT)
 	servFunc := func() error {
 		logger.Info("Started server on http://localhost" + addr)
-		return http.ListenAndServe(addr, mux)
+		return http.ListenAndServe(addr, corsHandler)
 	}
 
 	// Run server indefinitely
