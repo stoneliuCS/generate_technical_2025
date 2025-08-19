@@ -11,9 +11,9 @@ echo "Looking up stats for: $EMAIL"
 echo "================================"
 
 SUMMARY=$(PGPASSWORD="" psql \
-    -h  \
+    -h \
     -p 5432 \
-    -U  \
+    -U \
     -d postgres \
     -t \
     -A \
@@ -45,9 +45,9 @@ echo "All Scores:"
 echo "----------"
 
 PGPASSWORD="" psql \
-    -h  \
+    -h \
     -p 5432 \
-    -U  \
+    -U \
     -d postgres \
     -c "
     SELECT 
@@ -62,3 +62,32 @@ PGPASSWORD="" psql \
     WHERE m.email = '$EMAIL'
     ORDER BY s.created_at DESC;
     "
+
+FRONTEND_STATS=$(PGPASSWORD="" psql \
+    -h \
+    -p 5432 \
+    -U \
+    -d postgres \
+    -t \
+    -A \
+    -c "
+    SELECT
+        COALESCE(COUNT(f.id), 0) as request_count,
+        MIN(f.timestamp)::date as first_request,
+        MAX(f.timestamp)::date as last_request
+    FROM members m
+    LEFT JOIN frontend_usages f ON m.id::uuid = f.user_id
+    WHERE m.email = '$EMAIL';
+    ")
+
+IFS='|' read -r frontend_requests first_frontend last_frontend <<< "$FRONTEND_STATS"
+
+echo "Frontend Usage:"
+echo "---------------"
+echo "Total Requests: $frontend_requests"
+if [ "$frontend_requests" -gt 0 ]; then
+    echo "First Request: $first_frontend"
+    echo "Last Request: $last_frontend"
+else
+    echo "No frontend requests made"
+fi
