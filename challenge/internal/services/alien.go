@@ -25,7 +25,11 @@ func (i InvasionState) sortAliens() InvasionState {
 	sortedAliens := slices.SortedFunc(slices.Values(i.aliensLeft), func(a1 Alien, a2 Alien) int {
 		power1 := a1.Atk + a1.Hp
 		power2 := a2.Atk + a2.Hp
-		return power2 - power1 // Highest total power first
+		if power2 != power1 {
+			return power2 - power1 // Highest total power first
+		}
+		// Otherwise sort by the smaller HP Alien.
+		return a1.Hp - a2.Hp
 	})
 	return InvasionState{
 		aliensLeft: sortedAliens,

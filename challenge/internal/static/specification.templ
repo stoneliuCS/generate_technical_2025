@@ -269,6 +269,41 @@ templ ChallengePage() {
 				<p> ALIEN is a JSON Object with HP and ATK. </p>
 				<p> INVASION is a JSON ARRAY of ALIEN. </p>
 				<p> POWER is the sum of the ALIEN remaining HP and ATK. </p>
+        <p> EDIT: When sorting the aliens POWER, if two aliens have the same power then sort by whichever alien has the SMALLER HP. That is for example given an array of aliens like this: </p>
+        <pre><code>{
+        `// Given these aliens
+{Hp: 3, Atk: 3}, // 6 Power
+{Hp: 2, Atk: 3}, // 5 Power
+{Hp: 3, Atk: 2}, // 5 Power
+{Hp: 2, Atk: 3}, // 5 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 2, Atk: 2}, // 4 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 1, Atk: 2}, // 3 Power
+{Hp: 1, Atk: 2}, // 3 Power
+{Hp: 2, Atk: 1}, // 3 Power
+{Hp: 2, Atk: 1}, // 3 Power
+
+// This is the proper sorting
+{Hp: 3, Atk: 3}, // 6 Power
+{Hp: 2, Atk: 3}, // 5 Power
+{Hp: 2, Atk: 3}, // 5 Power
+{Hp: 3, Atk: 2}, // 5 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 1, Atk: 3}, // 4 Power
+{Hp: 2, Atk: 2}, // 4 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 3, Atk: 1}, // 4 Power
+{Hp: 1, Atk: 2}, // 3 Power
+{Hp: 1, Atk: 2}, // 3 Power
+{Hp: 2, Atk: 1}, // 3 Power
+{Hp: 2, Atk: 1}  // 3 Power`}</code></pre>
         <p> The formal API specification may be used to view these definitions in greater detail.</p>
 
 				<h4> A Command is one of </h4>
