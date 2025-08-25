@@ -10,7 +10,7 @@ import (
 
 func validateNEUEmail(email string) bool {
 	splitEmail := strings.SplitN(email, "@", 2)
-	return splitEmail[1] == "northeastern.edu"
+	return len(splitEmail) == 2 && splitEmail[1] == "northeastern.edu"
 }
 
 func validateNUID(nuid string) bool {
