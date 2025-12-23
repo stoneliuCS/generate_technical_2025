@@ -185,7 +185,7 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 
 	baseURL := url.String()
 
-	ok, err := health(ctx, baseURL)
+	ok, err := health(ctx, c.customClient, baseURL)
 	if err != nil || !ok {
 		return NgrokChallengeScore{
 			Valid:  false,

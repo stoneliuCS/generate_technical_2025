@@ -434,13 +434,13 @@ func filterAliensByNumericField(aliens []DetailedAlien, field string, op Compari
 	return filtered
 }
 
-func health(ctx context.Context, url string) (ok bool, err error) {
+func health(ctx context.Context, client *http.Client, url string) (ok bool, err error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url+"/healthcheck", nil)
 	if err != nil {
 		return false, fmt.Errorf("failed to create request: %w", err)
 	}
 	req.Header.Set("ngrok-skip-browser-warning", "true")
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return false, fmt.Errorf("failed to make request: %w", err)
 	}
