@@ -22,7 +22,7 @@ type NgrokChallengeScore struct {
 }
 
 type NgrokRequest interface {
-	Execute(client *http.Client, baseURL string) (pointsEarned int, err error)
+	Execute(ctx context.Context, client *http.Client, baseURL string) (pointsEarned int, err error)
 	GetName() string
 	GetTotalPossiblePoints() int
 }
@@ -82,8 +82,8 @@ const (
 	HP  = "hp"
 )
 
-func (t NgrokDeleteRequest) Execute(client *http.Client, baseURL string) (int, error) {
-	req, err := http.NewRequest("DELETE", baseURL+t.Path, nil)
+func (t NgrokDeleteRequest) Execute(ctx context.Context, client *http.Client, baseURL string) (int, error) {
+	req, err := http.NewRequestWithContext(ctx, "DELETE", baseURL+t.Path, nil)
 	if err != nil {
 		return 0, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -103,7 +103,7 @@ func (t NgrokDeleteRequest) Execute(client *http.Client, baseURL string) (int, e
 	return 0, nil
 }
 
-func (t NgrokPostRequest) Execute(client *http.Client, baseURL string) (int, error) {
+func (t NgrokPostRequest) Execute(ctx context.Context, client *http.Client, baseURL string) (int, error) {
 	// Marshal body to JSON
 	bodyBytes, err := json.Marshal(t.Body)
 	if err != nil {
@@ -111,7 +111,7 @@ func (t NgrokPostRequest) Execute(client *http.Client, baseURL string) (int, err
 	}
 
 	// Create request
-	req, err := http.NewRequest("POST", baseURL+t.Path, bytes.NewReader(bodyBytes))
+	req, err := http.NewRequestWithContext(ctx, "POST", baseURL+t.Path, bytes.NewReader(bodyBytes))
 	if err != nil {
 		return 0, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -135,9 +135,9 @@ func (t NgrokPostRequest) Execute(client *http.Client, baseURL string) (int, err
 	return NGROK_POST_POINTS, nil
 }
 
-func (t NgrokGetRequest) Execute(client *http.Client, baseURL string) (int, error) {
+func (t NgrokGetRequest) Execute(ctx context.Context, client *http.Client, baseURL string) (int, error) {
 	// Create request
-	req, err := http.NewRequest("GET", baseURL+t.Path, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", baseURL+t.Path, nil)
 	if err != nil {
 		return 0, fmt.Errorf("failed to create request: %w", err)
 	}

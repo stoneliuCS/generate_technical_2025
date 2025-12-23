@@ -211,13 +211,13 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 
 	// 1. Clean up any old data.
 	if deleteRequest != nil {
-		sendDeleteRequest(deleteRequest, client, baseURL)
+		sendDeleteRequest(ctx, deleteRequest, client, baseURL)
 		time.Sleep(10 * time.Millisecond)
 	}
 
 	// 2) Populate data.
 	if postRequest != nil {
-		points, err := postRequest.Execute(client, baseURL)
+		points, err := postRequest.Execute(ctx, client, baseURL)
 		if err != nil {
 
 			if VERBOSE {
@@ -247,7 +247,7 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 			fmt.Printf("Request: %s\n", getRequest.GetName())
 		}
 
-		possibleAdjustedPoints, err := getRequest.Execute(client, baseURL)
+		possibleAdjustedPoints, err := getRequest.Execute(ctx, client, baseURL)
 		if err != nil {
 			if VERBOSE {
 				fmt.Printf("GET request failed: %s\n", err.Error())
@@ -273,8 +273,8 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 	}
 }
 
-func sendDeleteRequest(deleteRequest NgrokRequest, client *http.Client, baseURL string) {
-	_, err := deleteRequest.Execute(client, baseURL)
+func sendDeleteRequest(ctx context.Context, deleteRequest NgrokRequest, client *http.Client, baseURL string) {
+	_, err := deleteRequest.Execute(ctx, client, baseURL)
 	if err != nil {
 		if VERBOSE {
 			fmt.Printf("DELETE request failed: %s\n", err.Error())
