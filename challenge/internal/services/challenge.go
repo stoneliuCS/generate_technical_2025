@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"slices"
+	"sync"
 	"time"
 
 	mapset "github.com/deckarep/golang-set/v2"
@@ -41,6 +42,7 @@ type OracleAnswer struct {
 type ChallengeServiceImpl struct {
 	logger       *slog.Logger
 	transactions transactions.ChallengeTransactions
+	customClient *http.Client
 }
 
 // ScoreMemberSubmission implements ChallengeService.
@@ -165,8 +167,15 @@ func (c ChallengeServiceImpl) SolveAlienChallenge(state InvasionState) InvasionS
 }
 
 func CreateChallengeService(logger *slog.Logger, transactions transactions.ChallengeTransactions) ChallengeService {
+	client := &http.Client{
+		Timeout: 15 * time.Second,
+		Transport: &http.Transport{
+			MaxIdleConnsPerHost: 7,
+			IdleConnTimeout:     30 * time.Second,
+		},
+	}
 	return ChallengeServiceImpl{
-		logger: logger, transactions: transactions,
+		logger: logger, transactions: transactions, customClient: client,
 	}
 }
 
@@ -182,10 +191,6 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 			Valid:  false,
 			Reason: "Health check failed--server unreachable",
 		}
-	}
-
-	client := &http.Client{
-		Timeout: 15 * time.Second,
 	}
 
 	totalPossiblePoints := lo.Reduce(requests.Requests, func(acc int, req NgrokRequest, index int) int {
@@ -211,13 +216,13 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 
 	// 1. Clean up any old data.
 	if deleteRequest != nil {
-		sendDeleteRequest(ctx, deleteRequest, client, baseURL)
+		sendDeleteRequest(ctx, deleteRequest, c.customClient, baseURL)
 		time.Sleep(10 * time.Millisecond)
 	}
 
 	// 2) Populate data.
 	if postRequest != nil {
-		points, err := postRequest.Execute(ctx, client, baseURL)
+		points, err := postRequest.Execute(ctx, c.customClient, baseURL)
 		if err != nil {
 
 			if VERBOSE {
@@ -240,6 +245,8 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 		time.Sleep(50 * time.Millisecond)
 	}
 
+	wg := sync.WaitGroup{}
+	wg.Add(len(getRequests))
 	// 3) Make GET requests.
 	for _, getRequest := range getRequests {
 
@@ -247,24 +254,28 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 			fmt.Printf("Request: %s\n", getRequest.GetName())
 		}
 
-		possibleAdjustedPoints, err := getRequest.Execute(ctx, client, baseURL)
-		if err != nil {
-			if VERBOSE {
-				fmt.Printf("GET request failed: %s\n", err.Error())
-			}
-		} else {
-			totalScore += possibleAdjustedPoints
+		go func() {
+			defer wg.Done()
+			possibleAdjustedPoints, err := getRequest.Execute(ctx, c.customClient, baseURL)
+			if err != nil {
+				if VERBOSE {
+					fmt.Printf("GET request failed: %s\n", err.Error())
+				}
+			} else {
+				totalScore += possibleAdjustedPoints
 
-			if VERBOSE {
-				fmt.Printf("GET request succeeded (+%d points out of %d total points)\n",
-					possibleAdjustedPoints,
-					getRequest.GetTotalPossiblePoints())
+				if VERBOSE {
+					fmt.Printf("GET request succeeded (+%d points out of %d total points)\n",
+						possibleAdjustedPoints,
+						getRequest.GetTotalPossiblePoints())
+				}
 			}
+		}()
 
-		}
 		time.Sleep(10 * time.Millisecond)
 	}
 
+	wg.Wait()
 	// Finished sending all requests without returning early, so their
 	// submission must be valid.
 	return NgrokChallengeScore{
