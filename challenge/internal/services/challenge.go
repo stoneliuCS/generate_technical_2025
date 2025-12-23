@@ -24,7 +24,8 @@ type ChallengeService interface {
 	GenerateUniqueFrontendChallenge(id uuid.UUID) []DetailedAlien
 	ScoreMemberSubmission(memberID uuid.UUID, submission map[uuid.UUID]UserChallengeSubmission) OracleAnswer
 	GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge
-	GradeNgrokServer(url url.URL, requests NgrokChallenge) NgrokChallengeScore
+	GradeNgrokServer(ctx context.Context, url url.URL, requests NgrokChallenge) NgrokChallengeScore
+	HealthCheck(ctx context.Context, url url.URL) (bool, error)
 }
 
 type UserChallengeSubmission struct {
@@ -179,19 +180,15 @@ func CreateChallengeService(logger *slog.Logger, transactions transactions.Chall
 	}
 }
 
-func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChallenge) NgrokChallengeScore {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+func (c ChallengeServiceImpl) HealthCheck(ctx context.Context, url url.URL) (bool, error) {
+	ok, err := health(ctx, c.customClient, url.String())
+
+	return ok, err
+}
+
+func (c ChallengeServiceImpl) GradeNgrokServer(ctx context.Context, url url.URL, requests NgrokChallenge) NgrokChallengeScore {
+	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
-
-	baseURL := url.String()
-
-	ok, err := health(ctx, c.customClient, baseURL)
-	if err != nil || !ok {
-		return NgrokChallengeScore{
-			Valid:  false,
-			Reason: "Health check failed--server unreachable",
-		}
-	}
 
 	totalPossiblePoints := lo.Reduce(requests.Requests, func(acc int, req NgrokRequest, index int) int {
 		return acc + req.GetTotalPossiblePoints()
@@ -213,6 +210,8 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 			getRequests = append(getRequests, req)
 		}
 	}
+
+	baseURL := url.String()
 
 	// 1. Clean up any old data.
 	if deleteRequest != nil {

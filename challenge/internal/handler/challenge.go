@@ -158,8 +158,28 @@ func (h Handler) APIV1ChallengeBackendIDNgrokSubmitPost(ctx context.Context, req
 		}, nil
 	}
 
+	ok, err := h.challengeService.HealthCheck(ctx, req.Value.URL.Value)
+	if err != nil || !ok {
+		gradeResult := services.NgrokChallengeScore{
+			Valid:  false,
+			Reason: "Health check failed--server unreachable",
+		}
+
+		// Grading failed:
+		result := api.APIV1ChallengeBackendIDNgrokSubmitPostOK{
+			Valid:   false,
+			Message: gradeResult.Reason,
+		}
+		score := models.CreateScore(params.ID, models.NGROK_CHALLENGE_TYPE, models.INVALID_SCORE, gradeResult.Valid)
+		_, err := h.memberService.CreateScore(score)
+		if err != nil {
+			return &api.APIV1ChallengeBackendIDNgrokSubmitPostInternalServerError{Message: "Database error when saving a score."}, err
+		}
+		return &result, nil
+	}
+
 	generatedRequests := h.challengeService.GenerateUniqueNgrokChallenge(params.ID)
-	gradeResult := h.challengeService.GradeNgrokServer(req.Value.URL.Value, generatedRequests)
+	gradeResult := h.challengeService.GradeNgrokServer(ctx, req.Value.URL.Value, generatedRequests)
 
 	if gradeResult.Valid {
 		// Successful grading:
