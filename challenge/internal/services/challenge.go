@@ -303,7 +303,7 @@ func sendDeleteRequest(ctx context.Context, deleteRequest NgrokRequest, client *
 //  1. a DELETE request that deletes all aliens in the candidate's DB.
 //  2. a POST request that creates a deterministic set of aliens in the candidate's DB.
 //  3. A GET request with no filters that retrieves all aliens from the candidate's DB.
-//  4. A GET request with randomized filters:
+//  4. 4 GET requests with randomized filters:
 //     A filter is one of:
 //     - type=
 //     - atk_lte=
@@ -312,6 +312,7 @@ func sendDeleteRequest(ctx context.Context, deleteRequest NgrokRequest, client *
 //     - spd_gte=
 //     - hp_lte=
 //     - hp_gte=
+//  5. A GET request with contradicting filters (e.g. atk_lte=3 and atk_gte=5)
 func (c ChallengeServiceImpl) GenerateUniqueNgrokChallenge(memberID uuid.UUID) NgrokChallenge {
 	rng := utils.CreateRNGFromHash(memberID)
 	aliens := GenerateNgrokAliens(rng, memberID)
