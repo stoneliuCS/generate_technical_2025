@@ -254,7 +254,7 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 			fmt.Printf("Request: %s\n", getRequest.GetName())
 		}
 
-		go func() {
+		go func(getRequest NgrokRequest) {
 			defer wg.Done()
 			possibleAdjustedPoints, err := getRequest.Execute(ctx, c.customClient, baseURL)
 			if err != nil {
@@ -270,7 +270,7 @@ func (c ChallengeServiceImpl) GradeNgrokServer(url url.URL, requests NgrokChalle
 						getRequest.GetTotalPossiblePoints())
 				}
 			}
-		}()
+		}(getRequest)
 
 		time.Sleep(10 * time.Millisecond)
 	}
